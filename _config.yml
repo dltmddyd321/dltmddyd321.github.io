@@ -2,6 +2,8 @@
 # This file contains configuration flags to customize your site
 #
 
+category_list: [ nodejs, javascript, tip, diary, linux, chatbot, php ,publishing, jekyll, sql, error ]
+
 # Name of your site (displayed in the header)
 name: Yong's DevBlog!
 
