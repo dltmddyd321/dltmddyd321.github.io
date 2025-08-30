@@ -72,11 +72,11 @@
       </div>
       <div class="card">
         <div class="avatar-wrapper">
-          <img class="avatar" src="https://github.com/dltmddyd321/dltmddyd321.github.io/blob/main/myprofile.png?raw=true" alt="Profile photo of Seungyong Lee" onerror="this.src='https://via.placeholder.com/320x320.png?text=Profile'"/>
+          <img class="avatar" src="myprofile.png" alt="Portrait of Seungyong Lee" onerror="this.src='https://via.placeholder.com/320x320.png?text=Profile'"/>
         </div>
         <h3 style="margin:0 0 8px;">Quick facts</h3>
         <ul class="muted" style="margin:0; padding-left:18px;">
-          <li>총 경력: 5+년 (예시)</li>
+          <li>총 경력: <span id="tenure">계산 중…</span></li>
           <li>관심: 생산성/위치 기반 서비스</li>
           <li>현재: TimeBlocks Android 개발</li>
         </ul>
@@ -153,6 +153,19 @@
       });
     }, { rootMargin: '-50% 0px -45% 0px', threshold: 0 });
     sections.forEach(s=>io.observe(s));
+      // tenure calc (from 2021-12-06)
+    (function(){
+      const start = new Date(2021, 11, 6); // months: 0=Jan, so 11=Dec
+      const now = new Date();
+      let months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+      if (now.getDate() < start.getDate()) months -= 1; // not completed current month
+      if (months < 0) months = 0;
+      const years = Math.floor(months / 12);
+      const remMonths = months % 12;
+      const txt = `${years}년 ${remMonths}개월`;
+      const el = document.getElementById('tenure');
+      if (el) el.textContent = txt;
+    })();
   </script>
 </body>
 </html>
