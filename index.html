@@ -110,85 +110,46 @@
         </section>
 
       <section id="work">
+
+
+<section id="achievements">
 <h2 style="margin:0 0 10px;">Work & Achievements</h2>
-<div class="work-grid">
-<!-- 1. 레거시 코드 리팩토링 및 최신화 -->
-<article class="card work-block">
-<div class="work-kicker">
-<span class="kicker">Refactoring</span>
-<span class="kicker">Modernization</span>
-</div>
+<div class="timeline">
+<div class="tl-item">
 <h3>레거시 코드 리팩토링 및 최신화</h3>
 <ul class="muted">
-<li>사내 <b>Java → Kotlin</b> 리팩토링 및 코드베이스 개선</li>
-<li>Deprecated 라이브러리·클래스 최신화 및 대체 적용</li>
-<li><a href="https://yongdragon9819.tistory.com/entry/Android-Kotlin-%EC%B6%94%EC%83%81-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80-Sealed-Class%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-Api-%ED%98%B8%EC%B6%9C-%EB%A1%9C%EC%A7%81-%EC%A0%95%EB%A6%AC" target="_blank" rel="noopener">API 호출 중복 로직 개선(추상/Sealed 활용) ↗</a></li>
-<li>Retrofit 기반 <b>통신 레이어 개선</b> 및 <b>Token Refresh</b> 도입</li>
-<li>Coroutine 도입으로 AsyncTask 전면 대체</li>
-<li>검색 입력에 <b>RxJava Debounce</b> 적용해 과호출·지연 최소화</li>
+<li>자바 코드를 코틀린 코드로 리팩토링</li>
+<li>Deprecated 라이브러리 및 클래스 최신화</li>
+<li><a href="https://yongdragon9819.tistory.com/entry/Android-Kotlin-%EC%B6%94%EC%83%81-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80-Sealed-Class%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-Api-%ED%98%B8%EC%B6%9C-%EB%A1%9C%EC%A7%81-%EC%A0%95%EB%A6%AC" target="_blank">API 호출 중복 로직 개선</a></li>
+<li>Retrofit 기반 API 통신 로직 개선 및 Token Refresh 기능 추가</li>
+<li>Coroutine 도입으로 AsyncTask 대체</li>
+<li>RxJava Debounce 활용 검색 기능 개선</li>
 </ul>
-</article>
-
-
-<!-- 2. 데이터 렌더링 시간 단축 및 효과 개선 -->
-<article class="card work-block">
-<div class="work-kicker">
-<span class="kicker">Performance</span>
-<span class="kicker">UX</span>
 </div>
+<div class="tl-item">
 <h3>데이터 렌더링 시간 단축 및 효과 개선</h3>
 <ul class="muted">
-<li><b>DiffUtil</b> + 홀더 애니메이션으로 자연스러운 리스트 갱신</li>
-<li>대량 쿼리 누적 시 렌더링 지연 문제 최적화</li>
-<li>TimeBlocks 검색: <b>로컬 선제 검색</b> + <b>비동기 API</b> 설계</li>
-<li><a href="https://yongdragon9819.tistory.com/entry/Android-SQLite-%EC%88%9C%EC%B0%A8%EC%A0%81-DB-Query-%EC%9E%91%EC%97%85%EC%9D%98-%EC%9A%B0%EC%84%A0%EC%B2%98%EB%A6%AC-%EA%B0%9C%EC%84%A0" target="_blank" rel="noopener">다중 작업 후 렌더링 시간 약 4.5초 감축 ↗</a></li>
+<li>DiffUtil 및 홀더 애니메이션 활용 자연스러운 리스트 갱신</li>
+<li>대량 데이터 쿼리 지연 문제 개선</li>
+<li>TimeBlocks 일정 검색 시스템 개편</li>
+<li><a href="https://yongdragon9819.tistory.com/entry/Android-SQLite-%EC%88%9C%EC%B0%A8%EC%A0%81-DB-Query-%EC%9E%91%EC%97%85%EC%9D%98-%EC%9A%B0%EC%84%A0%EC%B2%98%EB%A6%AC-%EA%B0%9C%EC%84%A0" target="_blank">렌더링 시간 4.5초 단축</a></li>
 </ul>
-</article>
-
-
-<!-- 3. TimeBlocks 데이터 동기화 로직 개선 -->
-<article class="card work-block">
-<div class="work-kicker">
-<span class="kicker">Sync</span>
-<span class="kicker">Scalability</span>
 </div>
+<div class="tl-item">
 <h3>TimeBlocks 데이터 동기화 로직 개선</h3>
 <ul class="muted">
-<li>대량 데이터 동기화 알고리즘 개선으로 총 소요시간 <b>4초대</b> 달성 (≈ 5,300건 수신 기준)</li>
-<li>구간별 API 처리 및 선택적 호출로 효율 극대화</li>
-<li>대용량 요청 타임아웃 <b>0%</b> 달성</li>
-<li><a href="https://yongdragon9819.tistory.com/entry/AndroidWorkManager%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-15%EB%B6%84-%EB%A7%88%EB%8B%A4-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%9E%91%EC%97%85-%EC%88%98%ED%96%89%ED%95%98%EA%B8%B0" target="_blank" rel="noopener">WorkManager로 백그라운드 환경설정 동기화 ↗</a></li>
+<li>동기화 알고리즘 개선으로 시간 10초~타임아웃 → 4초대로 단축</li>
+<li>구간별 API 호출 처리 및 선택적 호출로 최적화</li>
+<li>대용량 데이터 요청 타임아웃 문제 0%로 감축</li>
+<li><a href="https://yongdragon9819.tistory.com/entry/AndroidWorkManager%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-15%EB%B6%84-%EB%A7%88%EB%8B%A4-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%9E%91%EC%97%85-%EC%88%98%ED%96%89%ED%95%98%EA%B8%B0" target="_blank">WorkManager 활용 백그라운드 동기화</a></li>
 </ul>
-</article>
-
-
-<!-- 4. TimeBlocks Design System 구축 -->
-<article class="card work-block">
-<div class="work-kicker">
-<span class="kicker">Design System</span>
-<span class="kicker">Compose</span>
 </div>
+<div class="tl-item">
 <h3>TimeBlocks Design System 구축</h3>
 <ul class="muted">
-<li>Color, Margin 등 Foundation 규격화로 디자이너/개발 협업 최적화</li>
-<li>Atomic Design 단계 기반 컴포넌트 정의</li>
-<li>Compose UI로 Tooltip, BlurView, TopBar 등 재사용 컴포넌트 구현</li>
-<li>레거시 커스텀뷰 개선으로 재사용성 극대화</li>
-</ul>
-</article>
-
-
-<!-- 5. 보안 강화 -->
-<article class="card work-block">
-<div class="work-kicker">
-<span class="kicker">Security</span>
-<span class="kicker">Privacy</span>
-</div>
-<h3>애플리케이션 및 서비스 이용 보안 강화</h3>
-<ul class="muted">
-<li><a href="https://yongdragon9819.tistory.com/entry/Android-Proguard-%ED%99%9C%EC%84%B1%ED%99%94-rules-%EA%B8%B0%EC%9E%85" target="_blank" rel="noopener">Proguard 난독화 적용 ↗</a></li>
-<li>외부 SDK API Key 노출 방지 처리</li>
-<li>앱 잠금 비밀번호 및 생체 인증 적용</li>
+<li>Color, Margin 등 Foundation 규격화</li>
+<li>Atomic Design 기반 컴포넌트 정의</li>
+<li>Compose UI 도입하여 Tooltip, BlurView, TopBar 구현</li>
 </section>
 
         <section id="experience">
