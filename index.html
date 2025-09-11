@@ -150,6 +150,28 @@
 <li>Color, Margin 등 Foundation 규격화</li>
 <li>Atomic Design 기반 컴포넌트 정의</li>
 <li>Compose UI 도입하여 Tooltip, BlurView, TopBar 구현</li>
+
+<h3>수익성을 높이기 위한 광고 도입 및 인앱 구매 개선</h3>
+<ul class="muted">
+<li>인앱 구매 및 구독, 환불 레거시 로직 리팩토링을 통해 수동 환불 처리 케이스 대폭 감소</li>
+<li>매번 최대의 수익성을 보장하는 외부 광고 SDK 모듈을 앱에 구성하는 작업 진행</li>
+<li>AdPopCorn 기반 Pangle, Unity, AppLovin 등의 인앱 광고 매체 도입</li>
+<li>TimeBlocks 자체 광고 또는 외부 광고가 유연하게 삽입 가능한 컴포넌트 View 구현</li>
+<li>스토어의 편의성, 아이템 접근성을 높이기 위한 검색 기능, 위시리스트 기능 구현</li>
+
+<h3>사용자의 신속한 접근을 위한 로직 개선</h3>
+<ul class="muted">
+<li>Splash 화면에서 5초 이상 잔류하는 구간에 대한 비동기 처리 개선</li>
+<li>데이터 업데이트 처리 작업에 대해 백그라운드 비동기 처리로 이전</li>
+<li>스토어 진입 시, 파트에 따라 api 분할하여 로딩 시간 단축</li>
+<li>신규 개발 List 화면에서 Compose + 페이징 처리 적용으로 로딩 시간 단축</li>
+
+<h3>자사 서비스 각종 기본 기능 개선 및 구현</h3>
+<ul class="muted">
+<li>사용자의 앱 잠금 비밀번호 기능 및 생체 인증 기능 적용 </li>
+<li>Recurrence Rule 반복 일정 개념을 통해 서비스의 중추인 일정 생성 기능 개선</li>
+<li>위젯에 배경 이미지 적용 및 위젯 데이터 동기화 개선</li>
+<li>MAU 확보를 위한 각종 Push Notification 추천 안내 로직 구성</li>
 </section>
 
         <section id="experience">
@@ -219,7 +241,7 @@
 
   <h2>Statement</h2>
 
-  <details class="accordion" open>
+  <details class="accordion">
     <summary>
       <span class="chevron"></span>
       탐구와 성취로 이룬 성능 개선 경험
@@ -239,7 +261,7 @@
   </details>
 
         <!-- 경험과 도전을 즐기는 개발자 -->
-<details class="accordion" open>
+<details class="accordion">
   <summary>
     <span class="chevron"></span>
     경험과 도전을 즐기는 개발자
