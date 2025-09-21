@@ -113,79 +113,227 @@
 
 
 <section id="achievements">
-<h2 style="margin:0 0 10px;">Work & Achievements · <span class="muted">TimeBlocks</span></h2>
-<div class="timeline">
-<div class="tl-item">
-<h3>레거시 코드 리팩토링 및 최신화</h3>
-<ul class="muted">
-<li>자바 코드를 코틀린 코드로 리팩토링</li>
-<li>Deprecated 라이브러리 및 클래스 최신화</li>
-<li><a href="https://yongdragon9819.tistory.com/entry/Android-Kotlin-%EC%B6%94%EC%83%81-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80-Sealed-Class%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-Api-%ED%98%B8%EC%B6%9C-%EB%A1%9C%EC%A7%81-%EC%A0%95%EB%A6%AC" target="_blank">API 호출 중복 로직 개선</a></li>
-<li>Retrofit 기반 API 통신 로직 개선 및 Token Refresh 기능 추가</li>
-<li>Coroutine 도입으로 AsyncTask 대체</li>
-<li>RxJava Debounce 활용 검색 기능 개선</li>
-</ul>
-</div>
-<div class="tl-item">
-<h3>데이터 렌더링 시간 단축 및 효과 개선</h3>
-<ul class="muted">
-<li>DiffUtil 및 홀더 애니메이션 활용 자연스러운 리스트 갱신</li>
-<li>대량 데이터 쿼리 지연 문제 개선</li>
-<li>TimeBlocks 일정 검색 시스템 개편</li>
-<li><a href="https://yongdragon9819.tistory.com/entry/Android-SQLite-%EC%88%9C%EC%B0%A8%EC%A0%81-DB-Query-%EC%9E%91%EC%97%85%EC%9D%98-%EC%9A%B0%EC%84%A0%EC%B2%98%EB%A6%AC-%EA%B0%9C%EC%84%A0" target="_blank">렌더링 시간 4.5초 단축</a></li>
-</ul>
-</div>
-<div class="tl-item">
-<h3>TimeBlocks 데이터 동기화 로직 개선</h3>
-<ul class="muted">
-<li>동기화 알고리즘 개선으로 시간 10초~타임아웃 → 4초대로 단축</li>
-<li>구간별 API 호출 처리 및 선택적 호출로 최적화</li>
-<li>대용량 데이터 요청 타임아웃 문제 0%로 감축</li>
-<li><a href="https://yongdragon9819.tistory.com/entry/AndroidWorkManager%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-15%EB%B6%84-%EB%A7%88%EB%8B%A4-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%9E%91%EC%97%85-%EC%88%98%ED%96%89%ED%95%98%EA%B8%B0" target="_blank">WorkManager 활용 백그라운드 동기화</a></li>
-</ul>
-</div>
-    
-<div class="tl-item">
-<h3>TimeBlocks Design System 구축</h3>
-<ul class="muted">
-<li>Color, Margin 등 Foundation 규격화</li>
-<li>Atomic Design 기반 컴포넌트 정의</li>
-<li>Compose UI 도입하여 Tooltip, BlurView, TopBar 구현</li>
-</ul>
-</div>
-    
-<div class="tl-item">
-<h3>수익성을 높이기 위한 광고 도입 및 인앱 구매 개선</h3>
-<ul class="muted">
-<li>인앱 구매 및 구독, 환불 레거시 로직 리팩토링을 통해 수동 환불 처리 케이스 대폭 감소</li>
-<li>매번 최대의 수익성을 보장하는 외부 광고 SDK 모듈을 앱에 구성하는 작업 진행</li>
-<li>AdPopCorn 기반 Pangle, Unity, AppLovin 등의 인앱 광고 매체 도입</li>
-<li>TimeBlocks 자체 광고 또는 외부 광고가 유연하게 삽입 가능한 컴포넌트 View 구현</li>
-<li>스토어의 편의성, 아이템 접근성을 높이기 위한 검색 기능, 위시리스트 기능 구현</li>
-</ul>
-</div>
-    
-<div class="tl-item">
-<h3>사용자의 신속한 접근을 위한 로직 개선</h3>
-<ul class="muted">
-<li>Splash 화면에서 5초 이상 잔류하는 구간에 대한 비동기 처리 개선</li>
-<li>데이터 업데이트 처리 작업에 대해 백그라운드 비동기 처리로 이전</li>
-<li>스토어 진입 시, 파트에 따라 api 분할하여 로딩 시간 단축</li>
-<li>신규 개발 List 화면에서 Compose + 페이징 처리 적용으로 로딩 시간 단축</li>
-</ul>
-</div>
-    
-<div class="tl-item">
-<h3>자사 서비스 각종 기본 기능 개선 및 구현</h3>
-<ul class="muted">
-<li>사용자의 앱 잠금 비밀번호 기능 및 생체 인증 기능 적용 </li>
-<li>Recurrence Rule 반복 일정 개념을 통해 서비스의 중추인 일정 생성 기능 개선</li>
-<li>위젯에 배경 이미지 적용 및 위젯 데이터 동기화 개선</li>
-<li>MAU 확보를 위한 각종 Push Notification 추천 안내 로직 구성</li>
-</ul>
-</div>
+  <style>
+    /* --- Achievements scoped styles --- */
+    #achievements { padding-top: 0; }
+    #achievements h2 { margin: 0 0 10px; }
+    #achievements .a-grid { display: grid; gap: 16px; }
+    #achievements .a-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    #achievements .a-title { margin: 0 0 8px; font-size: 18px; font-weight: 800; }
+    #achievements .a-rows { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    #achievements .a-col { border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: rgba(0,0,0,.02); }
+    [data-theme="light"] #achievements .a-col { background: rgba(0,0,0,0); }
+    #achievements .a-col h4{ margin: 0 0 8px; font-size:14px; color: var(--muted); letter-spacing:.2px }
+    #achievements ul{ margin:8px 0 0; padding-left:18px; color: var(--muted) }
+    #achievements li{ margin:6px 0 }
+    #achievements .badge { margin-left: 6px; }
+    @media (max-width: 820px){
+      #achievements .a-rows{ grid-template-columns: 1fr; }
+    }
+  </style>
 
-     <section id="statement">
+  <h2 style="margin:0 0 10px;">Work & Achievements · <span class="muted">TimeBlocks</span></h2>
+
+  <div class="a-grid">
+
+    <!-- 레거시 코드 리팩토링 및 최신화 -->
+    <article class="a-card">
+      <div class="a-title">레거시 코드 리팩토링 및 최신화 <span class="badge">Refactor</span></div>
+      <div class="a-rows">
+        <div class="a-col">
+          <h4>주요 업무</h4>
+          <ul>
+            <li>노후된 코드 개선을 위한 사내 자바 코드를 코틀린 코드로 리팩토링</li>
+            <li>Deprecated 라이브러리, 클래스에 대한 최신화 및 리팩토링 진행</li>
+            <li><a href="https://yongdragon9819.tistory.com/entry/Android-Kotlin-%EC%B6%94%EC%83%81-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80-Sealed-Class%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-Api-%ED%98%B8%EC%B6%9C-%EB%A1%9C%EC%A7%81-%EC%A0%95%EB%A6%AC" target="_blank" rel="noopener">각 API 호출 클래스마다 존재하는 동일한 중복 로직에 대한 개선 작업 진행</a></li>
+            <li>RxJava Debounce를 활용한 기존 검색 기능 개선</li>
+          </ul>
+        </div>
+        <div class="a-col">
+          <h4>주요 성과</h4>
+          <ul>
+            <li>API 호출 시, Coroutine + Retrofit을 도입하여 execute() 타입에 따라 상황별로 비동기 / 동기를 선택적으로 구성할 수 있도록 개선</li>
+            <li>Call Adapter를 통해 다양한 비동기 처리 방식 (Flow, suspend)을 지원할 수 있게되어 이후 아키텍처 구성에도 이바지</li>
+            <li>BaseAsyncTask abstract 클래스를 구성하여 api가 필요한 경우 해당 클래스를 implemented하여 빠르고 일관성 있게 데이터 통신 로직을 구축할 수 있게하여 api 연결 작업이 소요되는 자원 단축</li>
+            <li>기존에는 검색 버튼을 클릭해야만 나오던 검색 결과를 RxJava 기반의 라이브러리 EditText를 활용하여 사용자가 입력 시마다 빠르게 결과물에 접근할 수 있도록 개선</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- 데이터 렌더링 지연 해소 및 속도 향상 -->
+    <article class="a-card">
+      <div class="a-title">데이터 렌더링 지연 해소 및 속도 향상 <span class="badge">Performance</span></div>
+      <div class="a-rows">
+        <div class="a-col">
+          <h4>주요 업무</h4>
+          <ul>
+            <li>사용자로부터 데이터가 늦게 표시된다는 보고를 지속적으로 받아 대량 쿼리 및 비동기 시스템 개선</li>
+            <li>여러번의 대량 데이터 쿼리 작업 축적 시, 렌더링이 지연되는 문제 개선</li>
+            <li>TimeBlocks 일정 검색 시스템 개편 (Local DB 기준 선제적 검색 + 비동기로 검색 API 호출)</li>
+          </ul>
+        </div>
+        <div class="a-col">
+          <h4>주요 성과</h4>
+          <ul>
+            <li><a href="https://yongdragon9819.tistory.com/entry/Android-SQLite-%EC%88%9C%EC%B0%A8%EC%A0%81-DB-Query-%EC%9E%91%EC%97%85%EC%9D%98-%EC%9A%B0%EC%84%A0%EC%B2%98%EB%A6%AC-%EA%B0%9C%EC%84%A0" target="_blank" rel="noopener">데이터 렌더링 문제 개선으로 인해 다중 작업 요청 후 렌더링 시간 약 4.5초 감축</a></li>
+            <li>매번 페이징을 할 때마다 해당 구간에 필요한 데이터를 전부 로드할 때까지 대기하는 것이 아니라 사용자의 목적과는 거리가 멀어진 3페이지 이상을 초과하면 뒤로 밀린 작업은 대기 상태가 무효화되고 스택 형태처럼 맨 마지막에 들어온 작업이 항상 우선 수행되도록 구상</li>
+            <li>Coroutine의 Deferred를 통해 DB 쿼리 작업 결과를 수신하여 메모리에 올려놓고, Lazy Start를 통해 필요한 상태에서만 쿼리 작업을 수행하도록 하여 DB 작업 과부하 상태를 해소</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- TimeBlocks 데이터 동기화 로직 개선 -->
+    <article class="a-card">
+      <div class="a-title">TimeBlocks 데이터 동기화 로직 개선 <span class="badge">Sync</span></div>
+      <div class="a-rows">
+        <div class="a-col">
+          <h4>주요 업무</h4>
+          <ul>
+            <li>대량의 데이터를 서버로 한 번에 요청하여 타임아웃 또는 서버 오류가 발생하는 문제에 대한 대응 작업</li>
+            <li>이미 한번 수신받은 데이터를 불필요하게 재수신 받는 부분에 대한 최적화 진행</li>
+            <li>환경설정, 다꾸 아이템 설정 값에 대한 동기화 구성 진행</li>
+            <li><a href="https://yongdragon9819.tistory.com/entry/AndroidWorkManager%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-15%EB%B6%84-%EB%A7%88%EB%8B%A4-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%9E%91%EC%97%85-%EC%88%98%ED%96%89%ED%95%98%EA%B8%B0" target="_blank" rel="noopener">WorkManager 활용하여 백그라운드에서 사용자에게 신속한 환경 설정 동기화 지원</a></li>
+          </ul>
+        </div>
+        <div class="a-col">
+          <h4>주요 성과</h4>
+          <ul>
+            <li>데이터 등록 날짜 범위 + 페이징 처리가 추가된 신규 API를 통해 사용자의 데이터가 타임아웃 없이 모두 수신 받을 수 있도록 개선</li>
+            <li>동기화 진행 중에 모종의 이유로 프로세스가 종료될 시, 다음 동기화에서 유실된 데이터가 발생하지 않도록 DB 업데이트 순서 개선 및 롤백 처리 추가하여 유실 문제 해소</li>
+            <li>BaseSyncTask라는 동기화 관련 비즈니스 로직이 정리된 클래스를 구현하여 상황에 따른 다양한 동기화를 선택적으로 바로 구성할 수 있도록 지원</li>
+            <li>API 호출에 대한 구간별 처리를 진행함으로서 10초 ~ 타임아웃까지 걸리던 동기화 시간 4초대로 단축 <br/>(전체 약 5300개 데이터 수신 상황 기준)</li>
+            <li>대용량 데이터 요청 처리로 인한 Crashlytics에 보고되는 타임아웃 문제 0%로 완전 해소</li>
+            <li>이미 동기화된 특정 구간에 대해서 중복 데이터를 구성하지 않도록 Room DB 기반으로 구간 라벨과 updatedTime을 기반으로 한 기록형 시스템을 제안하여 구성하고, 해당 updatedTime을 기반으로 사용자가 이미 수신받은 데이터를 또 수신받지 않도록 하여 데이터 동기화 시간을 추가로 단축</li>
+            <li>해당 수신기록 DB를 매번 접근하지 말고 앱 refresh 시에 메모리에 올려두는 Manager를 구성하고 스레드 세이프한 컬렉션인 synchronizedList를 활용하여 동기화 직전, 직후에 접근에 용이하도록 설계</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- TimeBlocks Design System 구축 -->
+    <article class="a-card">
+      <div class="a-title">TimeBlocks Design System 구축 <span class="badge">Design System</span></div>
+      <div class="a-rows">
+        <div class="a-col">
+          <h4>주요 업무</h4>
+          <ul>
+            <li>Color, Margin 등 Foundation을 플랫폼에 상관없이 디자인 작업과 소통에 용이하도록 규격화</li>
+            <li>Atomic Design 단계별 디자인 시스템 회의에 따라 컴포넌트 정의</li>
+            <li>Compose UI 도입하여 Tooltip, BlurView, TopBar 등의 재활용 가능한 컴포넌트 구현</li>
+          </ul>
+        </div>
+        <div class="a-col">
+          <h4>주요 성과</h4>
+          <ul>
+            <li>레거시 배너 컴포넌트 개선하여 광고 배너, 아이템 소개 배너에 동일하게 재사용</li>
+            <li>ComposeUI를 도입하여 XML 코드의 추가를 줄이고, Preview를 통해 빠르게 해당 컴포넌트만 확인 가능하도록 구성</li>
+            <li>FAB 버튼, 프로필 이미지 Circle, Tooltip 같이 앱의 여러 부분에서 사용되는 요소를 하나의 컴포저블 컴포넌트로 정의하고 Figma의 디자인 가이드 단위와 통일하여 재사용성 및 가독성 향상</li>
+            <li>디자인 시스템의 단계적 개념을 이해하고, 명령형과 선언형 UI 방식 별로 어떻게 컴포넌트 및 하위 파라미터를 구성해야할지 고민하고, 디자이너와의 직접 소통을 통해 이해하기 쉬운 Class 또는 const value로 정의</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- 애플리케이션 및 서비스 이용 보안 강화 -->
+    <article class="a-card">
+      <div class="a-title">애플리케이션 및 서비스 이용 보안 강화 <span class="badge">Security</span></div>
+      <div class="a-rows">
+        <div class="a-col">
+          <h4>주요 업무</h4>
+          <ul>
+            <li><a href="https://yongdragon9819.tistory.com/entry/Android-Proguard-%ED%99%9C%EC%84%B1%ED%99%94-rules-%EA%B8%B0%EC%9E%85" target="_blank" rel="noopener">proguard 난독화 적용</a></li>
+            <li>앱 내부의 외부 SDK api key에 대한 노출 방지 처리 진행</li>
+            <li>사용자의 앱 잠금 비밀번호 기능 및 생체 인증 기능 적용</li>
+            <li>JWT Token Refresh 로직 구성</li>
+          </ul>
+        </div>
+        <div class="a-col">
+          <h4>주요 성과</h4>
+          <ul>
+            <li>난독화를 통해 외부에서 앱의 코드 분석을 방지하고, 코드 최적화로 APK / AAB 용량 감소</li>
+            <li>토큰의 만료 상태를 확인 가능한 TokenAuthenticator()를 구성하여 사용자 토큰 만료 시, 로그아웃 조치 또는 Token Refresh API 호출을 상황에 따라 능동적으로 처리</li>
+            <li>RetryInterceptor를 구현하여 토큰 갱신 시점의 기존 api를 갱신 성공 이후 다시 재호출 할 수 있도록 구성</li>
+            <li>AccessToken과 RefreshToken의 개념을 이해하고, 시스템 보안 측면에서 그 필요성을 확인</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- 수익성 향상: 광고 · 인앱 구매 -->
+    <article class="a-card">
+      <div class="a-title">수익성을 높이기 위한 광고 도입 및 인앱 구매 개선 <span class="badge">Monetization</span></div>
+      <div class="a-rows">
+        <div class="a-col">
+          <h4>주요 업무</h4>
+          <ul>
+            <li>인앱 구매 및 구독, 환불 레거시 로직 리팩토링을 통해 수동 환불 처리 케이스 대폭 감소</li>
+            <li>외부 광고 SDK 모듈을 앱에 추가 구성하는 작업 진행 (AdPopCorn, AdFit)</li>
+            <li>스토어의 편의성, 아이템 접근성을 높이기 위한 검색 기능, 위시리스트 기능 구현</li>
+          </ul>
+        </div>
+        <div class="a-col">
+          <h4>주요 성과</h4>
+          <ul>
+            <li>매번 수동적으로 CS를 통해 사용자 아이템 환불 처리를 해주던 과정이 해소</li>
+            <li>프리미엄 요금제에 대한 인상 및 플랫폼 간 구독 유지 시스템을 자동화로 개선</li>
+            <li>유니티, 구글, AppLovin, Pangle 등 각종 광고 SDK를 수익성이 높은 순으로 우선 제공하는 AdPopCorn의 도입으로 수익성 높은 광고 요청에 따라 광고 수익 증가</li>
+            <li>AdPopcorn사와 디버깅을 통해 광고 상태를 점검하고, 상단 띠 형태의 광고 배너와 일반 광고 배너 2가지 유형 타입을 정의하여 AdView라는 기본 View를 상속받아 다른 개발자들이 빠르게 앱에 광고 배너를 붙일 수 있도록 구성</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- 신규 위젯 추가 및 기존 위젯 유지보수 -->
+    <article class="a-card">
+      <div class="a-title">신규 위젯 추가 및 기존 위젯 유지보수 <span class="badge">Widgets</span></div>
+      <div class="a-rows">
+        <div class="a-col">
+          <h4>주요 업무</h4>
+          <ul>
+            <li>캘린더 서비스의 스타일에 적합한 일정 표시 및 등록 관련 각종 위젯 구현 및 유지보수</li>
+            <li>신규 위젯에 대하여 Compose 기반의 Glance 위젯을 구현</li>
+            <li>각 위젯의 사용자 테마 아이템 배경 이미지 리소스 적용</li>
+            <li>위젯에서의 데이터 동기화 로직 개선</li>
+          </ul>
+        </div>
+        <div class="a-col">
+          <h4>주요 성과</h4>
+          <ul>
+            <li>기존의 List 형식의 위젯에서는 LoadingView EmptyView가 구성되어 있지 않아서 사용자에게 빈화면이나 ‘로드 중’으로 표시되는 경우가 빈번했고, RemoteViewsService와 Factory 같은 보일러플레이트 코드가 계속 증가함에 따라 유지보수의 복잡성도 높았던 상황</li>
+            <li>이에 따라 기존 위젯을 제거하고, Glance 위젯으로 재구현 → 보일러 플레이트 코드가 감소하고, 선언형 UI 안에서 데이터 상태 분기만으로 간단하게 UI 구성 처리가 가능한 형태로 개선</li>
+            <li>actionRunCallback을 Class로 정의하며, 기존에 위젯 마다 산재되어 있던 인앱 이동, 동기화 동의 각종 액션을 정리함으로서 재사용 가능하도록 지원</li>
+            <li>테마 아이템 배경을 지원하면서 OOM이 지속적으로 발생하는 케이스가 있어 Bitmap sampleSize 배수 조정을 통해 사용자의 OOM을 방지하도록 개선 → Crashlytics에서 위젯 Bitmap으로 발생한 OOM 발생 보고 감소</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <!-- 자사 서비스 각종 기본 기능 개선 및 구현 (보너스, 하위 섹션 없음) -->
+    <article class="a-card">
+      <div class="a-title">자사 서비스 각종 기본 기능 개선 및 구현 <span class="badge">Etc.</span></div>
+      <ul>
+        <li>소셜 로그인 연동 관리, 이메일 및 비밀번호 변경 기능 구성</li>
+        <li>데이터 활용 개선을 위한 Realm, SQLite, Room DB 마이그레이션 작업 및 관리</li>
+        <li><a href="https://icalendar.org/iCalendar-RFC-5545/3-8-5-3-recurrence-rule.html" target="_blank" rel="noopener">Recurrence Rule</a> 반복 일정 개념을 통해 서비스의 중추인 반복 일정 생성에 대한 오류 개선</li>
+        <li>사용자에게 그날의 일정과 관련된 데이터들을 한번에 보여주는 홈탭 구현</li>
+        <li>MAU 확보를 위한 각종 Push Notification 추천 안내 로직 구성</li>
+        <li>위시리스트, 보유 아이템 목록 등 신규 리스트 화면에 Compose + 페이징 처리 적용</li>
+        <li>WebP를 사용하도록 Coil 라이브러리를 통해 View 구현하여 서비스에서 사용하는 리소스의 부담 감소</li>
+      </ul>
+    </article>
+
+  </div>
+</section>
+
+
+<section id="statement">
     
   <style>
     /* scoped to #statement only */
