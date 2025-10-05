@@ -503,6 +503,7 @@
         
             const sections = [...document.querySelectorAll('section[id]')];
             const navLinks = [...document.querySelectorAll('nav a')];
+            const headerHeight = 100; // 헤더 높이에 맞춰 조정하세요
             const io = new IntersectionObserver((entries)=>{
               entries.forEach(e=>{
                 if(e.isIntersecting){
@@ -510,7 +511,7 @@
                   navLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href') === '#'+id));
                 }
               });
-            }, { rootMargin: '-50% 0px -45% 0px', threshold: 0 });
+            }, { rootMargin: `-${headerHeight}px 0px -${window.innerHeight - headerHeight - 1}px 0px` });
             sections.forEach(s=>io.observe(s));
         
             // tenure calc (from 2021-12-06)
