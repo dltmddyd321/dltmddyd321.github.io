@@ -74,7 +74,7 @@
                 <p class="muted">누적 다운로드 300만 캘린더 서비스의 신규 기능/성능 개선 담당. Coroutine/Retrofit/Compose를 최초 도입하여 안정성과 생산성 향상에 기여. 성능 개선과 데이터 처리 최적화를 통해 사용자 경험 향상.</p>
                 <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
                     <span class="chip">Kotlin</span>
-                    <span class="chip">Jetpack Compose / Views</span>
+                    <span class="chip">Jetpack Compose</span>
                     <span class="chip">Coroutines · Flow</span>
                     <span class="chip">Hilt · DI</span>
                     <span class="chip">Room / Realm</span>
@@ -228,7 +228,7 @@
             <li>API 호출에 대한 구간별 처리를 진행함으로서 10초 ~ 타임아웃까지 걸리던 동기화 시간 4초대로 단축 <br/>(전체 약 5300개 데이터 수신 상황 기준)</li>
             <li>대용량 데이터 요청 처리로 인한 Crashlytics에 보고되는 타임아웃 문제 0%로 완전 해소</li>
             <li>이미 동기화된 특정 구간에 대해서 중복 데이터를 구성하지 않도록 Room DB 기반으로 구간 라벨과 updatedTime을 기반으로 한 기록형 시스템을 제안하여 구성하고, 해당 updatedTime을 기반으로 사용자가 이미 수신받은 데이터를 또 수신받지 않도록 하여 데이터 동기화 시간을 추가로 단축</li>
-            <li>해당 수신기록 DB를 매번 접근하지 말고 앱 refresh 시에 메모리에 올려두는 Manager를 구성하고 스레드 세이프한 컬렉션인 synchronizedList를 활용하여 동기화 직전, 직후에 접근에 용이하도록 설계</li>
+            <li>해당 수신기록 DB를 매번 접근하지 말고 앱 refresh 시에 메모리에 올려두는 Manager를 구성하여 여러 스레드에서 DB에 빠르게 반복 접근하는 상황 최소화</li>
           </ul>
         </div>
       </div>
