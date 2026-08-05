@@ -1,0 +1,150 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  statusLine?: string;
+}
+
+const {
+  title,
+  description = '이승용 · Android Engineer의 기술 블로그. 개발 인사이트, 구현 과정, 코딩 아카이브, AI 뉴스를 기록합니다.',
+  statusLine = '$ tail -f blog.md',
+} = Astro.props;
+
+const pageTitle = title ? `${title} · dltmddyd321` : 'dltmddyd321';
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="description" content={description} />
+    <title>{pageTitle}</title>
+    <link rel="alternate" type="application/rss+xml" title="dltmddyd321" href="/rss.xml" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site-header">
+        <a class="logo" href="/">
+          <span class="mono">~/</span>이승용<span class="mono">.log</span>
+        </a>
+        <nav>
+          <a href="/">Posts</a>
+          <a href="/category/insight">Insight</a>
+          <a href="/category/dev-log">Dev Log</a>
+          <a href="/category/archive">Archive</a>
+          <a href="/category/ai-news">AI News</a>
+          <a href="/about">About</a>
+        </nav>
+      </header>
+      <div class="status-line mono">
+        <span class="prompt">{statusLine}</span>
+        <span class="rss"><a href="/rss.xml">rss ↗</a></span>
+      </div>
+      <main>
+        <slot />
+      </main>
+      <footer class="mono">
+        <span>© {new Date().getFullYear()} 이승용</span>
+        <span class="muted">·</span>
+        <a href="https://github.com/dltmddyd321" target="_blank" rel="noopener">github ↗</a>
+      </footer>
+    </div>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 32px 0 20px;
+  }
+
+  .logo {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.01em;
+  }
+
+  .logo:hover {
+    text-decoration: none;
+    color: var(--accent);
+  }
+
+  .logo .mono {
+    color: var(--text-muted);
+    font-size: 0.85em;
+  }
+
+  nav {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  nav a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .status-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+    margin-bottom: 8px;
+  }
+
+  .status-line .prompt::before {
+    content: '';
+  }
+
+  .status-line a {
+    color: var(--text-muted);
+  }
+
+  .status-line a:hover {
+    color: var(--accent);
+  }
+
+  main {
+    min-height: 60vh;
+    padding: 40px 0;
+  }
+
+  footer {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    padding: 20px 0 48px;
+  }
+
+  @media (max-width: 720px) {
+    nav {
+      gap: 12px;
+    }
+  }
+</style>

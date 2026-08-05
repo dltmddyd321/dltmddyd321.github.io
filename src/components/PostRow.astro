@@ -1,0 +1,63 @@
+---
+import { categoryLabel } from '../lib/categories';
+
+interface Props {
+  slug: string;
+  title: string;
+  description: string;
+  pubDate: Date;
+  category: string;
+}
+
+const { slug, title, description, pubDate, category } = Astro.props;
+
+const dateStr = pubDate.toISOString().slice(0, 10);
+---
+
+<article class="row">
+  <div class="meta mono">
+    <span class="date">{dateStr}</span>
+    <a class="chip" href={`/category/${category}`}>{categoryLabel(category)}</a>
+  </div>
+  <a class="title" href={`/posts/${slug}`}>{title}</a>
+  <p class="desc muted">{description}</p>
+</article>
+
+<style>
+  .row {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .row:hover .title {
+    color: var(--accent);
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .title {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.35;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .desc {
+    margin: 0;
+    font-size: 0.98rem;
+  }
+</style>

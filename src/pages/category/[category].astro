@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostRow from '../../components/PostRow.astro';
+import { CATEGORIES, categoryLabel } from '../../lib/categories';
+
+export async function getStaticPaths() {
+  return Object.keys(CATEGORIES).map((category) => ({ params: { category } }));
+}
+
+const { category } = Astro.params;
+
+const allPosts = await getCollection(
+  'posts',
+  ({ data }) => !data.draft && data.category === category,
+);
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout
+  title={categoryLabel(category as string)}
+  statusLine={`$ grep -rl "category: ${category}" ./posts  →  ${posts.length}`}
+>
+  <section class="hero">
+    <p class="kicker mono">&gt; category</p>
+    <h1>{categoryLabel(category as string)}</h1>
+  </section>
+
+  <section class="list">
+    {posts.length === 0 && <p class="muted">이 카테고리에는 아직 글이 없습니다.</p>}
+    {posts.map((post) => (
+      <PostRow
+        slug={post.id}
+        title={post.data.title}
+        description={post.data.description}
+        pubDate={post.data.pubDate}
+        category={post.data.category}
+      />
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 8px 0 36px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+
+  .kicker {
+    color: var(--accent);
+    font-size: 0.8rem;
+    margin: 0 0 12px;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    margin: 0;
+  }
+</style>

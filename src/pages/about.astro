@@ -1,0 +1,555 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const achievements = [
+  {
+    title: '레거시 코드 리팩토링 및 최신화',
+    badge: 'Refactor',
+    tasks: [
+      '노후된 코드 개선을 위한 사내 자바 코드를 코틀린 코드로 리팩토링',
+      'Deprecated 라이브러리, 클래스에 대한 최신화 및 리팩토링 진행',
+      {
+        text: '각 API 호출 클래스마다 존재하는 동일한 중복 로직에 대한 개선 작업 진행',
+        href: 'https://yongdragon9819.tistory.com/entry/Android-Kotlin-%EC%B6%94%EC%83%81-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80-Sealed-Class%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-Api-%ED%98%B8%EC%B6%9C-%EB%A1%9C%EC%A7%81-%EC%A0%95%EB%A6%AC',
+      },
+      'RxJava Debounce를 활용한 기존 검색 기능 개선',
+    ],
+    results: [
+      'API 호출 시, Coroutine + Retrofit을 도입하여 execute() 타입에 따라 상황별로 비동기 / 동기를 선택적으로 구성할 수 있도록 개선',
+      'Call Adapter를 통해 다양한 비동기 처리 방식 (Flow, suspend)을 지원할 수 있게되어 이후 아키텍처 구성에도 이바지',
+      'BaseAsyncTask abstract 클래스를 구성하여 api가 필요한 경우 해당 클래스를 implemented하여 빠르고 일관성 있게 데이터 통신 로직을 구축할 수 있게하여 api 연결 작업이 소요되는 자원 단축',
+      '기존에는 검색 버튼을 클릭해야만 나오던 검색 결과를 RxJava 기반의 라이브러리 EditText를 활용하여 사용자가 입력 시마다 빠르게 결과물에 접근할 수 있도록 개선',
+    ],
+  },
+  {
+    title: '데이터 렌더링 지연 해소 및 속도 향상',
+    badge: 'Performance',
+    tasks: [
+      '사용자로부터 데이터가 늦게 표시된다는 보고를 지속적으로 받아 대량 쿼리 및 비동기 시스템 개선',
+      '여러번의 대량 데이터 쿼리 작업 축적 시, 렌더링이 지연되는 문제 개선',
+      'TimeBlocks 일정 검색 시스템 개편 (Local DB 기준 선제적 검색 + 비동기로 검색 API 호출)',
+    ],
+    results: [
+      {
+        text: '데이터 렌더링 문제 개선으로 인해 다중 작업 요청 후 렌더링 시간 약 4.5초 감축',
+        href: 'https://yongdragon9819.tistory.com/entry/Android-SQLite-%EC%88%9C%EC%B0%A8%EC%A0%81-DB-Query-%EC%9E%91%EC%97%85%EC%9D%98-%EC%9A%B0%EC%84%A0%EC%B2%98%EB%A6%AC-%EA%B0%9C%EC%84%A0',
+      },
+      '매번 페이징을 할 때마다 해당 구간에 필요한 데이터를 전부 로드할 때까지 대기하는 것이 아니라 사용자의 목적과는 거리가 멀어진 3페이지 이상을 초과하면 뒤로 밀린 작업은 대기 상태가 무효화되고 스택 형태처럼 맨 마지막에 들어온 작업이 항상 우선 수행되도록 구상',
+      'Coroutine의 Deferred를 통해 DB 쿼리 작업 결과를 수신하여 메모리에 올려놓고, Lazy Start를 통해 필요한 상태에서만 쿼리 작업을 수행하도록 하여 DB 작업 과부하 상태를 해소',
+    ],
+  },
+  {
+    title: 'TimeBlocks 데이터 동기화 로직 개선',
+    badge: 'Data Sync',
+    tasks: [
+      '대량의 데이터를 서버로 한 번에 요청하여 타임아웃 또는 서버 오류가 발생하는 문제에 대한 대응 작업',
+      '이미 한번 수신받은 데이터를 불필요하게 재수신 받는 부분에 대한 최적화 진행',
+      '환경설정, 다꾸 아이템 설정 값에 대한 동기화 구성 진행',
+      {
+        text: 'WorkManager 활용하여 백그라운드에서 사용자에게 신속한 환경 설정 동기화 지원',
+        href: 'https://yongdragon9819.tistory.com/entry/AndroidWorkManager%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-15%EB%B6%84-%EB%A7%88%EB%8B%A4-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%9E%91%EC%97%85-%EC%88%98%ED%96%89%ED%95%98%EA%B8%B0',
+      },
+    ],
+    results: [
+      '데이터 등록 날짜 범위 + 페이징 처리가 추가된 신규 API를 통해 사용자의 데이터가 타임아웃 없이 모두 수신 받을 수 있도록 개선',
+      '동기화 진행 중에 모종의 이유로 프로세스가 종료될 시, 다음 동기화에서 유실된 데이터가 발생하지 않도록 DB 업데이트 순서 개선 및 롤백 처리 추가하여 유실 문제 해소',
+      'BaseSyncTask라는 동기화 관련 비즈니스 로직이 정리된 클래스를 구현하여 상황에 따른 다양한 동기화를 선택적으로 바로 구성할 수 있도록 지원',
+      'API 호출에 대한 구간별 처리를 진행함으로서 10초 ~ 타임아웃까지 걸리던 동기화 시간 4초대로 단축 (전체 약 5300개 데이터 수신 상황 기준)',
+      '대용량 데이터 요청 처리로 인한 Crashlytics에 보고되는 타임아웃 문제 0%로 완전 해소',
+      '이미 동기화된 특정 구간에 대해서 중복 데이터를 구성하지 않도록 Room DB 기반으로 구간 라벨과 updatedTime을 기반으로 한 기록형 시스템을 제안하여 구성하고, 해당 updatedTime을 기반으로 사용자가 이미 수신받은 데이터를 또 수신받지 않도록 하여 데이터 동기화 시간을 추가로 단축',
+      '해당 수신기록 DB를 매번 접근하지 말고 앱 refresh 시에 메모리에 올려두는 Manager를 구성하여 여러 스레드에서 DB에 빠르게 반복 접근하는 상황 최소화',
+    ],
+  },
+  {
+    title: 'TimeBlocks Design System 구축',
+    badge: 'Design System',
+    tasks: [
+      'Color, Margin 등 Foundation을 플랫폼에 상관없이 디자인 작업과 소통에 용이하도록 규격화',
+      'Atomic Design 단계별 디자인 시스템 회의에 따라 컴포넌트 정의',
+      'Compose UI 도입하여 Tooltip, BlurView, TopBar 등의 재활용 가능한 컴포넌트 구현',
+    ],
+    results: [
+      '레거시 배너 컴포넌트 개선하여 광고 배너, 아이템 소개 배너에 동일하게 재사용',
+      'ComposeUI를 도입하여 XML 코드의 추가를 줄이고, Preview를 통해 빠르게 해당 컴포넌트만 확인 가능하도록 구성',
+      'FAB 버튼, 프로필 이미지 Circle, Tooltip 같이 앱의 여러 부분에서 사용되는 요소를 하나의 컴포저블 컴포넌트로 정의하고 Figma의 디자인 가이드 단위와 통일하여 재사용성 및 가독성 향상',
+      '디자인 시스템의 단계적 개념을 이해하고, 명령형과 선언형 UI 방식 별로 어떻게 컴포넌트 및 하위 파라미터를 구성해야할지 고민하고, 디자이너와의 직접 소통을 통해 이해하기 쉬운 Class 또는 const value로 정의',
+    ],
+  },
+  {
+    title: '애플리케이션 및 서비스 이용 보안 강화',
+    badge: 'Security',
+    tasks: [
+      {
+        text: 'proguard 난독화 적용',
+        href: 'https://yongdragon9819.tistory.com/entry/Android-Proguard-%ED%99%9C%EC%84%B1%ED%99%94-rules-%EA%B8%B0%EC%9E%85',
+      },
+      '앱 내부의 외부 SDK api key에 대한 노출 방지 처리 진행',
+      '사용자의 앱 잠금 비밀번호 기능 및 생체 인증 기능 적용',
+      'JWT Token Refresh 로직 구성',
+    ],
+    results: [
+      '난독화를 통해 외부에서 앱의 코드 분석을 방지하고, 코드 최적화로 APK / AAB 용량 감소',
+      '토큰의 만료 상태를 확인 가능한 TokenAuthenticator()를 구성하여 사용자 토큰 만료 시, 로그아웃 조치 또는 Token Refresh API 호출을 상황에 따라 능동적으로 처리',
+      'RetryInterceptor를 구현하여 토큰 갱신 시점의 기존 api를 갱신 성공 이후 다시 재호출 할 수 있도록 구성',
+      'AccessToken과 RefreshToken의 개념을 이해하고, 시스템 보안 측면에서 그 필요성을 확인',
+    ],
+  },
+  {
+    title: '수익성을 높이기 위한 광고 도입 및 인앱 구매 개선',
+    badge: 'Monetization',
+    tasks: [
+      '인앱 구매 및 구독, 환불 레거시 로직 리팩토링을 통해 수동 환불 처리 케이스 대폭 감소',
+      '외부 광고 SDK 모듈을 앱에 추가 구성하는 작업 진행 (AdPopCorn, AdFit)',
+      '스토어의 편의성, 아이템 접근성을 높이기 위한 검색 기능, 위시리스트 기능 구현',
+    ],
+    results: [
+      '매번 수동적으로 CS를 통해 사용자 아이템 환불 처리를 해주던 과정이 해소',
+      '프리미엄 요금제에 대한 인상 및 플랫폼 간 구독 유지 시스템을 자동화로 개선',
+      '유니티, 구글, AppLovin, Pangle 등 각종 광고 SDK를 수익성이 높은 순으로 우선 제공하는 AdPopCorn의 도입으로 수익성 높은 광고 요청에 따라 광고 수익 증가',
+      'AdPopcorn사와 디버깅을 통해 광고 상태를 점검하고, 상단 띠 형태의 광고 배너와 일반 광고 배너 2가지 유형 타입을 정의하여 AdView라는 기본 View를 상속받아 다른 개발자들이 빠르게 앱에 광고 배너를 붙일 수 있도록 구성',
+    ],
+  },
+  {
+    title: '신규 위젯 추가 및 기존 위젯 유지보수',
+    badge: 'Widgets',
+    tasks: [
+      '캘린더 서비스의 스타일에 적합한 일정 표시 및 등록 관련 각종 위젯 구현 및 유지보수',
+      '신규 위젯에 대하여 Compose 기반의 Glance 위젯을 구현',
+      '각 위젯의 사용자 테마 아이템 배경 이미지 리소스 적용',
+      '위젯에서의 데이터 동기화 로직 개선',
+    ],
+    results: [
+      '기존의 List 형식의 위젯에서는 LoadingView EmptyView가 구성되어 있지 않아서 사용자에게 빈화면이나 ‘로드 중’으로 표시되는 경우가 빈번했고, RemoteViewsService와 Factory 같은 보일러플레이트 코드가 계속 증가함에 따라 유지보수의 복잡성도 높았던 상황',
+      '이에 따라 기존 위젯을 제거하고, Glance 위젯으로 재구현 → 보일러 플레이트 코드가 감소하고, 선언형 UI 안에서 데이터 상태 분기만으로 간단하게 UI 구성 처리가 가능한 형태로 개선',
+      'actionRunCallback을 Class로 정의하며, 기존에 위젯 마다 산재되어 있던 인앱 이동, 동기화 동의 각종 액션을 정리함으로서 재사용 가능하도록 지원',
+      '테마 아이템 배경을 지원하면서 OOM이 지속적으로 발생하는 케이스가 있어 Bitmap sampleSize 배수 조정을 통해 사용자의 OOM을 방지하도록 개선 → Crashlytics에서 위젯 Bitmap으로 발생한 OOM 발생 보고 감소',
+    ],
+  },
+];
+
+const etcItems = [
+  '소셜 로그인 연동 관리, 이메일 및 비밀번호 변경 기능 구성',
+  '데이터 활용 개선을 위한 Realm, SQLite, Room DB 마이그레이션 작업 및 관리',
+  'MAU 확보를 위한 각종 Push Notification 추천 안내 로직 구성',
+  '위시리스트, 보유 아이템 목록 등 신규 리스트 화면에 Compose + 페이징 처리 적용',
+  'WebP를 사용하도록 Coil 라이브러리를 통해 View 구현하여 서비스에서 사용하는 리소스의 부담 감소',
+];
+
+const statements = [
+  {
+    title: '탐구와 성취로 이룬 성능 개선 경험',
+    paragraphs: [
+      '개발자로서의 가장 큰 동기 중 하나는 ‘탐구와 성취감’입니다. 실제로 문제를 깊이 파고들고, 해결 방안을 찾아내는 과정에서 저는 큰 보람을 느낍니다. 일정 동기화 로직을 개선한 이후, 간헐적으로 사용자로부터 안드로이드 앱 렌더링 속도가 느리다는 피드백을 받았고, 저 또한 캘린더를 월 단위로 넘길수록 점차 화면 전환이 지연되는 현상을 직접 확인할 수 있었습니다.',
+      '이 문제를 해결하기 위해 여러 차례 디버깅과 원인 분석을 반복한 결과, 기존 TimeBlocks 앱은 UI에서 DB 인스턴스에 직접 동기적으로 쿼리를 요청하는 구조였고, 이로 인해 다수의 요청이 동시에 발생하면 최신 작업의 처리가 지연되는 구조적 한계가 있음을 발견했습니다.',
+      '문제를 확인한 뒤, iOS 팀과도 현상을 공유했고, 양 플랫폼 모두에서 유사한 구조적 리스크가 있음을 인지하였습니다. 이에 저는 Repository 패턴을 응용한 Manager 구조를 도입하기로 제안했습니다. Manager 내부에서 스택 구조로 쿼리 요청 Task를 관리해, 불필요한 요청은 제거하고 최신 요청을 우선적으로 처리하도록 구현했습니다. 이 방식을 통해 렌더링 속도 저하 문제를 효과적으로 개선할 수 있었고, 동시에 UI 레벨에서 흩어져 있던 DB 요청 함수들을 Manager로 통합해 코드의 일관성과 유지보수성도 높일 수 있었습니다.',
+      '또한 이 패턴을 iOS 팀과 공유하여 iOS 앱에도 동일한 구조를 적용할 수 있었고, 플랫폼 간 기술 공유 및 확산이라는 긍정적인 효과도 경험했습니다. 현재는 Manager에서 처리되는 Task의 결과값을 캐시 데이터로 활용하여, 서비스 내 중복된 쿼리 작업을 줄이는 개선 작업을 추가로 진행 중입니다.',
+      '이 경험을 통해 저는 다시 한 번, 하나의 문제에도 다양한 접근 방식이 존재하며, 그 해답을 찾기 위한 탐구심이 얼마나 중요한지 실감했습니다. 작은 문제 하나라도 끝까지 파고들며 팀에 실질적인 기여를 할 수 있을 때, 개발자로서의 성취감과 책임감을 함께 느낄 수 있었습니다. 이러한 태도는 앞으로도 제가 개발자로 성장하는 데 중요한 기반이 될 것이라 믿습니다.',
+    ],
+  },
+  {
+    title: '경험과 도전을 즐기는 개발자',
+    paragraphs: [
+      '저는 어릴 때부터 도전하고 싶은 일이 생기면 결과와 상관없이 반드시 시도해보는 성격입니다. 그 과정에서 얻는 경험 자체에 가치를 느끼는 사람이며, 이러한 성향은 자연스럽게 개발자로 이어졌습니다. 스스로 문제를 해결하고 아이디어를 실현하는 개발자의 삶은 제게 큰 매력으로 다가왔습니다.',
+      '자격증을 준비하던 시절, 친구와 함께 필요한 학습 내용을 정리한 애플리케이션을 직접 제작해 서로에게 실질적인 도움을 줬고, 이후엔 간단한 게임을 개발해 주변에 선보이며 기술로 즐거움을 줄 수 있다는 성취감과 자신감을 얻었습니다. 개발은 단순한 결과물을 넘어 사람과 연결되고 가치를 만드는 일임을 체감했습니다.',
+      '현재는 TimeBlocks에서 안드로이드 개발자로 재직 중입니다. 주요 업무로는 레거시 코드의 문제점 개선, 반응 속도 향상, 캘린더의 부가 기능 구현 등을 맡고 있으며, 문제를 겪고 있는 사용자와의 직접적인 소통을 통해 사용자 시각에서의 서비스 개선 필요성을 찾는 능력을 키우고 있습니다. 이어서 사용자 피드백을 직접 반영하고 서비스를 발전시키는 과정에서 매일의 성과와 보람을 체감하고 있습니다.',
+      '업무 외에도 호기심이 생기면 사소한 기능이라도 직접 구현하고, 문서와 자료를 찾아 학습하며 자기주도적으로 역량을 넓혀가고 있습니다. 이렇게 쌓은 지식과 경험은 외부 활동과 발표를 통해 동료들과 공유하며 함께 성장하고자 합니다.',
+      '앞으로도 새로운 도전과 배움을 두려워하지 않고, 기술로 더 나은 경험을 제공하는 개발자가 되겠습니다.',
+    ],
+  },
+  {
+    title: '커뮤니케이션 기반의 문제 해결 경험',
+    paragraphs: [
+      '지속적인 소통과 협력이 팀 문화를 성장시키고, 서비스 품질에 직접적인 영향을 미친다고 믿습니다. 다양한 플랫폼과 직무가 협업하는 환경에서 커뮤니케이션 중심의 개발은 필수라고 생각합니다.',
+      '일정 관리 앱에서 발생한 데이터 동기화 문제 해결 프로젝트를 주도했습니다. 당시 앱은 로그인/재실행 시 전체 데이터를 일괄 수신하는 구조로, 데이터가 많으면 서버 타임아웃이 잦았고, 클라이언트 SQLite DB도 커져 쿼리·렌더링 지연이 발생했습니다.',
+      '이를 해결하기 위해 서버·클라이언트 팀과 동기화 개선 프로젝트를 진행했습니다. 백엔드와 협의하여 사용자에게 필요한 기간의 데이터만 선택적 요청하도록 변경해 동기화 속도와 타임아웃 빈도를 크게 개선했습니다.',
+      '클라이언트 측에서는 로컬 DB의 오래된 데이터 정리를 제안했습니다. 데이터 손실 우려를 줄이기 위해 디바이스 시간을 기준으로 특정 시점 이후 데이터는 예외 처리하고, 더 나아가 업데이트 시간까지 고려하는 삭제 조건을 도입해 사용자 경험을 해치지 않으면서 효율적으로 경량화했습니다.',
+      '이 프로젝트는 기술적 성과를 넘어, 팀 간 적극적인 커뮤니케이션으로 문제를 정의하고 해결안을 도출해낸 경험이었습니다. 수개월의 논의 끝에 더 나은 방향을 함께 찾았고, 이를 통해 협업의 가치를 다시 확인할 수 있었습니다.',
+    ],
+  },
+];
+---
+
+<BaseLayout title="About" statusLine="$ cat ./about/profile.md">
+  <section class="hero">
+    <div class="hero-text">
+      <p class="kicker mono">&gt; whoami</p>
+      <h1>새로운 도전과 문제 해결을 성장의 연료로 삼는 개발자, 이승용입니다.</h1>
+      <p class="muted">
+        누적 다운로드 300만 캘린더 서비스의 신규 기능/성능 개선 담당. Coroutine/Retrofit/Compose를
+        최초 도입하여 안정성과 생산성 향상에 기여. 성능 개선과 데이터 처리 최적화를 통해 사용자
+        경험 향상.
+      </p>
+      <div class="chips">
+        <span class="chip">Kotlin</span>
+        <span class="chip">Jetpack Compose</span>
+        <span class="chip">Coroutines · Flow</span>
+        <span class="chip">Hilt · DI</span>
+        <span class="chip">Room / Realm</span>
+        <span class="chip">WorkManager</span>
+      </div>
+    </div>
+    <div class="card facts">
+      <img class="avatar" src="/myprofile.png" alt="이승용 프로필 사진" />
+      <h3 class="mono">quick facts</h3>
+      <ul class="muted">
+        <li>총 경력: <span id="tenure">계산 중…</span></li>
+        <li>현재: TimeBlocks Android 개발</li>
+        <li><a href="https://github.com/dltmddyd321" target="_blank" rel="noopener">GitHub ↗</a></li>
+        <li><a href="https://yongdragon9819.tistory.com" target="_blank" rel="noopener">Blog ↗</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="cards">
+      <article class="card">
+        <h3>Jibro</h3>
+        <p class="muted">
+          인근 지하철역의 도착 정보를 확인하고 막차, 목적지 도착 알림을 받을 수 있는 서비스입니다.
+        </p>
+        <p class="link-row">
+          <a href="https://github.com/dltmddyd321/Jibro" target="_blank" rel="noopener">GitHub ↗</a>
+        </p>
+      </article>
+      <article class="card">
+        <h3>MindBank</h3>
+        <p class="muted">
+          링크 및 간단한 메모와 할일을 단순하고 빠르게 저장 가능한 서비스입니다.
+        </p>
+        <p class="link-row">
+          <a href="https://github.com/dltmddyd321/mind-bank" target="_blank" rel="noopener">GitHub ↗</a>
+        </p>
+      </article>
+      <article class="card">
+        <h3>Certification helper</h3>
+        <p class="muted">
+          정보처리산업기사 자격 취득을 위한 테스트 문제를 제공하는 간단한 서비스입니다.
+        </p>
+        <p class="link-row">
+          <a
+            href="https://like-alligator-6e1.notion.site/Certification-helper-08a5b0981fee416481f380ec1f10cef5"
+            target="_blank"
+            rel="noopener">Notion ↗</a
+          >
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section id="achievements">
+    <h2>Work & Achievements <span class="muted mono">· TimeBlocks [2021.12 ~ ing]</span></h2>
+    <div class="a-grid">
+      {achievements.map((item) => (
+        <article class="a-card">
+          <div class="a-title">
+            {item.title} <span class="chip">{item.badge}</span>
+          </div>
+          <div class="a-rows">
+            <div class="a-col">
+              <h4 class="mono">주요 업무</h4>
+              <ul>
+                {item.tasks.map((task) => (
+                  <li>
+                    {typeof task === 'string' ? (
+                      task
+                    ) : (
+                      <a href={task.href} target="_blank" rel="noopener">{task.text}</a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="a-col">
+              <h4 class="mono">주요 성과</h4>
+              <ul>
+                {item.results.map((result) => (
+                  <li>
+                    {typeof result === 'string' ? (
+                      result
+                    ) : (
+                      <a href={result.href} target="_blank" rel="noopener">{result.text}</a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+
+      <article class="a-card">
+        <div class="a-title">
+          자사 서비스 각종 기본 기능 개선 및 구현 <span class="chip">Etc</span>
+        </div>
+        <ul class="etc-list">
+          {etcItems.map((text) => <li>{text}</li>)}
+          <li>
+            <a href="https://icalendar.org/iCalendar-RFC-5545/3-8-5-3-recurrence-rule.html" target="_blank" rel="noopener"
+              >Recurrence Rule</a
+            > 반복 일정 개념을 통해 서비스의 중추인 반복 일정 생성에 대한 오류 개선
+          </li>
+          <li>사용자에게 그날의 일정과 관련된 데이터들을 한번에 보여주는 홈탭 구현</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section id="statement">
+    <h2>Statement</h2>
+    {statements.map((s) => (
+      <details class="accordion">
+        <summary>
+          <span class="chevron"></span>
+          {s.title}
+        </summary>
+        <div class="content">
+          {s.paragraphs.map((p) => <p>{p}</p>)}
+        </div>
+      </details>
+    ))}
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+    <ul class="muted plain-list">
+      <li>신구대학교 IT 소프트웨어 학과 2022 졸업</li>
+      <li>정보처리산업기사 - 2021.06 취득</li>
+      <li>SQLD - 2021.10 취득</li>
+      <li>
+        <a
+          href="https://yongdragon9819.tistory.com/entry/Android-%EC%82%AC%EB%82%B4-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EB%B0%8F-%EC%BB%B4%ED%8F%AC%EC%A6%88-%EA%B8%B0%EB%B3%B8-%EB%8F%84%EC%9E%85%EC%97%90-%EA%B4%80%ED%95%9C-%EB%B0%9C%ED%91%9C-%EC%9E%90%EB%A3%8C"
+          target="_blank"
+          rel="noopener">코드살롱 커뮤니티 안드로이드 디자인 시스템 개선 발표 ↗</a
+        >
+      </li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p class="muted">
+      전화: 010-5385-1748<br />
+      이메일: <a href="mailto:dltmddyd321@naver.com">dltmddyd321@naver.com</a>
+    </p>
+  </section>
+</BaseLayout>
+
+<script>
+  const tenureEl = document.getElementById('tenure');
+  if (tenureEl) {
+    const start = new Date(2021, 11, 6);
+    const now = new Date();
+    let months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+    if (now.getDate() < start.getDate()) months -= 1;
+    if (months < 0) months = 0;
+    const years = Math.floor(months / 12);
+    const remMonths = months % 12;
+    tenureEl.textContent = `${years}년 ${remMonths}개월`;
+  }
+</script>
+
+<style>
+  h2 {
+    font-size: 1.5rem;
+    margin: 0 0 18px;
+  }
+
+  section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section:last-child {
+    border-bottom: none;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .kicker {
+    color: var(--accent);
+    font-size: 0.8rem;
+    margin: 0 0 12px;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.6rem, 3.6vw, 2.2rem);
+    line-height: 1.4;
+    margin: 0 0 14px;
+  }
+
+  .chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .facts h3 {
+    margin: 0 0 10px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .facts ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  .facts li {
+    margin: 6px 0;
+  }
+
+  .avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border);
+    margin-bottom: 14px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .cards h3 {
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+  }
+
+  .link-row {
+    margin: 10px 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+  }
+
+  .a-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .a-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+
+  .a-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .a-rows {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .a-col h4 {
+    margin: 0 0 8px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .a-col ul,
+  .etc-list {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--text-muted);
+    font-size: 0.92rem;
+  }
+
+  .a-col li,
+  .etc-list li {
+    margin: 6px 0;
+  }
+
+  .accordion {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin: 12px 0;
+    overflow: clip;
+  }
+
+  .accordion summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+  }
+
+  .accordion summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .chevron {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 14px;
+    border: solid var(--accent);
+    border-width: 0 2px 2px 0;
+    transform: rotate(-45deg);
+    transition: transform 0.18s ease;
+  }
+
+  .accordion[open] .chevron {
+    transform: rotate(45deg);
+  }
+
+  .accordion .content {
+    border-top: 1px solid var(--border);
+    padding: 4px 18px 20px;
+  }
+
+  .accordion .content p {
+    margin: 12px 0;
+    color: var(--text-muted);
+  }
+
+  .plain-list {
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  .plain-list li {
+    margin: 8px 0;
+  }
+
+  @media (max-width: 720px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+
+    .a-rows {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
