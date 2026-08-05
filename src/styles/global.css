@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/PretendardVariable.woff2') format('woff2-variations');
+}
+
 :root {
   --bg: #0b0c0a;
   --surface: #131410;
@@ -9,7 +17,7 @@
   --accent-soft: rgba(224, 164, 88, 0.14);
   --accent-line: rgba(224, 164, 88, 0.4);
 
-  --font-serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Noto Serif KR', serif;
+  --font-sans: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
 
   --max-width: 960px;
@@ -28,7 +36,8 @@ body {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
+  font-weight: 400;
   line-height: 1.7;
   background-image:
     linear-gradient(var(--border) 1px, transparent 1px),
@@ -46,6 +55,14 @@ body::before {
   background: radial-gradient(ellipse at top, rgba(11, 12, 10, 0) 0%, var(--bg) 70%);
   pointer-events: none;
   z-index: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  letter-spacing: -0.01em;
 }
 
 a {
