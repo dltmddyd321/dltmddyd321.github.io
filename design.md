@@ -77,7 +77,17 @@
 - `BaseLayout` — 헤더(로고/nav), 터미널풍 status line, footer
 - `PostLayout` — 포스트 헤더 + 사이드바(날짜/카테고리/태그) + 본문 2컬럼 그리드
 - `PostRow` — 목록/카테고리 페이지 공용 글 목록 행
-- 페이지: `/`(목록), `/posts/[slug]`, `/category/[category]`, `/about`, `/rss.xml`
+- 페이지: `/`(목록), `/posts/[slug]`, `/category/[category]`, `/about`, `/tistory`, `/rss.xml`
+
+### `/tistory` — 예전 글 아카이브
+
+이 블로그 이전에 [Tistory(yongdragon9819.tistory.com)](https://yongdragon9819.tistory.com)에 쓴
+글 302편의 색인 페이지. 전체 마이그레이션 대신, 제목·날짜·원문 링크만 정적 데이터
+(`src/data/tistory-archive.json`)로 만들어 연도별로 그룹핑해 보여주고 클릭 시 Tistory 원문으로
+이동한다. 데이터는 Tistory `/category?page=N` 목록 페이지의 JSON-LD(`ListItem`) 구조화 데이터를
+빌드 시점에 한 번 수집해 만든 정적 스냅샷이며, 이후 새 글이 이 블로그로 이어지므로 주기적 재수집은
+필요 없다. 302개 목록은 `$ grep -i` 스타일의 클라이언트 사이드 텍스트 검색(바닐라 JS)으로
+탐색성을 보완했다.
 
 ## Responsive rules
 

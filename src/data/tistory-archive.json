@@ -1,0 +1,1512 @@
+[
+  {
+    "title": "Android Google InApp Update 기능 구현",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Google-InApp-Update-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84",
+    "date": "2026.08.04"
+  },
+  {
+    "title": "구글 인앱 결제 모듈 업그레이드 작업Google Play Billing Library 7.1.1 → 8.3.0 마이그레이션 후기",
+    "url": "https://yongdragon9819.tistory.com/entry/%EA%B5%AC%EA%B8%80-%EC%9D%B8%EC%95%B1-%EA%B2%B0%EC%A0%9C-%EB%AA%A8%EB%93%88-%EC%97%85%EA%B7%B8%EB%A0%88%EC%9D%B4%EB%93%9C-%EC%9E%91%EC%97%85Google-Play-Billing-Library-711-%E2%86%92-830-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98-%ED%9B%84%EA%B8%B0",
+    "date": "2026.05.12"
+  },
+  {
+    "title": "Android 개발자 기술 면접 대비 질문 몇 가지 정리.. - DB",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B8%B0%EC%88%A0-%EB%A9%B4%EC%A0%91-%EB%8C%80%EB%B9%84-%EC%A7%88%EB%AC%B8-%EB%AA%87-%EA%B0%80%EC%A7%80-%EC%A0%95%EB%A6%AC-DB",
+    "date": "2026.05.11"
+  },
+  {
+    "title": "잘못 등록된 Git Tag 제거하기",
+    "url": "https://yongdragon9819.tistory.com/entry/%EC%9E%98%EB%AA%BB-%EB%93%B1%EB%A1%9D%EB%90%9C-Git-Tag-%EC%A0%9C%EA%B1%B0%ED%95%98%EA%B8%B0",
+    "date": "2026.04.02"
+  },
+  {
+    "title": "Antigravity를 활용한 Naver Mail 인사이트 대시보드 시스템 구축",
+    "url": "https://yongdragon9819.tistory.com/entry/Antigravity%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-Naver-Mail-%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8-%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EA%B5%AC%EC%B6%95",
+    "date": "2026.02.24"
+  },
+  {
+    "title": "Antigravity로 깃허브 연동",
+    "url": "https://yongdragon9819.tistory.com/entry/Antigravity%EB%A1%9C-%EA%B9%83%ED%97%88%EB%B8%8C-%EC%97%B0%EB%8F%99",
+    "date": "2026.02.12"
+  },
+  {
+    "title": "Firebase 디버깅 이벤트 수신 받기",
+    "url": "https://yongdragon9819.tistory.com/entry/Firebase-%EB%94%94%EB%B2%84%EA%B9%85-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EC%88%98%EC%8B%A0-%EB%B0%9B%EA%B8%B0",
+    "date": "2026.02.10"
+  },
+  {
+    "title": "Google AdMob 배너 광고 삽입",
+    "url": "https://yongdragon9819.tistory.com/entry/Google-AdMob-%EB%B0%B0%EB%84%88-%EA%B4%91%EA%B3%A0-%EC%82%BD%EC%9E%85",
+    "date": "2026.02.09"
+  },
+  {
+    "title": "2026.01 개발 기록 with AI - Activity.recreate() 후, remember 변수 초기화 방지 & 사용 중인 기기에서 작동하는 않는 앱입니다 대응",
+    "url": "https://yongdragon9819.tistory.com/entry/1%EC%9B%94-%EA%B0%9C%EB%B0%9C-%EA%B8%B0%EB%A1%9D-with-AI-Activityrecreate-%ED%9B%84-remember-%EB%B3%80%EC%88%98-%EC%B4%88%EA%B8%B0%ED%99%94-%EB%B0%A9%EC%A7%80-%EC%82%AC%EC%9A%A9-%EC%A4%91%EC%9D%B8-%EA%B8%B0%EA%B8%B0%EC%97%90%EC%84%9C-%EC%9E%91%EB%8F%99%ED%95%98%EB%8A%94-%EC%95%8A%EB%8A%94-%EC%95%B1%EC%9E%85%EB%8B%88%EB%8B%A4-%EB%8C%80%EC%9D%91",
+    "date": "2026.01.14"
+  },
+  {
+    "title": "백준 1149번 RGB 거리 - 다이나믹 프로그래밍",
+    "url": "https://yongdragon9819.tistory.com/entry/%EB%B0%B1%EC%A4%80-1149%EB%B2%88-RGB-%EA%B1%B0%EB%A6%AC-%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D",
+    "date": "2025.12.08"
+  },
+  {
+    "title": "[Android] edge to edge 적용 시, System Bar 색상 반전 처리",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-edge-to-edge-%EC%A0%81%EC%9A%A9-%EC%8B%9C-System-Bar-%EC%83%89%EC%83%81-%EB%B0%98%EC%A0%84-%EC%B2%98%EB%A6%AC",
+    "date": "2025.11.30"
+  },
+  {
+    "title": "Compose Stability에 관하여",
+    "url": "https://yongdragon9819.tistory.com/entry/Compose-Stability%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC",
+    "date": "2025.11.03"
+  },
+  {
+    "title": "Fatal Exception: java.lang.IllegalStateException: Object is no longer managed by Realm. Has it been deleted? at io.realm.internal.InvalidRow.getStubException(InvalidRow.java:279) 대응",
+    "url": "https://yongdragon9819.tistory.com/entry/Fatal-Exception-javalangIllegalStateException-Object-is-no-longer-managed-by-Realm-Has-it-been-deleted-at-iorealminternalInvalidRowgetStubExceptionInvalidRowjava279-%EB%8C%80%EC%9D%91",
+    "date": "2025.11.03"
+  },
+  {
+    "title": "[Android] SHA256 앱 실행 시, 표시하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-SHA256-%EC%95%B1-%EC%8B%A4%ED%96%89-%EC%8B%9C-%ED%91%9C%EC%8B%9C%ED%95%98%EA%B8%B0",
+    "date": "2025.10.24"
+  },
+  {
+    "title": "[Android Zendesk] 앱에서 Locale 수정하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Zendesk-%EC%95%B1%EC%97%90%EC%84%9C-Locale-%EC%88%98%EC%A0%95%ED%95%98%EA%B8%B0",
+    "date": "2025.10.23"
+  },
+  {
+    "title": "Flow 동작과 개념에 관해 간단 메모...",
+    "url": "https://yongdragon9819.tistory.com/entry/Flow-%EB%8F%99%EC%9E%91%EA%B3%BC-%EA%B0%9C%EB%85%90%EC%97%90-%EA%B4%80%ED%95%B4-%EA%B0%84%EB%8B%A8-%EB%A9%94%EB%AA%A8",
+    "date": "2025.10.22"
+  },
+  {
+    "title": "Compose 그라데이션 효과 종류별 정리",
+    "url": "https://yongdragon9819.tistory.com/entry/Compose-%EA%B7%B8%EB%9D%BC%EB%8D%B0%EC%9D%B4%EC%85%98-%ED%9A%A8%EA%B3%BC-%EC%A2%85%EB%A5%98%EB%B3%84-%EC%A0%95%EB%A6%AC",
+    "date": "2025.10.09"
+  },
+  {
+    "title": "[Android] Coil과 Glide 비교",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Coil%EA%B3%BC-Glide-%EB%B9%84%EA%B5%90",
+    "date": "2025.10.07"
+  },
+  {
+    "title": "Compose Debounce 검색 기능 구현하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Compose-Debounce-%EA%B2%80%EC%83%89-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0",
+    "date": "2025.10.06"
+  },
+  {
+    "title": "[Android] API MockWebServer 테스트",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-API-MockWebServer-%ED%85%8C%EC%8A%A4%ED%8A%B8",
+    "date": "2025.10.03"
+  },
+  {
+    "title": "[Android] 도메인 레이어란? 도메인 로직?",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EB%8F%84%EB%A9%94%EC%9D%B8-%EB%A0%88%EC%9D%B4%EC%96%B4%EB%9E%80-%EB%8F%84%EB%A9%94%EC%9D%B8-%EB%A1%9C%EC%A7%81",
+    "date": "2025.10.01"
+  },
+  {
+    "title": "[Compose] Scaffold에 관하여",
+    "url": "https://yongdragon9819.tistory.com/entry/Compose-Scaffold%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC",
+    "date": "2025.10.01"
+  },
+  {
+    "title": "[Android] Custom Tabs로 파이어폭스 기반 앱링크가 동작하지 않는 문제 대응",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Custom-Tabs%EB%A1%9C-%ED%8C%8C%EC%9D%B4%EC%96%B4%ED%8F%AD%EC%8A%A4-%EA%B8%B0%EB%B0%98-%EC%95%B1%EB%A7%81%ED%81%AC%EA%B0%80-%EB%8F%99%EC%9E%91%ED%95%98%EC%A7%80-%EC%95%8A%EB%8A%94-%EB%AC%B8%EC%A0%9C-%EB%8C%80%EC%9D%91",
+    "date": "2025.10.01"
+  },
+  {
+    "title": "[Android] setBottomSheetCallback deprecated 대응",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-setBottomSheetCallback-deprecated-%EB%8C%80%EC%9D%91",
+    "date": "2025.09.30"
+  },
+  {
+    "title": "Android Background Task 처리 변천사와 WorkManager",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Background-Task-%EC%B2%98%EB%A6%AC-%EB%B3%80%EC%B2%9C%EC%82%AC%EC%99%80-WorkManager",
+    "date": "2025.09.29"
+  },
+  {
+    "title": "[Android] 클린 아키텍처 DataSource 구성하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%ED%81%B4%EB%A6%B0-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98-DataSource-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0",
+    "date": "2025.09.28"
+  },
+  {
+    "title": "Hilt DI + WorkManager 활용하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Hilt-DI-WorkManager-%ED%99%9C%EC%9A%A9%ED%95%98%EA%B8%B0",
+    "date": "2025.09.28"
+  },
+  {
+    "title": "[Kotlin] 밥 먹듯이 사용하는 Scope Function 간단 정리",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%EB%B0%A5-%EB%A8%B9%EB%93%AF%EC%9D%B4-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-Scope-Function-%EA%B0%84%EB%8B%A8-%EC%A0%95%EB%A6%AC",
+    "date": "2025.09.26"
+  },
+  {
+    "title": "[Android / Compose] 특정 기능 소개 Modal 구현하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose-%ED%8A%B9%EC%A0%95-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C-Modal-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0",
+    "date": "2025.09.25"
+  },
+  {
+    "title": "[Android] ViewModel & ViewModelFactory에 관하여",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-ViewModel-ViewModelFactory%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC",
+    "date": "2025.09.25"
+  },
+  {
+    "title": "Reflection이란?",
+    "url": "https://yongdragon9819.tistory.com/entry/Reflection%EC%9D%B4%EB%9E%80",
+    "date": "2025.09.24"
+  },
+  {
+    "title": "[Android] Event Bus 라이브러리 활용하여 구독자에게 트리거",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Event-Bus-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-%EA%B5%AC%EB%8F%85%EC%9E%90%EC%97%90%EA%B2%8C-%ED%8A%B8%EB%A6%AC%EA%B1%B0",
+    "date": "2025.09.24"
+  },
+  {
+    "title": "[Android] 5초 마다 특정 이벤트를 전달하는 Polling 구현 (feat. Event Bus)",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-5%EC%B4%88-%EB%A7%88%EB%8B%A4-%ED%8A%B9%EC%A0%95-%EC%9D%B4%EB%B2%A4%ED%8A%B8%EB%A5%BC-%EC%A0%84%EB%8B%AC%ED%95%98%EB%8A%94-Polling-%EA%B5%AC%ED%98%84-feat-Event-Bus",
+    "date": "2025.09.24"
+  },
+  {
+    "title": "[Android] SeekBar 기본 활용법",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-SeekBar-%EA%B8%B0%EB%B3%B8-%ED%99%9C%EC%9A%A9%EB%B2%95",
+    "date": "2025.09.22"
+  },
+  {
+    "title": "SOLID 원칙",
+    "url": "https://yongdragon9819.tistory.com/entry/SOLID-%EC%9B%90%EC%B9%99",
+    "date": "2025.09.21"
+  },
+  {
+    "title": "안드로이드 스튜디오 프로젝트 폴더 구조 트리 형태로 출력",
+    "url": "https://yongdragon9819.tistory.com/entry/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%8F%B4%EB%8D%94-%EA%B5%AC%EC%A1%B0-%ED%8A%B8%EB%A6%AC-%ED%98%95%ED%83%9C%EB%A1%9C-%EC%B6%9C%EB%A0%A5",
+    "date": "2025.09.19"
+  },
+  {
+    "title": "Android 앱 제출 시, Location 권한에 대한 사유 제출",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EC%95%B1-%EC%A0%9C%EC%B6%9C-%EC%8B%9C-Location-%EA%B6%8C%ED%95%9C%EC%97%90-%EB%8C%80%ED%95%9C-%EC%82%AC%EC%9C%A0-%EC%A0%9C%EC%B6%9C",
+    "date": "2025.09.19"
+  },
+  {
+    "title": "부모 - 자식 DB 객체 관계에서 자식 인스턴스를 먼저 저장하고 처리했던 작업에 관하여.. (feat. SQLite, 트랜잭션)",
+    "url": "https://yongdragon9819.tistory.com/entry/%EB%B6%80%EB%AA%A8-%EC%9E%90%EC%8B%9D-DB-%EA%B0%9D%EC%B2%B4-%EA%B4%80%EA%B3%84%EC%97%90%EC%84%9C-%EC%9E%90%EC%8B%9D-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4%EB%A5%BC-%EB%A8%BC%EC%A0%80-%EC%A0%80%EC%9E%A5%ED%95%98%EA%B3%A0-%EC%B2%98%EB%A6%AC%ED%96%88%EB%8D%98-%EC%9E%91%EC%97%85%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC-feat-SQLite-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98",
+    "date": "2025.09.18"
+  },
+  {
+    "title": "You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license.",
+    "url": "https://yongdragon9819.tistory.com/entry/You-have-not-agreed-to-the-Xcode-license-agreements-Please-run-sudo-xcodebuild-license-from-within-a-Terminal-window-to-review-and-agree-to-the-Xcode-and-Apple-SDKs-license",
+    "date": "2025.09.18"
+  },
+  {
+    "title": "클린 아키텍처에서 UseCase의 실용성에 대하여..",
+    "url": "https://yongdragon9819.tistory.com/entry/%ED%81%B4%EB%A6%B0-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EC%97%90%EC%84%9C-UseCase%EC%9D%98-%EC%8B%A4%EC%9A%A9%EC%84%B1%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC",
+    "date": "2025.09.17"
+  },
+  {
+    "title": "앱이 16KB 메모리 페이지 크기를 지원해야 합니다. 대응 방법",
+    "url": "https://yongdragon9819.tistory.com/entry/%EC%95%B1%EC%9D%B4-16KB-%EB%A9%94%EB%AA%A8%EB%A6%AC-%ED%8E%98%EC%9D%B4%EC%A7%80-%ED%81%AC%EA%B8%B0%EB%A5%BC-%EC%A7%80%EC%9B%90%ED%95%B4%EC%95%BC-%ED%95%A9%EB%8B%88%EB%8B%A4-%EB%8C%80%EC%9D%91-%EB%B0%A9%EB%B2%95",
+    "date": "2025.09.15"
+  },
+  {
+    "title": "[Dev Diary] 사용자들의 OOM 이슈 발생 원인들에 대하여.. (역직렬화)",
+    "url": "https://yongdragon9819.tistory.com/entry/Dev-Diary-%EC%82%AC%EC%9A%A9%EC%9E%90%EB%93%A4%EC%9D%98-OOM-%EC%9D%B4%EC%8A%88-%EB%B0%9C%EC%83%9D-%EC%9B%90%EC%9D%B8%EB%93%A4%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC-%EC%97%AD%EC%A7%81%EB%A0%AC%ED%99%94",
+    "date": "2025.09.12"
+  },
+  {
+    "title": "[Android] Compose Recomposition에 대하여 메모..",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose-Recomposition%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC-%EB%A9%94%EB%AA%A8",
+    "date": "2025.09.10"
+  },
+  {
+    "title": "[Android] Compose는 왜 선언형 UI 구성 방식이라고 불리는가?",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose%EB%8A%94-%EC%99%9C-%EC%84%A0%EC%96%B8%ED%98%95-UI-%EA%B5%AC%EC%84%B1-%EB%B0%A9%EC%8B%9D%EC%9D%B4%EB%9D%BC%EA%B3%A0-%EB%B6%88%EB%A6%AC",
+    "date": "2025.09.10"
+  },
+  {
+    "title": "[Android] SQLite DB 필드 추가 마이그레이션",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-SQLite-DB-%ED%95%84%EB%93%9C-%EC%B6%94%EA%B0%80-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98",
+    "date": "2025.09.08"
+  },
+  {
+    "title": "[Android] WebView 사용 중, net::ERR_UNKNOWN_URL_SCHEME",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-WebView-%EC%82%AC%EC%9A%A9-%EC%A4%91-netERRUNKNOWNURLSCHEME",
+    "date": "2025.09.02"
+  },
+  {
+    "title": "[Dev Diary] 2025 - 09 - 01 (allowBackUp, OOM)",
+    "url": "https://yongdragon9819.tistory.com/entry/Dev-Diary-2025-09-01",
+    "date": "2025.09.01"
+  },
+  {
+    "title": "[Android] AppLink 인증 후, url로부터 데이터 받아오기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-AppLink-%EC%9D%B8%EC%A6%9D-%ED%9B%84-url%EB%A1%9C%EB%B6%80%ED%84%B0-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B0%9B%EC%95%84%EC%98%A4%EA%B8%B0",
+    "date": "2025.08.27"
+  },
+  {
+    "title": "[Android] App Link 인증 처리",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-App-Link-%EC%9D%B8%EC%A6%9D-%EC%B2%98%EB%A6%AC",
+    "date": "2025.08.27"
+  },
+  {
+    "title": "Kotlin Coroutines: Dispatcher와 Context 이해하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-Coroutines-Dispatcher%EC%99%80-Context-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0",
+    "date": "2025.08.23"
+  },
+  {
+    "title": "[Android] Shadow 효과 적용되는 ImageView 구성하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Shadow-%ED%9A%A8%EA%B3%BC-%EC%A0%81%EC%9A%A9%EB%90%98%EB%8A%94-ImageView-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0",
+    "date": "2025.08.22"
+  },
+  {
+    "title": "[알고리즘 메모] 대량의 데이터를 수신 받는 행위에 대한 고민",
+    "url": "https://yongdragon9819.tistory.com/entry/%EB%8C%80%EB%9F%89%EC%9D%98-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%A5%BC-%EC%88%98%EC%8B%A0-%EB%B0%9B%EB%8A%94-%ED%96%89%EC%9C%84%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EB%AF%BC",
+    "date": "2025.08.21"
+  },
+  {
+    "title": "[Android] WebView를 통해 데이터 읽어오기 (uri params, html)",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-WebView%EB%A5%BC-%ED%86%B5%ED%95%B4-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%9D%BD%EC%96%B4%EC%98%A4%EA%B8%B0-uri-params-html",
+    "date": "2025.08.20"
+  },
+  {
+    "title": "[Android] Button Text에 영문 입력 시, 항상 대문자로 렌더링되는 현상",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Button-Text%EC%97%90-%EC%98%81%EB%AC%B8-%EC%9E%85%EB%A0%A5-%EC%8B%9C-%ED%95%AD%EC%83%81-%EB%8C%80%EB%AC%B8%EC%9E%90%EB%A1%9C-%EB%A0%8C%EB%8D%94%EB%A7%81%EB%90%98%EB%8A%94-%ED%98%84%EC%83%81",
+    "date": "2025.08.19"
+  },
+  {
+    "title": "[Android] MSAL SDK로 마이크로소프트 계정 Access Token 가져오기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-MSAL-SDK%EB%A1%9C-%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%86%8C%ED%94%84%ED%8A%B8-%EA%B3%84%EC%A0%95-Access-Token-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0",
+    "date": "2025.08.18"
+  },
+  {
+    "title": "[Android] 안드로이드에서 Signature Hash 확인하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%EC%97%90%EC%84%9C-Signature-Hash-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0",
+    "date": "2025.08.13"
+  },
+  {
+    "title": "[Android] Coil Webp 렌더링 시, 품질 저하 대응",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Coil-Webp-%EB%A0%8C%EB%8D%94%EB%A7%81-%EC%8B%9C-%ED%92%88%EC%A7%88-%EC%A0%80%ED%95%98-%EB%8C%80%EC%9D%91",
+    "date": "2025.08.07"
+  },
+  {
+    "title": "[Android] RemoteViews Widget에서 Alpha 값 적용하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-RemoteViews-Widget%EC%97%90%EC%84%9C-Alpha-%EA%B0%92-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0",
+    "date": "2025.08.04"
+  },
+  {
+    "title": "[Android] Compose에서 앱 시작 시, 포그라운드 복귀 시 상관없이 화면 갱신하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose%EC%97%90%EC%84%9C-%EC%95%B1-%EC%8B%9C%EC%9E%91-%EC%8B%9C-%ED%8F%AC%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C-%EB%B3%B5%EA%B7%80-%EC%8B%9C-%EC%83%81%EA%B4%80%EC%97%86%EC%9D%B4-%ED%99%94%EB%A9%B4-%EA%B0%B1%EC%8B%A0%ED%95%98%EA%B8%B0",
+    "date": "2025.08.02"
+  },
+  {
+    "title": "[Android] Gradle 9.0.0 출시",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Gradle-900-%EC%B6%9C%EC%8B%9C",
+    "date": "2025.08.02"
+  },
+  {
+    "title": "[Android] 디바이스 실행 시 동작하는 BootReceiver에 관하여",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EB%94%94%EB%B0%94%EC%9D%B4%EC%8A%A4-%EC%8B%A4%ED%96%89-%EC%8B%9C-%EB%8F%99%EC%9E%91%ED%95%98%EB%8A%94-BootReceiver%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC",
+    "date": "2025.07.29"
+  },
+  {
+    "title": "[Android] Widget에서 위젯 인스턴스 ID (AppWidgetId) 조회 (RemoteViews, Glance)",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Widget%EC%97%90%EC%84%9C-%EC%9C%84%EC%A0%AF-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-ID-AppWidgetId-%EC%A1%B0%ED%9A%8C-RemoteViews-Glance",
+    "date": "2025.07.16"
+  },
+  {
+    "title": "Android Studio에서 WindSurf 연결해서 바이브 코딩하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Studio%EC%97%90%EC%84%9C-WindSurf-%EC%97%B0%EA%B2%B0%ED%95%B4%EC%84%9C-%EB%B0%94%EC%9D%B4%EB%B8%8C-%EC%BD%94%EB%94%A9%ED%95%98%EA%B8%B0",
+    "date": "2025.07.16"
+  },
+  {
+    "title": "[Android] Bitmap으로 이루어진 테두리, 선 그리기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Bitmap%EC%9C%BC%EB%A1%9C-%EC%9D%B4%EB%A3%A8%EC%96%B4%EC%A7%84-%ED%85%8C%EB%91%90%EB%A6%AC-%EC%84%A0-%EA%B7%B8%EB%A6%AC%EA%B8%B0",
+    "date": "2025.07.10"
+  },
+  {
+    "title": "[Android] Glance에서 알파 값 적용된 Bitmap Image 구성",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Glance%EC%97%90%EC%84%9C-%EC%95%8C%ED%8C%8C-%EA%B0%92-%EC%A0%81%EC%9A%A9%EB%90%9C-Bitmap-Image-%EA%B5%AC%EC%84%B1",
+    "date": "2025.07.10"
+  },
+  {
+    "title": "[Android] Exception java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Exception-javalangIllegalStateException-Can-not-perform-this-action-after-onSaveInstanceState",
+    "date": "2025.07.07"
+  },
+  {
+    "title": "[Android] Kotlin 2.0으로 마이그레이션 (+ Compose)",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-20%EC%9C%BC%EB%A1%9C-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98-Compose",
+    "date": "2025.07.02"
+  },
+  {
+    "title": "[Android] ShortCut 기능 구현 - 정적 바로가기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-ShortCut-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84-%EC%A0%95%EC%A0%81-%EB%B0%94%EB%A1%9C%EA%B0%80%EA%B8%B0",
+    "date": "2025.06.26"
+  },
+  {
+    "title": "[Android / Kotlin] 정규표현식도 필요없이 간단하게 Text Link 처리하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-%EC%A0%95%EA%B7%9C%ED%91%9C%ED%98%84%EC%8B%9D%EB%8F%84-%ED%95%84%EC%9A%94%EC%97%86%EC%9D%B4-%EA%B0%84%EB%8B%A8%ED%95%98%EA%B2%8C-Text-Link-%EC%B2%98%EB%A6%AC%ED%95%98%EA%B8%B0",
+    "date": "2025.06.25"
+  },
+  {
+    "title": "[Android / Kotlin] 정규 표현식으로 Text에서 url 부분 Link 처리하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-%EC%A0%95%EA%B7%9C-%ED%91%9C%ED%98%84%EC%8B%9D%EC%9C%BC%EB%A1%9C-Text%EC%97%90%EC%84%9C-url-%EB%B6%80%EB%B6%84-Link-%EC%B2%98%EB%A6%AC%ED%95%98%EA%B8%B0",
+    "date": "2025.06.25"
+  },
+  {
+    "title": "[Android] XML 기반 Ripple 효과 구현",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-XML-%EA%B8%B0%EB%B0%98-Ripple-%ED%9A%A8%EA%B3%BC-%EA%B5%AC%ED%98%84",
+    "date": "2025.06.20"
+  },
+  {
+    "title": "[Android] Fatal Exception: java.lang.NoSuchMethodException: com.~~~.Widget.<init> []",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Fatal-Exception-javalangNoSuchMethodException-comWidgetinit",
+    "date": "2025.06.19"
+  },
+  {
+    "title": "[Android] 좌우 양방향 화살표 bitmap 그리기",
+    "url": "https://yongdragon9819.tistory.com/entry/%EA%B8%B0%EB%A1%9D%EC%9A%A9-%EC%A2%8C%EC%9A%B0-%EC%96%91%EB%B0%A9%ED%96%A5-%ED%99%94%EC%82%B4%ED%91%9C-bitmap-%EA%B7%B8%EB%A6%AC%EA%B8%B0",
+    "date": "2025.06.12"
+  },
+  {
+    "title": "[Android] ScrollView 최상단으로 자동 스크롤하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-ScrollView-%EC%B5%9C%EC%83%81%EB%8B%A8%EC%9C%BC%EB%A1%9C-%EC%9E%90%EB%8F%99-%EC%8A%A4%ED%81%AC%EB%A1%A4%ED%95%98%EA%B8%B0",
+    "date": "2025.05.27"
+  },
+  {
+    "title": "외부 웹 사이트에서 내 앱으로 공유 기능 활성화하기 - Intent Sharing",
+    "url": "https://yongdragon9819.tistory.com/entry/%EC%99%B8%EB%B6%80-%EC%9B%B9-%EC%82%AC%EC%9D%B4%ED%8A%B8%EC%97%90%EC%84%9C-%EB%82%B4-%EC%95%B1%EC%9C%BC%EB%A1%9C-%EA%B3%B5%EC%9C%A0-%EA%B8%B0%EB%8A%A5-%ED%99%9C%EC%84%B1%ED%99%94%ED%95%98%EA%B8%B0-Intent-Sharing",
+    "date": "2025.05.22"
+  },
+  {
+    "title": "Android Glance UI 갱신하는 방법 - PreferencesGlanceStateDefinition",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Glance-UI-%EA%B0%B1%EC%8B%A0%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95-PreferencesGlanceStateDefinition",
+    "date": "2025.05.22"
+  },
+  {
+    "title": "Proxyman으로 Android 네트워크 통신 내역 디버깅하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Proxyman%EC%9C%BC%EB%A1%9C-Android-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%ED%86%B5%EC%8B%A0-%EB%82%B4%EC%97%AD-%EB%94%94%EB%B2%84%EA%B9%85%ED%95%98%EA%B8%B0",
+    "date": "2025.05.21"
+  },
+  {
+    "title": "Android Glance에서 Activity 열기 및 특정 로직 수행 (ActionCallBack, StartActivityIntentAction)",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Glance%EC%97%90%EC%84%9C-Activity-%EC%97%B4%EA%B8%B0-%EB%B0%8F-%ED%8A%B9%EC%A0%95-%EB%A1%9C%EC%A7%81-%EC%88%98%ED%96%89-ActionCallBack-StartActivityIntentAction",
+    "date": "2025.05.21"
+  },
+  {
+    "title": "Android Glance Widget에서 SizeMode에 관하여 (위젯 크기에 따라 View에 변화 주기)",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Glance-Widget%EC%97%90%EC%84%9C-SizeMode%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC-%EC%9C%84%EC%A0%AF-%ED%81%AC%EA%B8%B0%EC%97%90-%EB%94%B0%EB%9D%BC-View%EC%97%90-%EB%B3%80%ED%99%94-%EC%A3%BC%EA%B8%B0",
+    "date": "2025.05.21"
+  },
+  {
+    "title": "[Android] Kotlin으로 XML View 높이 조절하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin%EC%9C%BC%EB%A1%9C-%EB%B7%B0-%EB%86%92%EC%9D%B4-%EC%A1%B0%EC%A0%88%ED%95%98%EA%B8%B0",
+    "date": "2025.05.16"
+  },
+  {
+    "title": "[Android] 구독형 인앱 결제 상품의 재구독 처리",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EA%B5%AC%EB%8F%85%ED%98%95-%EC%9D%B8%EC%95%B1-%EA%B2%B0%EC%A0%9C-%EC%83%81%ED%92%88%EC%9D%98-%EC%9E%AC%EA%B5%AC%EB%8F%85-%EC%B2%98%EB%A6%AC",
+    "date": "2025.05.15"
+  },
+  {
+    "title": "[MCP - Cursor와 Figma 연결해서 컴포넌트 생성하기]",
+    "url": "https://yongdragon9819.tistory.com/entry/MCP-Cursor%EC%99%80-Figma-%EC%97%B0%EA%B2%B0%ED%95%B4%EC%84%9C-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0",
+    "date": "2025.05.11"
+  },
+  {
+    "title": "[Android] Android Studio에서 리소스 폴더 한번에 추가하는 방법",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Android-Studio%EC%97%90%EC%84%9C-%EB%A6%AC%EC%86%8C%EC%8A%A4-%ED%8F%B4%EB%8D%94-%ED%95%9C%EB%B2%88%EC%97%90-%EC%B6%94%EA%B0%80%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95",
+    "date": "2025.05.09"
+  },
+  {
+    "title": "[Android] Widget Min Height, Width 값 설정 공식",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Widget-Min-Height-Width-%EA%B0%92-%EC%84%A4%EC%A0%95-%EA%B3%B5%EC%8B%9D",
+    "date": "2025.05.09"
+  },
+  {
+    "title": "[Android] Widget에서 View 컴포넌트 사용 불가능 / Widget에서 사용 가능한 컴포넌트 종류",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Widget%EC%97%90%EC%84%9C-View-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%82%AC%EC%9A%A9-%EB%B6%88%EA%B0%80%EB%8A%A5-Widget%EC%97%90%EC%84%9C-%EC%82%AC%EC%9A%A9-%EA%B0%80%EB%8A%A5%ED%95%9C-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%A2%85%EB%A5%98",
+    "date": "2025.05.08"
+  },
+  {
+    "title": "[Compose] Glance 위젯에서 특정 Activity 열기",
+    "url": "https://yongdragon9819.tistory.com/entry/Compose-Glance-%EC%9C%84%EC%A0%AF%EC%97%90%EC%84%9C-%ED%8A%B9%EC%A0%95-Activity-%EC%97%B4%EA%B8%B0",
+    "date": "2025.04.29"
+  },
+  {
+    "title": "[Compose] Android Glance 위젯으로 UI 구성 시 주의사항",
+    "url": "https://yongdragon9819.tistory.com/entry/Compose-Android-Glance-%EC%9C%84%EC%A0%AF%EC%9C%BC%EB%A1%9C-UI-%EA%B5%AC%EC%84%B1-%EC%8B%9C-%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD",
+    "date": "2025.04.29"
+  },
+  {
+    "title": "[Compose] Android Glance 기반 신규 위젯 구현하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Compose-Android-Glance-%EA%B8%B0%EB%B0%98-%EC%8B%A0%EA%B7%9C-%EC%9C%84%EC%A0%AF-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0",
+    "date": "2025.04.29"
+  },
+  {
+    "title": "[Flutter] Dart의 비동기 처리",
+    "url": "https://yongdragon9819.tistory.com/entry/Flutter-Dart%EC%9D%98-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%B2%98%EB%A6%AC",
+    "date": "2025.04.28"
+  },
+  {
+    "title": "[Flutter] Dart 기본 문법 정리",
+    "url": "https://yongdragon9819.tistory.com/entry/Flutter-Dart-%EA%B8%B0%EB%B3%B8-%EB%AC%B8%EB%B2%95-%EC%A0%95%EB%A6%AC",
+    "date": "2025.04.27"
+  },
+  {
+    "title": "[Android Test] Room DB 테스트 코드 작성하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Test-Room-DB-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%BD%94%EB%93%9C-%EC%9E%91%EC%84%B1%ED%95%98%EA%B8%B0",
+    "date": "2025.04.25"
+  },
+  {
+    "title": "[Android Test] Test Double이란? 그리고 ViewModel 테스트 코드 작성하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Test-Test-Double%EC%9D%B4%EB%9E%80-%EA%B7%B8%EB%A6%AC%EA%B3%A0-ViewModel-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%BD%94%EB%93%9C-%EC%9E%91%EC%84%B1%ED%95%98%EA%B8%B0",
+    "date": "2025.04.24"
+  },
+  {
+    "title": "[Compose] 둥근 테두리 Image Load View 구현",
+    "url": "https://yongdragon9819.tistory.com/entry/Compose-%EB%91%A5%EA%B7%BC-%ED%85%8C%EB%91%90%EB%A6%AC-Image-Load-View-%EA%B5%AC%ED%98%84",
+    "date": "2025.04.24"
+  },
+  {
+    "title": "네이버 Whale 활용해서 무료 화상 회의 진행하기",
+    "url": "https://yongdragon9819.tistory.com/entry/%EB%84%A4%EC%9D%B4%EB%B2%84-Whale-%ED%99%9C%EC%9A%A9%ED%95%B4%EC%84%9C-%EB%AC%B4%EB%A3%8C-%ED%99%94%EC%83%81-%ED%9A%8C%EC%9D%98-%EC%A7%84%ED%96%89%ED%95%98%EA%B8%B0",
+    "date": "2025.04.24"
+  },
+  {
+    "title": "[Android Test] @Before와 @Test를 이용한 클래스 테스트 진행",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Test-Before%EC%99%80-Test%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%ED%81%B4%EB%9E%98%EC%8A%A4-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A7%84%ED%96%89",
+    "date": "2025.04.23"
+  },
+  {
+    "title": "[Compose] 컴포넌트 클릭 시, Ripple + Scale Animation 적용",
+    "url": "https://yongdragon9819.tistory.com/entry/Compose-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%ED%81%B4%EB%A6%AD-%EC%8B%9C-Ripple-Scale-Animation-%EC%A0%81%EC%9A%A9",
+    "date": "2025.04.22"
+  },
+  {
+    "title": "[Room DB] 기존 테이블에 필드 추가 마이그레이션",
+    "url": "https://yongdragon9819.tistory.com/entry/Room-DB-%EA%B8%B0%EC%A1%B4-%ED%85%8C%EC%9D%B4%EB%B8%94%EC%97%90-%ED%95%84%EB%93%9C-%EC%B6%94%EA%B0%80-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98",
+    "date": "2025.04.17"
+  },
+  {
+    "title": "[Compose] XML ComposeView에서 SetContent 이후 재호출 시, 다시 컴포저블 갱신 안되는 문제",
+    "url": "https://yongdragon9819.tistory.com/entry/Compose-XML-ComposeView%EC%97%90%EC%84%9C-SetContent-%EC%9D%B4%ED%9B%84-%EC%9E%AC%ED%98%B8%EC%B6%9C-%EC%8B%9C-%EB%8B%A4%EC%8B%9C-%EC%BB%B4%ED%8F%AC%EC%A0%80%EB%B8%94-%EA%B0%B1%EC%8B%A0-%EC%95%88%EB%90%98%EB%8A%94-%EB%AC%B8%EC%A0%9C",
+    "date": "2025.04.17"
+  },
+  {
+    "title": "[Dart] 기본 문법 정리 2",
+    "url": "https://yongdragon9819.tistory.com/entry/Dart-%EA%B8%B0%EB%B3%B8-%EB%AC%B8%EB%B2%95-%EC%A0%95%EB%A6%AC-2",
+    "date": "2025.04.16"
+  },
+  {
+    "title": "[Compose] 컴포넌트 클릭 상태를 감지하여 Text 변화주기",
+    "url": "https://yongdragon9819.tistory.com/entry/Compose-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%ED%81%B4%EB%A6%AD-%EC%83%81%ED%83%9C%EB%A5%BC-%EA%B0%90%EC%A7%80%ED%95%98%EC%97%AC-Text-%EB%B3%80%ED%99%94%EC%A3%BC%EA%B8%B0",
+    "date": "2025.04.15"
+  },
+  {
+    "title": "[Android] 구글 인앱 결제 가격이 Free로 표시되어 앱 심사에서 거절 당한 이야기...;",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EA%B5%AC%EA%B8%80-%EC%9D%B8%EC%95%B1-%EA%B2%B0%EC%A0%9C-%EA%B0%80%EA%B2%A9%EC%9D%B4-Free%EB%A1%9C-%ED%91%9C%EC%8B%9C%EB%90%98%EC%96%B4-%EC%95%B1-%EC%8B%AC%EC%82%AC%EC%97%90%EC%84%9C-%EA%B1%B0%EC%A0%88-%EB%8B%B9%ED%95%9C-%EC%9D%B4%EC%95%BC%EA%B8%B0",
+    "date": "2025.04.15"
+  },
+  {
+    "title": "[Compose] Surface에 Alpha 컬러를 적용했는데, 색상이 깨지는 문제",
+    "url": "https://yongdragon9819.tistory.com/entry/Compose-Surface%EC%97%90-Alpha-%EC%BB%AC%EB%9F%AC%EB%A5%BC-%EC%A0%81%EC%9A%A9%ED%96%88%EB%8A%94%EB%8D%B0-%EC%83%89%EC%83%81%EC%9D%B4-%EA%B9%A8%EC%A7%80%EB%8A%94-%EB%AC%B8%EC%A0%9C",
+    "date": "2025.04.15"
+  },
+  {
+    "title": "[Compose] 빈공간 없는 GridList 사용하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Compose-%EB%B9%88%EA%B3%B5%EA%B0%84-%EC%97%86%EB%8A%94-GridList-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0",
+    "date": "2025.04.14"
+  },
+  {
+    "title": "[Dart] Dart 기본 문법 학습 일지 1. 변수 및 null, late",
+    "url": "https://yongdragon9819.tistory.com/entry/Dart-Dart-%EA%B8%B0%EB%B3%B8-%EB%AC%B8%EB%B2%95-%ED%95%99%EC%8A%B5-%EC%9D%BC%EC%A7%80-1-%EB%B3%80%EC%88%98-%EB%B0%8F-null-late",
+    "date": "2025.04.13"
+  },
+  {
+    "title": "[Hilt] Retrofit 인스턴스 생성 시, Base URL 다를 경우 처리",
+    "url": "https://yongdragon9819.tistory.com/entry/Hilt-Retrofit-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4-%EC%83%9D%EC%84%B1-%EC%8B%9C-Base-URL-%EB%8B%A4%EB%A5%BC-%EA%B2%BD%EC%9A%B0-%EC%B2%98%EB%A6%AC",
+    "date": "2025.04.11"
+  },
+  {
+    "title": "[Compose] Coil을 사용하여 원형 프로필 이미지 구성하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Compose-Coil%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC-%EC%9B%90%ED%98%95-%ED%94%84%EB%A1%9C%ED%95%84-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EA%B5%AC%EC%84%B1%ED%95%98%EA%B8%B0",
+    "date": "2025.04.10"
+  },
+  {
+    "title": "[Compose] 두 개 이미지를 중첩시킨 Composable 구현",
+    "url": "https://yongdragon9819.tistory.com/entry/Compose-%EB%91%90-%EA%B0%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80%EB%A5%BC-%EC%A4%91%EC%B2%A9%EC%8B%9C%ED%82%A8-Composable-%EA%B5%AC%ED%98%84",
+    "date": "2025.04.09"
+  },
+  {
+    "title": "[Android] Api 통신 구조를 MVVM + Hilt + Flow 형태로 리팩토링",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Api-%ED%86%B5%EC%8B%A0-%EA%B5%AC%EC%A1%B0%EB%A5%BC-MVVM-Hilt-Flow-%ED%98%95%ED%83%9C%EB%A1%9C-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81",
+    "date": "2025.04.09"
+  },
+  {
+    "title": "[Hilt] @Provides methods may not have type parameters public final <T extends java.lang.Object>T provideApiService(@org.jetbrains.annotations.NotNull",
+    "url": "https://yongdragon9819.tistory.com/entry/Hilt-Provides-methods-may-not-have-type-parameters-public-final-T-extends-javalangObjectT-provideApiServiceorgjetbrainsannotationsNotNull",
+    "date": "2025.04.08"
+  },
+  {
+    "title": "[Android / Compose] Compose Lottie Animation 활용하여 동적 가이드 구현",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose-Compose-Lottie-Animation-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-%EB%8F%99%EC%A0%81-%EA%B0%80%EC%9D%B4%EB%93%9C-%EA%B5%AC%ED%98%84",
+    "date": "2025.04.08"
+  },
+  {
+    "title": "[Android Compose] Custom Ripple 생성하여 확장 함수로 사용",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose-Custom-Ripple-%EC%83%9D%EC%84%B1%ED%95%98%EC%97%AC-%ED%99%95%EC%9E%A5-%ED%95%A8%EC%88%98%EB%A1%9C-%EC%82%AC%EC%9A%A9",
+    "date": "2025.04.02"
+  },
+  {
+    "title": "[Android Compose] Custom Floating Action Button 구현",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose-Custom-Floating-Action-Button-%EA%B5%AC%ED%98%84",
+    "date": "2025.04.02"
+  },
+  {
+    "title": "[Kotlin Coroutine] 일시중단 함수 구성",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-Coroutine-%EC%9D%BC%EC%8B%9C%EC%A4%91%EB%8B%A8-%ED%95%A8%EC%88%98-%EA%B5%AC%EC%84%B1",
+    "date": "2025.04.01"
+  },
+  {
+    "title": "[Kotlin Coroutine] Coroutine 취소와 타임아웃",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-Coroutine-Coroutine-%EC%B7%A8%EC%86%8C%EC%99%80-%ED%83%80%EC%9E%84%EC%95%84%EC%9B%83",
+    "date": "2025.03.31"
+  },
+  {
+    "title": "[Kotlin Coroutine] Coroutine 기본 2",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-Coroutine-Coroutine-%EA%B8%B0%EB%B3%B8-2",
+    "date": "2025.03.31"
+  },
+  {
+    "title": "[Kotlin Coroutine] Coroutine 기본 정리",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-Coroutine-Coroutine-%EA%B8%B0%EB%B3%B8-%EC%A0%95%EB%A6%AC",
+    "date": "2025.03.27"
+  },
+  {
+    "title": "[Android] 둥근 테두리 ImageView 사용 : ShapeableImageView",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EB%91%A5%EA%B7%BC-%ED%85%8C%EB%91%90%EB%A6%AC-ImageView-%EC%82%AC%EC%9A%A9-ShapeableImageView",
+    "date": "2025.03.26"
+  },
+  {
+    "title": "[Android] InstanceState의 Save와 Restore를 활용한 화면 회전 시에도 데이터 값 유지하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-InstanceState%EC%9D%98-Save%EC%99%80-Restore%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%ED%99%94%EB%A9%B4-%ED%9A%8C%EC%A0%84-%EC%8B%9C%EC%97%90%EB%8F%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B0%92-%EC%9C%A0%EC%A7%80%ED%95%98%EA%B8%B0",
+    "date": "2025.03.26"
+  },
+  {
+    "title": "[Kotlin Coroutine] async를 사용한 동시성. API 호출 결과를 합산",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-Coroutine-async%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-%EB%8F%99%EC%8B%9C%EC%84%B1-API-%ED%98%B8%EC%B6%9C-%EA%B2%B0%EA%B3%BC%EB%A5%BC-%ED%95%A9%EC%82%B0",
+    "date": "2025.03.26"
+  },
+  {
+    "title": "[Android] 자정에 데이터 갱신 예약 등록 시, Fatal Exception: java.lang.SecurityExceptionCaller com.~~ needs to hold android.permission.SCHEDULE_EXACT_ALARM or android.permission.USE_EXACT_ALARM to set exact alarms.",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EC%9E%90%EC%A0%95%EC%97%90-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B0%B1%EC%8B%A0-%EC%98%88%EC%95%BD-%EB%93%B1%EB%A1%9D-%EC%8B%9C-Fatal-Exception-javalangSecurityExceptionCaller-com-needs-to-hold-androidpermissionSCHEDULEEXACTALARM-or-androidpermissionUSEEXACTALARM-to-set-exact-alarms",
+    "date": "2025.03.24"
+  },
+  {
+    "title": "[Android] 기존 프로젝트에 Hilt 적용하기 with Room, MVVM",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EA%B8%B0%EC%A1%B4-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%97%90-Hilt-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0-with-Room-MVVM",
+    "date": "2025.03.21"
+  },
+  {
+    "title": "[Android] 자정이 지나면 위젯 갱신하기 (feat. BroadcastReceiver)",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EC%9E%90%EC%A0%95%EC%9D%B4-%EC%A7%80%EB%82%98%EB%A9%B4-%EC%9C%84%EC%A0%AF-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B0%B1%EC%8B%A0%ED%95%98%EA%B8%B0",
+    "date": "2025.03.20"
+  },
+  {
+    "title": "[Android] Gradient 테두리를 가진 커스텀 버튼 View 구현 (XML)",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Gradient-%ED%85%8C%EB%91%90%EB%A6%AC%EB%A5%BC-%EA%B0%80%EC%A7%84-%EC%BB%A4%EC%8A%A4%ED%85%80-%EB%B2%84%ED%8A%BC-View-%EA%B5%AC%ED%98%84-X",
+    "date": "2025.03.19"
+  },
+  {
+    "title": "[Android] Fatal Exception: java.lang.IllegalStateExceptionObject is no longer valid to operate on. Was it deleted by another thread? Realm DB 관련 오류 대응",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Fatal-Exception-javalangIllegalStateExceptionObject-is-no-longer-valid-to-operate-on-Was-it-deleted-by-another-thread-Realm-DB-%EA%B4%80%EB%A0%A8-%EC%98%A4%EB%A5%98-%EB%8C%80%EC%9D%91",
+    "date": "2025.03.19"
+  },
+  {
+    "title": "[Android] 구글 인앱 결제 처리 관련 코드를 Manager로 정리",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EA%B5%AC%EA%B8%80-%EC%9D%B8%EC%95%B1-%EA%B2%B0%EC%A0%9C-%EC%B2%98%EB%A6%AC-%EA%B4%80%EB%A0%A8-%EC%BD%94%EB%93%9C%EB%A5%BC-Manager%EB%A1%9C-%EC%A0%95%EB%A6%AC",
+    "date": "2025.03.18"
+  },
+  {
+    "title": "[Android] Compose + Coroutine(API 호출) 간단하게 페이징 처리 구현하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose-Api-%EA%B0%84%EB%8B%A8%ED%95%98%EA%B2%8C-%ED%8E%98%EC%9D%B4%EC%A7%95-%EC%B2%98%EB%A6%AC-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0",
+    "date": "2025.03.17"
+  },
+  {
+    "title": "[Android] vibrate() func deprecated 대응",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-vibrate-func-deprecated-%EB%8C%80%EC%9D%91",
+    "date": "2025.03.14"
+  },
+  {
+    "title": "[Android] Places Api (New)를 활용한 위치 검색 기능 구현 (feat. App Check, Compose UI)",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Places-Api-New%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%9C%84%EC%B9%98-%EA%B2%80%EC%83%89-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84-feat-App-Check-Compose-UI",
+    "date": "2025.03.12"
+  },
+  {
+    "title": "[Android] apng 형식 파일을 안드로이드 ImageView에서 렌더링",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-apng-%ED%98%95%EC%8B%9D-%ED%8C%8C%EC%9D%BC%EC%9D%84-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-ImageView%EC%97%90%EC%84%9C-%EB%A0%8C%EB%8D%94%EB%A7%81",
+    "date": "2025.03.10"
+  },
+  {
+    "title": "[Android] Android Studio에서 SHA-1 인증키 확인하는 방법",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Android-Studio%EC%97%90%EC%84%9C-SHA-1-%EC%9D%B8%EC%A6%9D%ED%82%A4-%ED%99%95%EC%9D%B8%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95",
+    "date": "2025.03.09"
+  },
+  {
+    "title": "[Android] java.lang.IllegalAccessError: superclass access check failed: class org.jetbrains.kotlin.kapt3.base.javac.KaptJavaCompiler (in unnamed module @0x6f06399e) cannot access class .... 오류 해결",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-javalangIllegalAccessError-superclass-access-check-failed-class-orgjetbrainskotlinkapt3basejavacKaptJavaCompiler-in-unnamed-module-0x6f06399e-cannot-access-class-%EC%98%A4%EB%A5%98-%ED%95%B4%EA%B2%B0",
+    "date": "2025.03.09"
+  },
+  {
+    "title": "[Android] Glide의 Cache 캐싱 처리 동작에 관하여...",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Glide%EC%9D%98-Cache-%EC%BA%90%EC%8B%B1-%EC%B2%98%EB%A6%AC-%EB%8F%99%EC%9E%91%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC",
+    "date": "2025.03.07"
+  },
+  {
+    "title": "[Android / Kotlin] TimePicker의 개별 EditText 입력 값 처리",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-TimePicker%EC%9D%98-%EA%B0%9C%EB%B3%84-EditText-%EC%9E%85%EB%A0%A5-%EA%B0%92-%EC%B2%98%EB%A6%AC",
+    "date": "2025.03.06"
+  },
+  {
+    "title": "[Android / 기술 지식] Application 클래스란?",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EA%B8%B0%EC%88%A0-%EC%A7%80%EC%8B%9D-Application-%ED%81%B4%EB%9E%98%EC%8A%A4%EB%9E%80",
+    "date": "2025.03.05"
+  },
+  {
+    "title": "[Android / Kotlin] HTML 태그 사용자 직접 입력에 대한 예외 처리",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-HTML-%ED%83%9C%EA%B7%B8-%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%A7%81%EC%A0%91-%EC%9E%85%EB%A0%A5%EC%97%90-%EB%8C%80%ED%95%9C-%EC%98%88%EC%99%B8-%EC%B2%98%EB%A6%AC",
+    "date": "2025.03.04"
+  },
+  {
+    "title": "[Android / Kotlin] LayoutParams로 가로 세로 값 수정",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-LayoutParams%EB%A1%9C-%EA%B0%80%EB%A1%9C-%EC%84%B8%EB%A1%9C-%EA%B0%92-%EC%88%98%EC%A0%95",
+    "date": "2025.02.28"
+  },
+  {
+    "title": "[Android] XML 둥근 테두리 형태 ImageView 구성",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-XML-%EB%91%A5%EA%B7%BC-%ED%85%8C%EB%91%90%EB%A6%AC-%ED%98%95%ED%83%9C-ImageView-%EA%B5%AC%EC%84%B1",
+    "date": "2025.02.18"
+  },
+  {
+    "title": "[Android / 기술 지식] 채용 자격 요건마다 있는 AAC에 관하여 (Android Architecture Components)",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-AAC%EC%97%90-%EA%B4%80%ED%95%98%EC%97%AC-Android-Architecture-Components",
+    "date": "2025.02.17"
+  },
+  {
+    "title": "[Android / Kotlin] Glide로 WebP 파일 재생",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-Glide%EB%A1%9C-WebP-%ED%8C%8C%EC%9D%BC-%EC%9E%AC%EC%83%9D",
+    "date": "2025.02.14"
+  },
+  {
+    "title": "YIQ 개념 기반 밝기 판별",
+    "url": "https://yongdragon9819.tistory.com/entry/YIQ-%EA%B0%9C%EB%85%90-%EA%B8%B0%EB%B0%98-%EB%B0%9D%EA%B8%B0-%ED%8C%90%EB%B3%84",
+    "date": "2025.02.13"
+  },
+  {
+    "title": "[Android / Kotlin] 코틀린 기술 면접 기본 질문 Top 10",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-%EC%BD%94%ED%8B%80%EB%A6%B0-%EA%B8%B0%EC%88%A0-%EB%A9%B4%EC%A0%91-%EA%B8%B0%EB%B3%B8-%EC%A7%88%EB%AC%B8-Top-10",
+    "date": "2025.02.09"
+  },
+  {
+    "title": "[Android] Hex Code String을 통해 Color 추출하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Hex-Code-String%EC%9D%84-%ED%86%B5%ED%95%B4-Color-%EC%B6%94%EC%B6%9C%ED%95%98%EA%B8%B0",
+    "date": "2025.02.05"
+  },
+  {
+    "title": "[Android] getIdentifier() 활용 앱 리소스 가져오기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-getIdentifier-%ED%99%9C%EC%9A%A9-%EC%95%B1-%EB%A6%AC%EC%86%8C%EC%8A%A4-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0",
+    "date": "2025.02.04"
+  },
+  {
+    "title": "[Android] View Tag 활용해서 접근하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-View-Tag-%ED%99%9C%EC%9A%A9%ED%95%B4%EC%84%9C-%EC%A0%91%EA%B7%BC%ED%95%98%EA%B8%B0",
+    "date": "2025.02.04"
+  },
+  {
+    "title": "Android - 외부 웹뷰가 아닌 인앱 웹뷰 기반 접근 처리 (간단)",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EC%99%B8%EB%B6%80-%EC%9B%B9%EB%B7%B0%EA%B0%80-%EC%95%84%EB%8B%8C-%EC%9D%B8%EC%95%B1-%EC%9B%B9%EB%B7%B0-%EA%B8%B0%EB%B0%98-%EC%A0%91%EA%B7%BC-%EC%B2%98%EB%A6%AC-%EA%B0%84%EB%8B%A8",
+    "date": "2025.01.31"
+  },
+  {
+    "title": "[Android / Kotlin] 갤러리 앱 보기 상태로 접근하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-%EA%B0%A4%EB%9F%AC%EB%A6%AC-%EC%95%B1-%EB%B3%B4%EA%B8%B0-%EC%83%81%ED%83%9C%EB%A1%9C-%EC%A0%91%EA%B7%BC%ED%95%98%EA%B8%B0",
+    "date": "2025.01.31"
+  },
+  {
+    "title": "[Android / Kotlin] View Background Stroke 색상 변경하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-View-Background-Stroke-%EC%83%89%EC%83%81-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0",
+    "date": "2025.01.15"
+  },
+  {
+    "title": "[Kotlin] 리스트에서 랜덤으로 값 추출하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%EB%A6%AC%EC%8A%A4%ED%8A%B8%EC%97%90%EC%84%9C-%EB%9E%9C%EB%8D%A4%EC%9C%BC%EB%A1%9C-%EA%B0%92-%EC%B6%94%EC%B6%9C%ED%95%98%EA%B8%B0",
+    "date": "2025.01.07"
+  },
+  {
+    "title": "최대 힙 - Kotlin",
+    "url": "https://yongdragon9819.tistory.com/entry/%EC%B5%9C%EB%8C%80-%ED%9E%99-Kotlin",
+    "date": "2025.01.06"
+  },
+  {
+    "title": "[TroubleShooting] Fatal Exception: java.lang.IllegalStateException: Fragment",
+    "url": "https://yongdragon9819.tistory.com/entry/TroubleShooting-Fatal-Exception-javalangIllegalStateException-Fragment",
+    "date": "2024.12.27"
+  },
+  {
+    "title": "투 포인터 알고리즘(Two Pointers)",
+    "url": "https://yongdragon9819.tistory.com/entry/%ED%88%AC-%ED%8F%AC%EC%9D%B8%ED%84%B0-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98Two-Pointers",
+    "date": "2024.12.26"
+  },
+  {
+    "title": "이분 탐색 (Binary Search)",
+    "url": "https://yongdragon9819.tistory.com/entry/%EC%9D%B4%EB%B6%84-%ED%83%90%EC%83%89-Binary-Search",
+    "date": "2024.12.26"
+  },
+  {
+    "title": "[Android / Compose] Expandable 메뉴 레이아웃 구현",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose-Expandable-%EB%A9%94%EB%89%B4-%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83-%EA%B5%AC%ED%98%84",
+    "date": "2024.12.18"
+  },
+  {
+    "title": "백준 12865번 - 평범한 배낭 [Kotlin]",
+    "url": "https://yongdragon9819.tistory.com/entry/%EB%B0%B1%EC%A4%80-12865%EB%B2%88-%ED%8F%89%EB%B2%94%ED%95%9C-%EB%B0%B0%EB%82%AD-Kotlin",
+    "date": "2024.12.18"
+  },
+  {
+    "title": "백준 11286번 - 절댓값 힙 [Kotlin]",
+    "url": "https://yongdragon9819.tistory.com/entry/%EB%B0%B1%EC%A4%80-11286%EB%B2%88-%EC%A0%88%EB%8C%93%EA%B0%92-%ED%9E%99-Kotlin",
+    "date": "2024.12.18"
+  },
+  {
+    "title": "[Android] Intent로 Activity 전환 시, 애니메이션 적용",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Intent%EB%A1%9C-Activity-%EC%A0%84%ED%99%98-%EC%8B%9C-%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98-%EC%A0%81%EC%9A%A9",
+    "date": "2024.12.02"
+  },
+  {
+    "title": "[Android] Proguard와 DEX 파일 연관성",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Proguard%EC%99%80-DEX-%ED%8C%8C%EC%9D%BC-%EC%97%B0%EA%B4%80%EC%84%B1",
+    "date": "2024.10.14"
+  },
+  {
+    "title": "[Android / Kotlin] MVI 패턴을 활용한 Compose + Api 호출 처리",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-MVI-%ED%8C%A8%ED%84%B4%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%9C-Compose-Api-%ED%98%B8%EC%B6%9C-%EC%B2%98%EB%A6%AC",
+    "date": "2024.10.13"
+  },
+  {
+    "title": "[Android / Compose] Switch 컴포넌트 색상 지정",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose-Switch-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-%EC%83%89%EC%83%81-%EC%A7%80%EC%A0%95",
+    "date": "2024.10.11"
+  },
+  {
+    "title": "[Android] Bottom Sheet가 EditText에 의해서 화면 영역을 벗어나는 상황 대응",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Bottom-Sheet%EA%B0%80-EditText%EC%97%90-%EC%9D%98%ED%95%B4%EC%84%9C-%ED%99%94%EB%A9%B4-%EC%98%81%EC%97%AD%EC%9D%84-%EB%B2%97%EC%96%B4%EB%82%98%EB%8A%94-%EC%83%81%ED%99%A9-%EB%8C%80%EC%9D%91",
+    "date": "2024.10.10"
+  },
+  {
+    "title": "[Android / Kotlin] 생체 인증 Biometric 활용 지문 인증 처리 구성",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-%EC%83%9D%EC%B2%B4-%EC%9D%B8%EC%A6%9D-Biometric-%ED%99%9C%EC%9A%A9-%EC%A7%80%EB%AC%B8-%EC%9D%B8%EC%A6%9D-%EC%B2%98%EB%A6%AC-%EA%B5%AC%EC%84%B1",
+    "date": "2024.10.07"
+  },
+  {
+    "title": "[Android] RxJava Binding 라이브러리 활용 검색 기능 구현",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose-RxJava-Binding-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%ED%99%9C%EC%9A%A9-%EA%B2%80%EC%83%89-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84",
+    "date": "2024.10.07"
+  },
+  {
+    "title": "[Android / Kotlin] 추상 클래스와 Sealed Class를 활용한 Api 호출 로직 정리",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-%EC%B6%94%EC%83%81-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80-Sealed-Class%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-Api-%ED%98%B8%EC%B6%9C-%EB%A1%9C%EC%A7%81-%EC%A0%95%EB%A6%AC",
+    "date": "2024.10.05"
+  },
+  {
+    "title": "[Android] 디자인 시스템 및 컴포즈 기본 도입에 관한 발표 자료",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EC%82%AC%EB%82%B4-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EB%B0%8F-%EC%BB%B4%ED%8F%AC%EC%A6%88-%EA%B8%B0%EB%B3%B8-%EB%8F%84%EC%9E%85%EC%97%90-%EA%B4%80%ED%95%9C-%EB%B0%9C%ED%91%9C-%EC%9E%90%EB%A3%8C",
+    "date": "2024.10.04"
+  },
+  {
+    "title": "[Android / Compose] 컴포넌트 onClick으로 Navigation 탭 변경 처리",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-onClick%EC%9C%BC%EB%A1%9C-Navigation-%ED%83%AD-%EB%B3%80%EA%B2%BD-%EC%B2%98%EB%A6%AC",
+    "date": "2024.10.03"
+  },
+  {
+    "title": "[Android / Kotlin] Compose에서 NavigationBar를 활용한 하단 Tab 구현",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-Compose%EC%97%90%EC%84%9C-NavigationBar%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%ED%95%98%EB%8B%A8-Tab-%EA%B5%AC%ED%98%84",
+    "date": "2024.10.01"
+  },
+  {
+    "title": "[Android] SQLite 순차적 DB Query 작업의 우선처리 개선",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-SQLite-%EC%88%9C%EC%B0%A8%EC%A0%81-DB-Query-%EC%9E%91%EC%97%85%EC%9D%98-%EC%9A%B0%EC%84%A0%EC%B2%98%EB%A6%AC-%EA%B0%9C%EC%84%A0",
+    "date": "2024.09.30"
+  },
+  {
+    "title": "[Kotlin] 백준 - 빈도 정렬",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%EB%B0%B1%EC%A4%80-%EB%B9%88%EB%8F%84-%EC%A0%95%EB%A0%AC",
+    "date": "2024.09.25"
+  },
+  {
+    "title": "[Kotlin] 백준 - 역원소 정렬",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%EB%B0%B1%EC%A4%80-%EC%97%AD%EC%9B%90%EC%86%8C-%EC%A0%95%EB%A0%AC",
+    "date": "2024.09.24"
+  },
+  {
+    "title": "[Android] RecyclerView 최상단 또는 최하단에 여백 넣기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-RecyclerView-%EC%B5%9C%EC%83%81%EB%8B%A8-%EB%98%90%EB%8A%94-%EC%B5%9C%ED%95%98%EB%8B%A8%EC%97%90-%EC%97%AC%EB%B0%B1-%EB%84%A3%EA%B8%B0",
+    "date": "2024.09.23"
+  },
+  {
+    "title": "[Kotlin] 백준 2493번 : 탑",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%EB%B0%B1%EC%A4%80-2493%EB%B2%88-%ED%83%91",
+    "date": "2024.09.21"
+  },
+  {
+    "title": "Android Developer Roadmap 살펴보기 - APK & AAB",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Developer-Roadmap-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0-APK-AAB",
+    "date": "2024.09.07"
+  },
+  {
+    "title": "[Kotlin] 백준 - 1475번 방번호",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%EB%B0%B1%EC%A4%80-1475%EB%B2%88-%EB%B0%A9%EB%B2%88%ED%98%B8",
+    "date": "2024.09.07"
+  },
+  {
+    "title": "[Kotlin] 백준 - 비밀 이메일",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%EB%B0%B1%EC%A4%80-%EB%B9%84%EB%B0%80-%EC%9D%B4%EB%A9%94%EC%9D%BC",
+    "date": "2024.09.07"
+  },
+  {
+    "title": "[Android] Fatal Exception: android.database.CursorWindowAllocationException: Could not allocate CursorWindow '/data/user/0/~.db' of size 4194304 due to error -12.",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Fatal-Exception-androiddatabaseCursorWindowAllocationException-Could-not-allocate-CursorWindow-datauser0db-of-size-4194304-due-to-error-12",
+    "date": "2024.09.04"
+  },
+  {
+    "title": "[Kotlin] 백준 - 중복 빼고 정렬하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%EB%B0%B1%EC%A4%80-%EC%A4%91%EB%B3%B5-%EB%B9%BC%EA%B3%A0-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0",
+    "date": "2024.09.02"
+  },
+  {
+    "title": "[Kotlin] 99 클럽 코딩 테스트 스터디 미들러 40일차 - UniquePaths",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-40%EC%9D%BC%EC%B0%A8-UniquePaths",
+    "date": "2024.08.31"
+  },
+  {
+    "title": "[Kotlin] 99 클럽 코딩 테스트 스터디 미들러 39일차 - 광물 캐기 [재풀이 필요]",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-39%EC%9D%BC%EC%B0%A8-%EA%B4%91%EB%AC%BC-%EC%BA%90%EA%B8%B0-%EC%9E%AC%ED%92%80%EC%9D%B4-%ED%95%84%EC%9A%94",
+    "date": "2024.08.30"
+  },
+  {
+    "title": "[Android / Compose] Text Font에 대한 커스터마이징",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose-Text-FontSize%EB%A5%BC-%EC%9D%B8%EC%95%B1%EC%97%90%EC%84%9C-%EC%A7%80%EC%A0%95%ED%95%9C-%ED%81%AC%EA%B8%B0%EB%A1%9C-%EC%A1%B0%EC%A0%95%ED%95%98%EA%B8%B0",
+    "date": "2024.08.29"
+  },
+  {
+    "title": "[Kotlin] 99 클럽 코딩 테스트 스터디 미들러 38일차 - 디펜스 게임",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-38%EC%9D%BC%EC%B0%A8-%EB%94%94%ED%8E%9C%EC%8A%A4-%EA%B2%8C%EC%9E%84",
+    "date": "2024.08.28"
+  },
+  {
+    "title": "[Kotlin] 99 클럽 코딩 테스트 스터디 미들러 37일차 - 부등호",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-37%EC%9D%BC%EC%B0%A8-%EB%B6%80%EB%93%B1%ED%98%B8",
+    "date": "2024.08.28"
+  },
+  {
+    "title": "[Kotlin] 99 클럽 코딩 테스트 스터디 미들러 35일차 -타겟 넘버(BFS)",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-35%EC%9D%BC%EC%B0%A8-%ED%83%80%EA%B2%9F-%EB%84%98%EB%B2%84BFS",
+    "date": "2024.08.26"
+  },
+  {
+    "title": "[Kotlin] 99 클럽 코딩 테스트 스터디 미들러 34일차 -타겟 넘버(DFS)",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-34%EC%9D%BC%EC%B0%A8-%ED%83%80%EA%B2%9F-%EB%84%98%EB%B2%84DFS",
+    "date": "2024.08.24"
+  },
+  {
+    "title": "[Kotlin] 99 클럽 코딩 테스트 스터디 미들러 33일차 - 리코쳇 로봇 (BFS)",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-33%EC%9D%BC%EC%B0%A8-%EB%A6%AC%EC%BD%94%EC%B3%87-%EB%A1%9C%EB%B4%87-BFS",
+    "date": "2024.08.23"
+  },
+  {
+    "title": "[Kotlin] 99 클럽 코딩 테스트 스터디 미들러 32일차 - 무인도 여행 (DFS)",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-32%EC%9D%BC%EC%B0%A8-%EB%AC%B4%EC%9D%B8%EB%8F%84-%EC%97%AC%ED%96%89-DFS",
+    "date": "2024.08.23"
+  },
+  {
+    "title": "[Kotlin] 99 클럽 코딩 테스트 스터디 미들러 31일차 - 점프 점프 (DFS)",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-31%EC%9D%BC%EC%B0%A8-%EC%A0%90%ED%94%84-%EC%A0%90%ED%94%84-DFS",
+    "date": "2024.08.22"
+  },
+  {
+    "title": "[Kotlin] 99 클럽 코딩 테스트 스터디 미들러 30일차 - Find Right Interval",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-30%EC%9D%BC%EC%B0%A8-Find-Right-Interval",
+    "date": "2024.08.20"
+  },
+  {
+    "title": "[Kotlin] 99 클럽 코딩 테스트 스터디 미들러 29일차 - Longest Increasing Subsequence",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-29%EC%9D%BC%EC%B0%A8-Longest-Increasing-Subsequence",
+    "date": "2024.08.20"
+  },
+  {
+    "title": "[Kotlin] 99 클럽 코딩 테스트 스터디 미들러 28일차 - 괄호 회전하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-28%EC%9D%BC%EC%B0%A8-%ED%95%A0%EC%9D%B8-%ED%96%89%EC%82%AC",
+    "date": "2024.08.18"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 미들러 27일차 - 할인 행사",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-27%EC%9D%BC%EC%B0%A8-%ED%95%A0%EC%9D%B8-%ED%96%89%EC%82%AC",
+    "date": "2024.08.17"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 미들러 26일차 - 달리기 경주",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-26%EC%9D%BC%EC%B0%A8-%EB%8B%AC%EB%A6%AC%EA%B8%B0-%EA%B2%BD%EC%A3%BC",
+    "date": "2024.08.16"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 미들러 25일차 - Evaluate Division",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-25%EC%9D%BC%EC%B0%A8-Evaluate-Division",
+    "date": "2024.08.16"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 미들러 24일차 - 대충 만든 자판",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-24%EC%9D%BC%EC%B0%A8-%EB%8C%80%EC%B6%A9-%EB%A7%8C%EB%93%A0-%EC%9E%90%ED%8C%90",
+    "date": "2024.08.14"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 미들러 23일차 - 마법의 엘리베이터",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-23%EC%9D%BC%EC%B0%A8-%EB%A7%88%EB%B2%95%EC%9D%98-%EC%97%98%EB%A6%AC%EB%B2%A0%EC%9D%B4%ED%84%B0",
+    "date": "2024.08.13"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 미들러 22일차 - 멀리 뛰기",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-22%EC%9D%BC%EC%B0%A8-%EB%A9%80%EB%A6%AC-%EB%9B%B0%EA%B8%B0",
+    "date": "2024.08.12"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 미들러 17일차 - 촌수 계산",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-17%EC%9D%BC%EC%B0%A8-%EC%B4%8C%EC%88%98-%EA%B3%84%EC%82%B0",
+    "date": "2024.08.08"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 미들러 16일차 - 모음 사전",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-16%EC%9D%BC%EC%B0%A8-%EB%AA%A8%EC%9D%8C-%EC%82%AC%EC%A0%84",
+    "date": "2024.08.06"
+  },
+  {
+    "title": "[Kotlin] 99 클럽 코딩 테스트 스터디 미들러 15일차 - Prefix and Suffix Search",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-15%EC%9D%BC%EC%B0%A8-Prefix-and-Suffix-Search",
+    "date": "2024.08.05"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 미들러 14일차 - 숫자 카드 2",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-14%EC%9D%BC%EC%B0%A8-%ED%95%98%EB%85%B8%EC%9D%B4%EC%9D%98-%ED%83%91",
+    "date": "2024.08.04"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 비기너 13일차 - 숫자 카드",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%B9%84%EA%B8%B0%EB%84%88-13%EC%9D%BC%EC%B0%A8-%EC%88%AB%EC%9E%90-%EC%B9%B4%EB%93%9C",
+    "date": "2024.08.03"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 비기너 12일차 - H-Index",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%B9%84%EA%B8%B0%EB%84%88-12%EC%9D%BC%EC%B0%A8-H-Index",
+    "date": "2024.08.02"
+  },
+  {
+    "title": "[Android / Kotlin] Compose Center Title Top App Bar - Title 가운데로 배치하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-Compose-Center-Title-Top-App-Bar-Title-%EA%B0%80%EC%9A%B4%EB%8D%B0%EB%A1%9C-%EB%B0%B0%EC%B9%98%ED%95%98%EA%B8%B0",
+    "date": "2024.08.02"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 비기너 11일차 - 카드 뭉치",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%B9%84%EA%B8%B0%EB%84%88-11%EC%9D%BC%EC%B0%A8-%EC%B9%B4%EB%93%9C-%EB%AD%89%EC%B9%98",
+    "date": "2024.08.01"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 비기너 10일차 - 이중우선순위큐",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%B9%84%EA%B8%B0%EB%84%88-10%EC%9D%BC%EC%B0%A8-%EC%9D%B4%EC%A4%91%EC%9A%B0%EC%84%A0%EC%88%9C%EC%9C%84%ED%81%90",
+    "date": "2024.07.31"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 비기너 9일차 - 더 맵게",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%B9%84%EA%B8%B0%EB%84%88-9%EC%9D%BC%EC%B0%A8-%EB%8D%94-%EB%A7%B5%EA%B2%8C",
+    "date": "2024.07.30"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 미들러 8일차 - 기능 개발",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-8%EC%9D%BC%EC%B0%A8-%EA%B8%B0%EB%8A%A5-%EA%B0%9C%EB%B0%9C",
+    "date": "2024.07.29"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 비기너 7일차 - 하노이의 탑",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%B9%84%EA%B8%B0%EB%84%88-7%EC%9D%BC%EC%B0%A8-%ED%95%98%EB%85%B8%EC%9D%B4%EC%9D%98-%ED%83%91",
+    "date": "2024.07.28"
+  },
+  {
+    "title": "99 클럽 코딩 테스트 스터디 미들러 6일차 - 의상",
+    "url": "https://yongdragon9819.tistory.com/entry/99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-6%EC%9D%BC%EC%B0%A8-%EC%9D%98%EC%83%81",
+    "date": "2024.07.27"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 미들러 5일차 - 전화번호 목록",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-5%EC%9D%BC%EC%B0%A8-%EC%A0%84%ED%99%94%EB%B2%88%ED%98%B8-%EB%AA%A9%EB%A1%9D",
+    "date": "2024.07.26"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 미들러 5일차 - JadenCase 문자열 만들기",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-5%EC%9D%BC%EC%B0%A8-JadenCase-%EB%AC%B8%EC%9E%90%EC%97%B4-%EB%A7%8C%EB%93%A4%EA%B8%B0",
+    "date": "2024.07.25"
+  },
+  {
+    "title": "[Android / Kotlin] Compose에서 Coil 라이브러리 활용하여 이미지, GIF 로딩",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-Compose%EC%97%90%EC%84%9C-Coil-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-%EC%9D%B4%EB%AF%B8%EC%A7%80-GIF-%EB%A1%9C%EB%94%A9",
+    "date": "2024.07.25"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 미들러 3일차 - 자연수 뒤집어 배열로 만들기",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%AF%B8%EB%93%A4%EB%9F%AC-3%EC%9D%BC%EC%B0%A8-%EC%9E%90%EC%97%B0%EC%88%98-%EB%92%A4%EC%A7%91%EC%96%B4-%EB%B0%B0%EC%97%B4%EB%A1%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0",
+    "date": "2024.07.24"
+  },
+  {
+    "title": "[Kotlin] 2차원 배열을 1차원으로 정리하는 방법s",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-2%EC%B0%A8%EC%9B%90-%EB%B0%B0%EC%97%B4%EC%9D%84-1%EC%B0%A8%EC%9B%90%EC%9C%BC%EB%A1%9C-%EC%A0%95%EB%A6%AC%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95s",
+    "date": "2024.07.23"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 비기너 2일차 - 평균 구하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%B9%84%EA%B8%B0%EB%84%88-2%EC%9D%BC%EC%B0%A8-%ED%8F%89%EA%B7%A0-%EA%B5%AC%ED%95%98%EA%B8%B0",
+    "date": "2024.07.23"
+  },
+  {
+    "title": "[Java / Kotlin] 99 클럽 코딩 테스트 스터디 비기너 1일차 - 자연수 뒤집어 배열로 만들기",
+    "url": "https://yongdragon9819.tistory.com/entry/Java-Kotlin-99-%ED%81%B4%EB%9F%BD-%EC%BD%94%EB%94%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%84%B0%EB%94%94-%EB%B9%84%EA%B8%B0%EB%84%88-1%EC%9D%BC%EC%B0%A8",
+    "date": "2024.07.22"
+  },
+  {
+    "title": "[Kotlin] HashMap을 특정 데이터 클래스로 변환",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-HashMap%EC%9D%84-%ED%8A%B9%EC%A0%95-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%81%B4%EB%9E%98%EC%8A%A4%EB%A1%9C-%EB%B3%80%ED%99%98",
+    "date": "2024.07.18"
+  },
+  {
+    "title": "[Android / Kotlin] Compose Custom Tab Row 사용하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-Compose-Custom-Tab-Row-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0",
+    "date": "2024.07.17"
+  },
+  {
+    "title": "[Kotlin] 2의 거듭제곱수",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-2%EC%9D%98-%EA%B1%B0%EB%93%AD%EC%A0%9C%EA%B3%B1%EC%88%98",
+    "date": "2024.07.10"
+  },
+  {
+    "title": "[Android / Compose] Skeleton Shimmer Effect 처리",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose-Skeleton-Shimmer-Effect-%EC%B2%98%EB%A6%AC",
+    "date": "2024.07.09"
+  },
+  {
+    "title": "[Kotlin / DP] BOJ - 이친수",
+    "url": "https://yongdragon9819.tistory.com/entry/DP-BOJ-%EC%9D%B4%EC%B9%9C%EC%88%98",
+    "date": "2024.06.26"
+  },
+  {
+    "title": "[Android / Kotlin] Compose Coil 이미지 로딩 시, Error 디버깅",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-Compose-Coil-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%A1%9C%EB%94%A9-%EC%8B%9C-Error-%EB%94%94%EB%B2%84%EA%B9%85",
+    "date": "2024.06.26"
+  },
+  {
+    "title": "선형 구조 VS 비선형 구조",
+    "url": "https://yongdragon9819.tistory.com/entry/%EC%84%A0%ED%98%95-%EA%B5%AC%EC%A1%B0-VS-%EB%B9%84%EC%84%A0%ED%98%95-%EA%B5%AC%EC%A1%B0",
+    "date": "2024.06.20"
+  },
+  {
+    "title": "[Kotlin - 프로그래머스] 크레인 인형뽑기",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%ED%81%AC%EB%A0%88%EC%9D%B8-%EC%9D%B8%ED%98%95%EB%BD%91%EA%B8%B0",
+    "date": "2024.06.01"
+  },
+  {
+    "title": "[Android / Compose] java.lang.illegalstateexception: viewtreelifecycleowner not found from android.widget.framelayout in ~ 대응",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose-javalangillegalstateexception-viewtreelifecycleowner-not-found-from-androidwidgetframelayout-in-%EB%8C%80%EC%9D%91",
+    "date": "2024.05.30"
+  },
+  {
+    "title": "[Kotlin] 소수 구하기 - 에라토스테네스의 체",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%EC%86%8C%EC%88%98-%EA%B5%AC%ED%95%98%EA%B8%B0-%EC%97%90%EB%9D%BC%ED%86%A0%EC%8A%A4%ED%85%8C%EB%84%A4%EC%8A%A4%EC%9D%98-%EC%B2%B4",
+    "date": "2024.05.29"
+  },
+  {
+    "title": "[Kotlin] 백준 - 10431 줄세우기",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%EB%B0%B1%EC%A4%80-10431-%EC%A4%84%EC%84%B8%EC%9A%B0%EA%B8%B0",
+    "date": "2024.05.23"
+  },
+  {
+    "title": "[Kotlin] 백준 - 1236 성지키기",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%EB%B0%B1%EC%A4%80-1236-%EC%84%B1%EC%A7%80%ED%82%A4%EA%B8%B0",
+    "date": "2024.05.23"
+  },
+  {
+    "title": "[Android] Kotlin Compose 활용해서 Tooltip 직접 구현하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-Compose-%ED%99%9C%EC%9A%A9%ED%95%B4%EC%84%9C-Tooltip-%EC%A7%81%EC%A0%91-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0",
+    "date": "2024.05.21"
+  },
+  {
+    "title": "[Kotlin] BOJ 11655 - ROT13 알고리즘 풀이",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-BOJ-11655-ROT13-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%ED%92%80%EC%9D%B4",
+    "date": "2024.05.20"
+  },
+  {
+    "title": "[Kotlin] - 파스칼의 삼각형 구현",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%ED%8C%8C%EC%8A%A4%EC%B9%BC%EC%9D%98-%EC%82%BC%EA%B0%81%ED%98%95-%EA%B5%AC%ED%98%84",
+    "date": "2024.05.14"
+  },
+  {
+    "title": "[Android] Compose에서 exoPlayer 활용 mp4 영상 재생",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose%EC%97%90%EC%84%9C-exoPlayer-%ED%99%9C%EC%9A%A9-mp4-%EC%98%81%EC%83%81-%EC%9E%AC%EC%83%9D",
+    "date": "2024.05.03"
+  },
+  {
+    "title": "[Kotlin] 반올림 처리 - DecimalFormat",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%EB%B0%98%EC%98%AC%EB%A6%BC-%EC%B2%98%EB%A6%AC-DecimalFormat",
+    "date": "2024.04.19"
+  },
+  {
+    "title": "[Kotlin] 컬렉션 함수와 친해지기 - partition, group, filter",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%EC%BB%AC%EB%A0%89%EC%85%98-%ED%95%A8%EC%88%98%EC%99%80-%EC%B9%9C%ED%95%B4%EC%A7%80%EA%B8%B0-partition-group-filter",
+    "date": "2024.04.19"
+  },
+  {
+    "title": "BOJ - 1406 에디터",
+    "url": "https://yongdragon9819.tistory.com/entry/BOJ-1406-%EC%97%90%EB%94%94%ED%84%B0",
+    "date": "2024.03.28"
+  },
+  {
+    "title": "[Kotlin] 문자열을 일정 Size로 분할하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-%EB%AC%B8%EC%9E%90%EC%97%B4%EC%9D%84-%EC%9D%BC%EC%A0%95-Size%EB%A1%9C-%EB%B6%84%ED%95%A0%ED%95%98%EA%B8%B0",
+    "date": "2024.03.14"
+  },
+  {
+    "title": "백준 허브를 활용하여 백준, 프로그래머스 문제 풀이를 자동으로 깃허브에 업로드하기",
+    "url": "https://yongdragon9819.tistory.com/entry/%EB%B0%B1%EC%A4%80-%ED%97%88%EB%B8%8C%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-%EB%B0%B1%EC%A4%80-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EB%AC%B8%EC%A0%9C-%ED%92%80%EC%9D%B4%EB%A5%BC-%EC%9E%90%EB%8F%99%EC%9C%BC%EB%A1%9C-%EA%B9%83%ED%97%88%EB%B8%8C%EC%97%90-%EC%97%85%EB%A1%9C%EB%93%9C%ED%95%98%EA%B8%B0",
+    "date": "2024.03.14"
+  },
+  {
+    "title": "[Android] Clickable Toast 구현하기 (Dialog 활용)",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Clickable-Toast-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-Dialog-%ED%99%9C%EC%9A%A9",
+    "date": "2024.03.08"
+  },
+  {
+    "title": "[Android] Out Of Memory를 대비하여 큰 Bitmap 효율적으로 처리하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Out-Of-Memory%EB%A5%BC-%EB%8C%80%EB%B9%84%ED%95%98%EC%97%AC-%ED%81%B0-Bitmap-%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9C%BC%EB%A1%9C-%EC%B2%98%EB%A6%AC%ED%95%98%EA%B8%B0",
+    "date": "2024.02.23"
+  },
+  {
+    "title": "[TIL] Realm DB 마이그레이션 시, Nullable 필드 추가하기",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-Realm-DB-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98-%EC%8B%9C-Nullable-%ED%95%84%EB%93%9C-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0",
+    "date": "2024.02.21"
+  },
+  {
+    "title": "[TIL] Kotlin - 배열 간의 합집합, 교집합, 차집합 구하기",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-Kotlin-%EB%B0%B0%EC%97%B4-%EA%B0%84%EC%9D%98-%ED%95%A9%EC%A7%91%ED%95%A9-%EA%B5%90%EC%A7%91%ED%95%A9-%EC%B0%A8%EC%A7%91%ED%95%A9-%EA%B5%AC%ED%95%98%EA%B8%B0",
+    "date": "2024.02.19"
+  },
+  {
+    "title": "[Android] 구글 플레이 스토어 사용 가능 여부 판단하기 - How to check if user has Google Play Services enabled",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EA%B5%AC%EA%B8%80-%ED%94%8C%EB%A0%88%EC%9D%B4-%EC%8A%A4%ED%86%A0%EC%96%B4-%EC%82%AC%EC%9A%A9-%EA%B0%80%EB%8A%A5-%EC%97%AC%EB%B6%80-%ED%8C%90%EB%8B%A8%ED%95%98%EA%B8%B0-How-to-check-if-user-has-Google-Play-Services-enabled",
+    "date": "2024.02.07"
+  },
+  {
+    "title": "[Android / Compose] 기존 XML 기반 프로젝트에 Compose 도입하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose-%EA%B8%B0%EC%A1%B4-XML-%EA%B8%B0%EB%B0%98-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%97%90-Compose-%EB%8F%84%EC%9E%85%ED%95%98%EA%B8%B0",
+    "date": "2024.01.31"
+  },
+  {
+    "title": "[Android] ViewBinding Adapter 적용",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-ViewBinding-Adapter-%EC%A0%81%EC%9A%A9",
+    "date": "2024.01.31"
+  },
+  {
+    "title": "[Android, Retrofit] Multipart를 활용하여 서버에 이미지 파일 데이터 전송",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Retrofit-Multipart%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-%EC%84%9C%EB%B2%84%EC%97%90-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%8C%8C%EC%9D%BC-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%84%EC%86%A1",
+    "date": "2024.01.29"
+  },
+  {
+    "title": "[Android] SharedPreferences 간단하게 활용하는 라이브러리 'Prefs'",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-SharedPreferences-%EA%B0%84%EB%8B%A8%ED%95%98%EA%B2%8C-%ED%99%9C%EC%9A%A9%ED%95%98%EB%8A%94-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-Prefs",
+    "date": "2024.01.25"
+  },
+  {
+    "title": "[Android] DiffUtil 활용하여 RecyclerView 성능 향상",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-DiffUtil-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-RecyclerView-%EC%84%B1%EB%8A%A5-%ED%96%A5%EC%83%81",
+    "date": "2024.01.24"
+  },
+  {
+    "title": "[Android / Compose] Compose-Lottie 애니메이션 동작 후, Intent 처리 (Custom Splash Screen)",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Compose-Compose-Lottie-%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98-%EB%8F%99%EC%9E%91-%ED%9B%84-Intent-%EC%B2%98%EB%A6%AC-Custom-Splash-Screen",
+    "date": "2024.01.23"
+  },
+  {
+    "title": "[TIL] - Android Compose에서 Context 사용하기",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-Android-Compose%EC%97%90%EC%84%9C-Context-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0",
+    "date": "2024.01.23"
+  },
+  {
+    "title": "[Android] 안드로이드 스튜디오 와이파이 활용 무선 디버깅 연결 방법",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4-%EC%99%80%EC%9D%B4%ED%8C%8C%EC%9D%B4-%ED%99%9C%EC%9A%A9-%EB%AC%B4%EC%84%A0-%EB%94%94%EB%B2%84%EA%B9%85-%EC%97%B0%EA%B2%B0-%EB%B0%A9%EB%B2%95",
+    "date": "2024.01.18"
+  },
+  {
+    "title": "[Android] Room DB (1) - Room DB 기본 설정 후, 데이터 저장 및 가져오기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Room-DB-1-Room-DB-%EA%B8%B0%EB%B3%B8-%EC%84%A4%EC%A0%95-%ED%9B%84-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%80%EC%9E%A5-%EB%B0%8F-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0",
+    "date": "2024.01.09"
+  },
+  {
+    "title": "[Android] Fatal Exception: java.util.ConcurrentModificationException 동시성 문제 해결",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Fatal-Exception-javautilConcurrentModificationException-%EB%8F%99%EC%8B%9C%EC%84%B1-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0",
+    "date": "2024.01.06"
+  },
+  {
+    "title": "[TIL] 두 개의 리스트 묶어서 Map으로 변환하기 - zip(), toMap()",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-%EB%91%90-%EA%B0%9C%EC%9D%98-%EB%A6%AC%EC%8A%A4%ED%8A%B8-%EB%AC%B6%EC%96%B4%EC%84%9C-Map%EC%9C%BC%EB%A1%9C-%EB%B3%80%ED%99%98%ED%95%98%EA%B8%B0-zip-toMap",
+    "date": "2024.01.06"
+  },
+  {
+    "title": "[Android] Application 강제 종료하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Application-%EA%B0%95%EC%A0%9C-%EC%A2%85%EB%A3%8C%ED%95%98%EA%B8%B0",
+    "date": "2024.01.04"
+  },
+  {
+    "title": "[TIL] Android - java.io.EOFException: End of input at line 1 column 1 path $ 대응",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-Android-javaioEOFException-End-of-input-at-line-1-column-1-path-%EB%8C%80%EC%9D%91",
+    "date": "2024.01.04"
+  },
+  {
+    "title": "[TIL] Kotlin - flatten() Method",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-Kotlin-flatten-Method",
+    "date": "2024.01.01"
+  },
+  {
+    "title": "[Android] 플레이스토어 업로드 버전과 현재 버전 비교를 통해 업데이트 필요 여부 판단 - AppUpdateManagerFactory",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%ED%94%8C%EB%A0%88%EC%9D%B4%EC%8A%A4%ED%86%A0%EC%96%B4-%EC%97%85%EB%A1%9C%EB%93%9C-%EB%B2%84%EC%A0%84%EA%B3%BC-%ED%98%84%EC%9E%AC-%EB%B2%84%EC%A0%84-%EB%B9%84%EA%B5%90%EB%A5%BC-%ED%86%B5%ED%95%B4-%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8-%ED%95%84%EC%9A%94-%EC%97%AC%EB%B6%80-%ED%8C%90%EB%8B%A8-AppUpdateManagerFactory",
+    "date": "2023.12.29"
+  },
+  {
+    "title": "[TIL] Android Device Id, Name, OsVersion 정보 확인하기",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-Android-Device-Id-Name-OsVersion-%EC%A0%95%EB%B3%B4-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0",
+    "date": "2023.12.29"
+  },
+  {
+    "title": "[TIL] IllegalArgumentException: View=DecorView not attached to window manager",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-IllegalArgumentException-ViewDecorView-not-attached-to-window-manager",
+    "date": "2023.12.29"
+  },
+  {
+    "title": "[Android] WorkManager를 활용하여 15분 마다 비동기 작업 수행하기",
+    "url": "https://yongdragon9819.tistory.com/entry/AndroidWorkManager%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-15%EB%B6%84-%EB%A7%88%EB%8B%A4-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%9E%91%EC%97%85-%EC%88%98%ED%96%89%ED%95%98%EA%B8%B0",
+    "date": "2023.12.04"
+  },
+  {
+    "title": "[Android] registerForActivityResult 활용하여 갤러리 저장소의 사진 선택하여 가져오기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-registerForActivityResult-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-%EA%B0%A4%EB%9F%AC%EB%A6%AC-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%9D%98-%EC%82%AC%EC%A7%84-%EC%84%A0%ED%83%9D%ED%95%98%EC%97%AC-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0",
+    "date": "2023.11.24"
+  },
+  {
+    "title": "[Android] Coroutine 활용 AsyncTask deprecated 간단 대응",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Coroutine-%ED%99%9C%EC%9A%A9-AsyncTask-deprecated-%EA%B0%84%EB%8B%A8-%EB%8C%80%EC%9D%91",
+    "date": "2023.11.24"
+  },
+  {
+    "title": "[Android] 사용자가 시스템 접근 권한을 2회 이상(영구적) 거부했을 시, 처리",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-%EC%82%AC%EC%9A%A9%EC%9E%90%EA%B0%80-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%A0%91%EA%B7%BC-%EA%B6%8C%ED%95%9C%EC%9D%84-2%ED%9A%8C-%EC%9D%B4%EC%83%81%EC%98%81%EA%B5%AC%EC%A0%81-%EA%B1%B0%EB%B6%80%ED%96%88%EC%9D%84-%EC%8B%9C-%EC%B2%98%EB%A6%AC",
+    "date": "2023.11.23"
+  },
+  {
+    "title": "[Android] Proguard 활성화 & rules 기입",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Proguard-%ED%99%9C%EC%84%B1%ED%99%94-rules-%EA%B8%B0%EC%9E%85",
+    "date": "2023.11.21"
+  },
+  {
+    "title": "[Android] Google - Zip Path Traversal 경고 해결",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Google-Zip-Path-Traversal-%EA%B2%BD%EA%B3%A0-%ED%95%B4%EA%B2%B0",
+    "date": "2023.11.21"
+  },
+  {
+    "title": "[Android] onBackPressed deprecated, onBackPressedCallback로 대체하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-onBackPressed-deprecated-onBackPressedCallback%EB%A1%9C-%EB%8C%80%EC%B2%B4%ED%95%98%EA%B8%B0",
+    "date": "2023.11.20"
+  },
+  {
+    "title": "[Android] NTP 서버를 활용하여 실제 시간과 Device 시간 비교",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-NTP-%EC%84%9C%EB%B2%84%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-%EC%8B%A4%EC%A0%9C-%EC%8B%9C%EA%B0%84%EA%B3%BC-Device-%EC%8B%9C%EA%B0%84-%EB%B9%84%EA%B5%90",
+    "date": "2023.11.20"
+  },
+  {
+    "title": "[Android] Error Body로 Api 통신 실패 내용 확인하기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Error-Body%EB%A1%9C-Api-%ED%86%B5%EC%8B%A0-%EC%8B%A4%ED%8C%A8-%EB%82%B4%EC%9A%A9-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0",
+    "date": "2023.11.20"
+  },
+  {
+    "title": "[Android] DELETE Non-body HTTP method cannot contain @Body 대응",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-DELETE-Non-body-HTTP-method-cannot-contain-Body-%EB%8C%80%EC%9D%91",
+    "date": "2023.11.17"
+  },
+  {
+    "title": "[Android] Custom Exception 활용 및 데이터 Message 로그 처리",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Custom-Exception-%ED%99%9C%EC%9A%A9-%EB%B0%8F-%EB%8D%B0%EC%9D%B4%ED%84%B0-Message-%EB%A1%9C%EA%B7%B8-%EC%B2%98%EB%A6%AC",
+    "date": "2023.11.17"
+  },
+  {
+    "title": "[Android] OkHttpClient 활용하여 통신에 대한 Request Body 확인하기",
+    "url": "https://yongdragon9819.tistory.com/entry/OkHttpClient-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-%ED%86%B5%EC%8B%A0%EC%97%90-%EB%8C%80%ED%95%9C-Request-Body-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0",
+    "date": "2023.11.15"
+  },
+  {
+    "title": "Widget에서 java.lang.IllegalArgumentException: RemoteViews for widget update exceeds maximum bitmap memory usage 발생",
+    "url": "https://yongdragon9819.tistory.com/entry/Widget%EC%97%90%EC%84%9C-javalangIllegalArgumentException-RemoteViews-for-widget-update-exceeds-maximum-bitmap-memory-usage-%EB%B0%9C%EC%83%9D",
+    "date": "2023.11.15"
+  },
+  {
+    "title": "[TIL] - Android Status Bar, Navigation Bar Icon 색상 변경",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-Android-Status-Bar-Navigation-Bar-Icon-%EC%83%89%EC%83%81-%EB%B3%80%EA%B2%BD",
+    "date": "2023.06.29"
+  },
+  {
+    "title": "[프로그래머스] 문자열 뒤의 n글자 (Kotlin)",
+    "url": "https://yongdragon9819.tistory.com/entry/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EB%AC%B8%EC%9E%90%EC%97%B4-%EB%92%A4%EC%9D%98-n%EA%B8%80%EC%9E%90-Kotlin",
+    "date": "2023.05.28"
+  },
+  {
+    "title": "[프로그래머스] 더 크게 합치기 (Kotlin)",
+    "url": "https://yongdragon9819.tistory.com/entry/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EB%8D%94-%ED%81%AC%EA%B2%8C-%ED%95%A9%EC%B9%98%EA%B8%B0-Kotlin",
+    "date": "2023.05.25"
+  },
+  {
+    "title": "[프로그래머스] 삼총사 (Kotlin)",
+    "url": "https://yongdragon9819.tistory.com/entry/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%82%BC%EC%B4%9D%EC%82%AC-Kotlin",
+    "date": "2023.04.29"
+  },
+  {
+    "title": "[프로그래머스] 모의고사 (Kotlin)",
+    "url": "https://yongdragon9819.tistory.com/entry/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC-Kotlin",
+    "date": "2023.04.14"
+  },
+  {
+    "title": "[백준] 균형잡힌 세상 (Kotlin / Stack)",
+    "url": "https://yongdragon9819.tistory.com/entry/%EB%B0%B1%EC%A4%80-%EA%B7%A0%ED%98%95%EC%9E%A1%ED%9E%8C-%EC%84%B8%EC%83%81-Kotlin-Stack",
+    "date": "2023.04.13"
+  },
+  {
+    "title": "[Kotlin] What's const?",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-Whats-const",
+    "date": "2023.04.13"
+  },
+  {
+    "title": "[프로그래머스] 직사각형 넓이 구하기 (Kotlin)",
+    "url": "https://yongdragon9819.tistory.com/entry/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%A7%81%EC%82%AC%EA%B0%81%ED%98%95-%EB%84%93%EC%9D%B4-%EA%B5%AC%ED%95%98%EA%B8%B0-Kotlin",
+    "date": "2023.04.12"
+  },
+  {
+    "title": "[프로그래머스] 이진수 더하기 (Kotlin)",
+    "url": "https://yongdragon9819.tistory.com/entry/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%9D%B4%EC%A7%84%EC%88%98-%EB%8D%94%ED%95%98%EA%B8%B0-Kotlin",
+    "date": "2023.04.11"
+  },
+  {
+    "title": "[TIL] Kotlin - Retrofit에서 Cache 기능 제거하기",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-Kotlin-Retrofit%EC%97%90%EC%84%9C-Cache-%EA%B8%B0%EB%8A%A5-%EC%A0%9C%EA%B1%B0%ED%95%98%EA%B8%B0",
+    "date": "2023.04.11"
+  },
+  {
+    "title": "[프로그래머스] 가장 가까운 같은 글자 (Kotlin)",
+    "url": "https://yongdragon9819.tistory.com/entry/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EA%B0%80%EC%9E%A5-%EA%B0%80%EA%B9%8C%EC%9A%B4-%EA%B0%99%EC%9D%80-%EA%B8%80%EC%9E%90",
+    "date": "2023.04.10"
+  },
+  {
+    "title": "[프로그래머스] 문자열 내 마음대로 정렬하기 (Kotlin)",
+    "url": "https://yongdragon9819.tistory.com/entry/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EB%AC%B8%EC%9E%90%EC%97%B4-%EB%82%B4-%EB%A7%88%EC%9D%8C%EB%8C%80%EB%A1%9C-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0-Kotlin",
+    "date": "2023.04.07"
+  },
+  {
+    "title": "[프로그래머스] K번째수 (Kotlin)",
+    "url": "https://yongdragon9819.tistory.com/entry/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-K%EB%B2%88%EC%A7%B8%EC%88%98-Kotlin",
+    "date": "2023.04.06"
+  },
+  {
+    "title": "[프로그래머스] 팩토리얼 (Kotlin)",
+    "url": "https://yongdragon9819.tistory.com/entry/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%ED%8C%A9%ED%86%A0%EB%A6%AC%EC%96%BC-Kotlin",
+    "date": "2023.04.05"
+  },
+  {
+    "title": "[CS] Process & Thread",
+    "url": "https://yongdragon9819.tistory.com/entry/CS-Process-Thread",
+    "date": "2023.03.22"
+  },
+  {
+    "title": "[Android / Kotlin] What's Moshi??",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-Whats-Moshi",
+    "date": "2023.03.16"
+  },
+  {
+    "title": "[Kotlin] Sealed Class",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-Sealed-Class",
+    "date": "2023.03.14"
+  },
+  {
+    "title": "[Kotlin] Enum Class",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-Enum-Class",
+    "date": "2023.03.14"
+  },
+  {
+    "title": "[Kotlin] Singleton Pattern",
+    "url": "https://yongdragon9819.tistory.com/entry/Kotlin-Singleton-Pattern",
+    "date": "2023.03.14"
+  },
+  {
+    "title": "TIL - Retrofit java.io.EOFException: End of input at line 1 column 1 path : empty body",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-Retrofit-javaioEOFException-End-of-input-at-line-1-column-1-path-empty-body",
+    "date": "2023.01.31"
+  },
+  {
+    "title": "TIL - Android 애니메이션 끄기 ON / OFF 감지하기",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-Android-%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98-%EB%81%84%EA%B8%B0-ON-OFF-%EA%B0%90%EC%A7%80%ED%95%98%EA%B8%B0",
+    "date": "2023.01.19"
+  },
+  {
+    "title": "TIL - EditText에 전화번호 형식 입력하기",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-EditText%EC%97%90-%EC%A0%84%ED%99%94%EB%B2%88%ED%98%B8-%ED%98%95%EC%8B%9D-%EC%9E%85%EB%A0%A5%ED%95%98%EA%B8%B0",
+    "date": "2023.01.16"
+  },
+  {
+    "title": "TIL - Android Bottom Sheet navigationBarColor",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-Android-Bottom-Sheet-navigationBarColor",
+    "date": "2023.01.12"
+  },
+  {
+    "title": "[Android / Kotlin] Chrome Custom Tab Service",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-Chrome-Custom-Tab-Service",
+    "date": "2023.01.11"
+  },
+  {
+    "title": "TIL - Android OutLineProvider : ImageView의 Radius 지정하기",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-Android-OutLineProvider-ImageView%EC%9D%98-Radius-%EC%A7%80%EC%A0%95%ED%95%98%EA%B8%B0",
+    "date": "2023.01.10"
+  },
+  {
+    "title": "TIL - Android CircleImageView",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-Android-CircleImageView",
+    "date": "2023.01.06"
+  },
+  {
+    "title": "TIL - ViewBinding error : too many parameters",
+    "url": "https://yongdragon9819.tistory.com/entry/TIL-ViewBinding-error-too-many-parameters",
+    "date": "2023.01.05"
+  },
+  {
+    "title": "[Android / Kotlin] registerForActivityResult() 사용해보기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-registerForActivityResult-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EA%B8%B0",
+    "date": "2023.01.01"
+  },
+  {
+    "title": "[Android / Kotlin] 안드로이드 Tooltip(Balloon) 팝업",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-kotlin-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-TooltipBalloon-%ED%8C%9D%EC%97%85",
+    "date": "2022.12.02"
+  },
+  {
+    "title": "[Android / Kotlin] Contact(연락처 연동) 활용 데이터 가져오기",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-Contact%EC%97%B0%EB%9D%BD%EC%B2%98-%EC%97%B0%EB%8F%99-%ED%99%9C%EC%9A%A9-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0",
+    "date": "2022.12.02"
+  },
+  {
+    "title": "[Android / Kotlin] 정규표현식 활용 이메일, 전화번호 형식 검사",
+    "url": "https://yongdragon9819.tistory.com/entry/Android-Kotlin-%EC%A0%95%EA%B7%9C%ED%91%9C%ED%98%84%EC%8B%9D-%ED%99%9C%EC%9A%A9-%EC%9D%B4%EB%A9%94%EC%9D%BC-%EC%A0%84%ED%99%94%EB%B2%88%ED%98%B8-%ED%98%95%EC%8B%9D-%EA%B2%80%EC%82%AC",
+    "date": "2022.11.18"
+  }
+]
