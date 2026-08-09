@@ -77,7 +77,43 @@
 - `BaseLayout` — 헤더(로고/nav), 터미널풍 status line, footer
 - `PostLayout` — 포스트 헤더 + 사이드바(날짜/카테고리/태그) + 본문 2컬럼 그리드
 - `PostRow` — 목록/카테고리 페이지 공용 글 목록 행
-- 페이지: `/`(목록), `/posts/[slug]`, `/category/[category]`, `/about`, `/tistory`, `/rss.xml`
+- 페이지: `/`(목록), `/posts/[slug]`, `/category/[category]`, `/tag/[tag]`, `/tags`, `/search`,
+  `/about`, `/tistory`, `/rss.xml`
+
+### 태그
+
+`posts` 컬렉션의 기존 `tags` 필드를 실제로 연결했다. `PostRow`(목록)와 `PostLayout` 사이드바에서
+태그가 `/tag/[tag]`로 링크되고, `/tags`는 전체 태그를 글 수 기준으로 정렬해 보여주는 인덱스다.
+카테고리(4종 고정)와 달리 태그는 자유 어휘라 별도 스키마 enum 없이 문자열 그대로 사용한다.
+
+### 검색 — Pagefind
+
+빌드 시점에 정적으로 색인하는 [Pagefind](https://pagefind.app)를 붙였다. 제목만 찾는 게 아니라
+본문 전체를 검색해야 실용적이라고 판단해, `/tistory`처럼 클라이언트 사이드 문자열 매칭 대신
+이 방식을 택했다.
+
+- `package.json`의 `postbuild` 스크립트(`pagefind --site dist`)가 `astro build` 직후 자동 실행되어
+  `dist/pagefind/`에 색인을 만든다 (npm이 `build` 실행 시 `postbuild`를 자동으로 이어서 실행하는
+  라이프사이클 훅을 사용 — CI 워크플로우 수정 불필요)
+- `PostLayout`의 `<article>`에 `data-pagefind-body`를 달아 **포스트 본문만** 색인 대상으로
+  한정했다 (nav, about, tistory 아카이브 302개 링크 같은 노이즈 제외). 사이드바는
+  `data-pagefind-ignore`로 제외
+- `/search` 페이지는 Pagefind의 저수준 JS API(`pagefind.search()`)를 직접 호출해 터미널 톤에
+  맞춘 커스텀 결과 UI를 그린다 (Pagefind 기본 제공 UI 위젯은 쓰지 않음)
+- **주의 — Vite 빌드 이슈**: `import('/pagefind/pagefind.js')`를 그냥 쓰면 Vite가
+  `@vite-ignore`를 붙여도 여전히 프리로드 헬퍼로 감싸면서 `__VITE_PRELOAD__` 참조 오류를 낸다
+  (해당 파일은 `postbuild`가 끝나야 생기므로 Vite가 정적 분석할 수 없는데, 그 사실과 무관하게
+  래핑만 실행되는 Vite의 알려진 동작). `new Function('specifier', 'return import(specifier)')`로
+  import 호출을 문자열 함수 본문 안에 숨겨 Vite의 정적 분석 자체를 우회해서 해결했다
+  (`src/pages/search.astro`)
+- **주의 — Astro 스코프드 스타일**: 검색 결과 DOM은 `innerHTML`로 런타임에 삽입되므로 Astro가
+  붙이는 `data-astro-cid-*` 스코프 속성이 적용되지 않는다. 결과 관련 스타일(`.result`, `mark`
+  하이라이트 등)은 반드시 `<style is:global>` 블록에 둬야 한다 — 처음엔 일반 스코프드
+  `<style>`에 넣었다가 브라우저 기본 `<mark>` 노란색이 그대로 나오는 걸 보고 발견/수정했다
+- `npm run dev`에서는 색인이 없어 검색이 "프로덕션 빌드에서만 생성됩니다" 안내만 뜬다 — 로컬
+  검증은 `npm run build && npm run preview`로 한다
+
+### `/tistory` — 예전 글 아카이브
 
 ### `/tistory` — 예전 글 아카이브
 
@@ -111,16 +147,18 @@
 - 다크 테마 전용으로 시작 (라이트 토글, accent 컬러 선택 UI는 1차 범위 제외)
 - 콘텐츠 관리: Markdown 파일 직접 작성, 별도 CMS 없음
 - 배포: GitHub Pages + GitHub Actions (기존 legacy 브랜치 서빙 방식에서 전환)
-- 댓글/검색/다국어/커스텀 도메인은 1차 범위 밖 — 필요 시 후속 논의
+- 댓글/다국어/커스텀 도메인은 1차 범위 밖 — 필요 시 후속 논의 (태그, 검색은 구현 완료)
 
 ## Verification run
 
-- `npm run build` — 성공 (7 페이지 생성)
-- 로컬 프리뷰(`npm run dev`)로 `/`, `/posts/blog-launch`, `/about`, `/category/dev-log` 브라우저
-  렌더링 확인 — 데스크톱(1200px)과 모바일(375px) 두 뷰포트 모두 확인, 375px에서 가로 스크롤
-  없음(scrollWidth === clientWidth) 확인
+- `npm run build` — 성공, `postbuild`(Pagefind 색인)까지 정상 실행
+- 로컬 프리뷰로 `/`, `/posts/blog-launch`, `/about`, `/category/dev-log`, `/tags`, `/tag/astro`,
+  `/search`, `/tistory` 브라우저 렌더링 확인 — 데스크톱(1200px)과 모바일(375px) 두 뷰포트 모두
+  확인, 모든 페이지에서 가로 스크롤 없음(scrollWidth === clientWidth) 확인
+- 검색: `npm run build && npm run preview`로 "Markdown" 검색 시 실제 결과 1건, 하이라이트·볼드
+  타이틀 등 스타일 정상 적용 확인. `npm run dev`(색인 없음)에서는 안내 메시지로 정상 대체됨 확인
 - 폰트 로드 확인: `document.fonts`에서 `Pretendard Variable` status `loaded` 확인
 - 색상 대비 계산: 위 표 참고, 전부 AA 통과
 - 미검증/리스크: 코드 하이라이팅이 들어간 실제 포스트에서의 `pre`/`code` 가독성(현재는 샘플
-  포스트에 코드 블록 없음), 스크린리더 대상 접근성 점검, 실기기(비-에뮬레이션) 렌더링은
-  아직 실행하지 않음
+  포스트에 코드 블록 없음), 스크린리더 대상 접근성 점검, 실기기(비-에뮬레이션) 렌더링, 글이
+  많아졌을 때 Pagefind 다국어(한국어 stemming 미지원) 검색 품질은 아직 검증하지 않음

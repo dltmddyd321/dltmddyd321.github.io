@@ -22,6 +22,7 @@ const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.
         description={post.data.description}
         pubDate={post.data.pubDate}
         category={post.data.category}
+        tags={post.data.tags}
       />
     ))}
   </section>

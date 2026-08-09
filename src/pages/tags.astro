@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const counts = new Map<string, number>();
+for (const post of allPosts) {
+  for (const tag of post.data.tags) {
+    counts.set(tag, (counts.get(tag) ?? 0) + 1);
+  }
+}
+const tags = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+---
+
+<BaseLayout title="Tags" statusLine={`$ ls ./tags | wc -l  →  ${tags.length}`}>
+  <section class="hero">
+    <p class="kicker mono">&gt; tags</p>
+    <h1>태그로 모아보기</h1>
+  </section>
+
+  <ul class="tag-grid">
+    {tags.length === 0 && <p class="muted">아직 태그가 붙은 글이 없습니다.</p>}
+    {tags.map(([tag, count]) => (
+      <li>
+        <a class="tag-card" href={`/tag/${tag}`}>
+          <span class="mono">#{tag}</span>
+          <span class="muted mono count">{count}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 8px 0 36px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+
+  .kicker {
+    color: var(--accent);
+    font-size: 0.8rem;
+    margin: 0 0 12px;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    margin: 0;
+  }
+
+  .tag-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+  }
+
+  .tag-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-size: 0.9rem;
+  }
+
+  .tag-card:hover {
+    border-color: var(--accent-line);
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .count {
+    font-size: 0.78rem;
+  }
+</style>

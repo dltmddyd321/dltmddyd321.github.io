@@ -2,32 +2,32 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostRow from '../../components/PostRow.astro';
-import { CATEGORIES, categoryLabel } from '../../lib/categories';
 
 export async function getStaticPaths() {
-  return Object.keys(CATEGORIES).map((category) => ({ params: { category } }));
+  const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+  const tags = new Set<string>();
+  for (const post of allPosts) {
+    for (const tag of post.data.tags) tags.add(tag);
+  }
+  return [...tags].map((tag) => ({ params: { tag } }));
 }
 
-const { category } = Astro.params;
+const { tag } = Astro.params;
 
 const allPosts = await getCollection(
   'posts',
-  ({ data }) => !data.draft && data.category === category,
+  ({ data }) => !data.draft && data.tags.includes(tag as string),
 );
 const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<BaseLayout
-  title={categoryLabel(category as string)}
-  statusLine={`$ grep -rl "category: ${category}" ./posts  →  ${posts.length}`}
->
+<BaseLayout title={`#${tag}`} statusLine={`$ grep -rl "tags:.*${tag}" ./posts  →  ${posts.length}`}>
   <section class="hero">
-    <p class="kicker mono">&gt; category</p>
-    <h1>{categoryLabel(category as string)}</h1>
+    <p class="kicker mono">&gt; tag</p>
+    <h1>#{tag}</h1>
   </section>
 
   <section class="list">
-    {posts.length === 0 && <p class="muted">이 카테고리에는 아직 글이 없습니다.</p>}
     {posts.map((post) => (
       <PostRow
         slug={post.id}
