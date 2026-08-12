@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { SITE } from '../lib/site';
+import { CATEGORIES, CATEGORY_KEYS } from '../lib/categories';
 
 interface Props {
   title: string;
@@ -89,10 +90,9 @@ const ogImageUrl = new URL(SITE.ogImage, SITE.url).href;
         </a>
         <nav>
           <a href="/">Posts</a>
-          <a href="/category/insight">Insight</a>
-          <a href="/category/dev-log">Dev Log</a>
-          <a href="/category/archive">Archive</a>
-          <a href="/category/ai-news">AI News</a>
+          {CATEGORY_KEYS.map((key) => (
+            <a href={`/category/${key}`}>{CATEGORIES[key].label}</a>
+          ))}
           <a href="/tags">Tags</a>
           <a href="/tistory">예전 글</a>
           <a href="/about">About</a>
@@ -108,8 +108,12 @@ const ogImageUrl = new URL(SITE.ogImage, SITE.url).href;
       </main>
       <footer class="mono">
         <span>© {new Date().getFullYear()} 이승용</span>
-        <span class="muted">·</span>
-        <a href="https://github.com/dltmddyd321" target="_blank" rel="noopener">github ↗</a>
+        {SITE.links.map((link) => (
+          <>
+            <span class="muted">·</span>
+            <a href={link.url} target="_blank" rel="noopener">{link.label} ↗</a>
+          </>
+        ))}
       </footer>
     </div>
   </body>
@@ -206,12 +210,18 @@ const ogImageUrl = new URL(SITE.ogImage, SITE.url).href;
 
   footer {
     display: flex;
-    gap: 10px;
+    flex-wrap: wrap;
+    gap: 6px 10px;
     align-items: center;
     font-size: 0.75rem;
     color: var(--text-muted);
     border-top: 1px solid var(--border);
     padding: 20px 0 48px;
+  }
+
+  footer span,
+  footer a {
+    white-space: nowrap;
   }
 
   @media (max-width: 720px) {

@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE } from '../lib/site';
+import { SAME_AS, SITE } from '../lib/site';
 
 const personJsonLd = {
   '@context': 'https://schema.org',
@@ -20,7 +20,7 @@ const personJsonLd = {
     'Room',
     'WorkManager',
   ],
-  sameAs: ['https://github.com/dltmddyd321', 'https://yongdragon9819.tistory.com'],
+  sameAs: SAME_AS,
 };
 
 const achievements = [
@@ -222,7 +222,15 @@ const statements = [
         <li>총 경력: <span id="tenure">계산 중…</span></li>
         <li>현재: TimeBlocks Android 개발</li>
         <li><a href="https://github.com/dltmddyd321" target="_blank" rel="noopener">GitHub ↗</a></li>
-        <li><a href="https://yongdragon9819.tistory.com" target="_blank" rel="noopener">Blog ↗</a></li>
+        <li>
+          <a href="https://www.youtube.com/@seungyong2477" target="_blank" rel="noopener">YouTube ↗</a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/wi.life_7/" target="_blank" rel="noopener">Instagram ↗</a>
+        </li>
+        <li>
+          <a href="https://yongdragon9819.tistory.com" target="_blank" rel="noopener">이전 블로그 ↗</a>
+        </li>
       </ul>
     </div>
   </section>

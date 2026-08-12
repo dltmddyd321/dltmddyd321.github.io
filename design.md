@@ -20,7 +20,7 @@
 로그, 기술 노트)가 핵심이라 정확히 이 스타일의 `bestFor`(technical docs, dev logs)와 일치한다.
 일반 SaaS 랜딩이나 포트폴리오형 미니멀 스타일은 콘텐츠 아카이브 용도에 맞지 않아 제외했다.
 
-**Secondary accent: 없음.** 카테고리 4종을 색상이 아니라 라벨(칩)로 구분하므로 별도 보조
+**Secondary accent: 없음.** 카테고리를 색상이 아니라 라벨(칩)로 구분하므로 별도 보조
 스타일 없이 accent 1색(amber)만 사용한다.
 
 ## Typography
@@ -79,6 +79,29 @@
 - `PostRow` — 목록/카테고리 페이지 공용 글 목록 행
 - 페이지: `/`(목록), `/posts/[slug]`, `/category/[category]`, `/tag/[tag]`, `/tags`, `/search`,
   `/about`, `/tistory`, `/rss.xml`
+
+### 카테고리
+
+**단일 소스: `src/lib/categories.ts`.** 여기에 항목을 추가하면 nav, 콘텐츠 스키마의 enum,
+카테고리 페이지, 사이트맵이 전부 따라온다 (nav는 `CATEGORY_KEYS`를 순회해 렌더링하고, 스키마는
+`z.enum(CATEGORY_KEYS)`로 파생시킨다). 객체의 키 순서가 곧 nav 순서다.
+
+| slug | 라벨 | 설명 |
+| --- | --- | --- |
+| `insight` | Insight | 개념을 파고들어 정리한 기술 인사이트 |
+| `dev-log` | Dev Log | 기능을 만들며 겪은 문제와 해결 과정 |
+| `algorithm` | Algorithm | 알고리즘 기본기와 코딩테스트 풀이 기록 |
+| `archive` | Archive | 다시 꺼내 쓸 코드와 설정 스니펫 모음 |
+| `ai-lab` | AI Lab | AI 도구를 실제로 써보고 남긴 활용기 |
+
+**표기 규칙**: 화면에 보이는 라벨은 영문으로 통일했다 — nav가 이미 영문이었는데 카테고리 페이지
+제목만 한글이라 섞여 있었고, 터미널 톤과도 영문이 맞는다. 대신 한국어 독자와 검색 유입을 위해
+카테고리마다 한글 `description`을 두고, 카테고리 페이지 부제목과 meta description에 쓴다.
+
+`ai-news`(AI 기술·뉴스)는 성격을 "직접 써본 활용기"로 좁히면서 `ai-lab`(AI Lab)으로 slug까지
+바꿨다. 해당 카테고리에 글이 없었고 색인도 되기 전이라 리다이렉트는 불필요했다.
+
+카테고리는 글당 1개(스키마 enum으로 고정 — 오타나 없는 값이면 빌드 실패), 태그는 자유 어휘다.
 
 ### 태그
 
@@ -145,6 +168,9 @@
   (빈 카테고리 판별을 위해 config에서 `src/content/posts/`의 frontmatter를 직접 읽는다)
 - **OG 이미지**: `public/og-image.png` (1200×630). 링크 공유 시 클릭률에 영향이 커서 사이트 톤에
   맞춘 정적 이미지를 만들어 넣었다
+- **외부 프로필 연결**: GitHub·YouTube·Instagram·이전 Tistory 블로그를 `SITE.links`에 모아
+  푸터에 노출하고, 같은 목록을 `SAME_AS`로 재사용해 schema.org `sameAs`에 넣었다 — 검색엔진이
+  흩어진 프로필을 같은 인물로 묶는 데 쓰는 신호다
 
 ### 배포 후 남은 수동 작업 (사람이 해야 함)
 

@@ -1,12 +1,39 @@
+/**
+ * Display labels are English to match the nav and the terminal tone; the Korean
+ * `description` carries the meaning for readers and for each category page's
+ * meta description. Key order here is the nav order.
+ */
 export const CATEGORIES = {
-  insight: { label: '기술 인사이트', short: 'insight' },
-  'dev-log': { label: '개발 구현 과정', short: 'dev-log' },
-  archive: { label: '코딩 아카이브', short: 'archive' },
-  'ai-news': { label: 'AI 기술 · 뉴스', short: 'ai-news' },
+  insight: {
+    label: 'Insight',
+    description: '개념을 파고들어 정리한 기술 인사이트',
+  },
+  'dev-log': {
+    label: 'Dev Log',
+    description: '기능을 만들며 겪은 문제와 해결 과정',
+  },
+  algorithm: {
+    label: 'Algorithm',
+    description: '알고리즘 기본기와 코딩테스트 풀이 기록',
+  },
+  archive: {
+    label: 'Archive',
+    description: '다시 꺼내 쓸 코드와 설정 스니펫 모음',
+  },
+  'ai-lab': {
+    label: 'AI Lab',
+    description: 'AI 도구를 실제로 써보고 남긴 활용기',
+  },
 } as const;
 
 export type CategoryKey = keyof typeof CATEGORIES;
 
+export const CATEGORY_KEYS = Object.keys(CATEGORIES) as CategoryKey[];
+
 export function categoryLabel(key: string): string {
   return CATEGORIES[key as CategoryKey]?.label ?? key;
+}
+
+export function categoryDescription(key: string): string {
+  return CATEGORIES[key as CategoryKey]?.description ?? '';
 }
