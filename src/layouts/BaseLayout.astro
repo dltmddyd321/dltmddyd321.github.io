@@ -49,6 +49,9 @@ const ogImageUrl = new URL(SITE.ogImage, SITE.url).href;
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, follow" />}
 
+    <!-- 네이버 서치어드바이저 소유확인 (구글은 public/google*.html 파일 방식) -->
+    <meta name="naver-site-verification" content="b3b265c613ed28a6627b35564d19c1c8a998bb85" />
+
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:locale" content={SITE.locale} />
