@@ -79,6 +79,15 @@ const jsonLd = {
 </BaseLayout>
 
 <style>
+  /* Header and grid share one width so the title lines up with the meta rail
+     instead of stretching across the full shell. */
+  .post {
+    --rail: minmax(140px, 180px);
+    --post-gap: clamp(24px, 4vw, 48px);
+    max-width: calc(180px + var(--post-gap) + var(--prose-max));
+    margin-inline: auto;
+  }
+
   .post-header {
     padding: 8px 0 28px;
     border-bottom: 1px solid var(--border);
@@ -103,10 +112,12 @@ const jsonLd = {
     margin: 0;
   }
 
+  /* Meta rail + prose, capped at the reading measure and centred as a pair so
+     the extra room on a wide shell falls outside rather than stretching lines. */
   .post-grid {
     display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 40px;
+    grid-template-columns: var(--rail) minmax(0, var(--prose-max));
+    gap: var(--post-gap);
     padding-top: 32px;
   }
 
@@ -142,7 +153,8 @@ const jsonLd = {
 
   .content {
     font-size: 1.05rem;
-    max-width: 68ch;
+    max-width: var(--prose-max);
+    min-width: 0;
   }
 
   .content :global(h2) {
@@ -173,9 +185,11 @@ const jsonLd = {
     font-size: 0.85rem;
   }
 
-  @media (max-width: 720px) {
+  /* Keeping the rail below this squeezes prose under ~35 Korean chars a line,
+     which reads choppy — give tablets the full width instead. */
+  @media (max-width: 820px) {
     .post-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
       gap: 20px;
     }
 

@@ -256,8 +256,8 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 
   .with-sidebar {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 240px;
-    gap: 48px;
+    grid-template-columns: minmax(0, 1fr) var(--sidebar-width);
+    gap: clamp(28px, 4vw, 56px);
     align-items: start;
   }
 
@@ -309,7 +309,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
   }
 
   /* Below this the two columns get too narrow to read; stack instead. */
-  @media (max-width: 860px) {
+  @media (max-width: 900px) {
     .with-sidebar {
       grid-template-columns: 1fr;
       gap: 0;

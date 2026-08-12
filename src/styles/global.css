@@ -20,11 +20,24 @@
   --font-sans: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
 
-  --max-width: 960px;
+  /* Outer shell. Wide enough that big screens don't feel empty — reading width
+     is capped separately by --prose-max, not by this. */
+  --max-width: 1200px;
+  /* Reading measure. In `ch`, so it tracks font-size and keeps a constant
+     characters-per-line no matter how the root size scales. */
+  --prose-max: 68ch;
+  --gutter: clamp(16px, 3vw, 32px);
+  --sidebar-width: clamp(220px, 22vw, 280px);
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* Fluid root size: every rem/ch value scales with it, so line length in
+   characters stays put while the layout breathes on larger displays. */
+html {
+  font-size: clamp(15.5px, 15px + 0.2vw, 18px);
 }
 
 html,
@@ -102,7 +115,7 @@ pre {
 .wrap {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--gutter);
   position: relative;
   z-index: 1;
 }
@@ -146,11 +159,23 @@ hr {
 
 img {
   max-width: 100%;
+  height: auto;
   border-radius: 8px;
 }
 
-@media (max-width: 720px) {
-  .wrap {
-    padding: 0 16px;
-  }
+/* Wide content can't be reflowed, so let it scroll inside its own box rather
+   than pushing the page sideways. */
+pre,
+table {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Long unbroken strings (URLs, identifiers) shouldn't force horizontal scroll. */
+p,
+li,
+h1,
+h2,
+h3 {
+  overflow-wrap: break-word;
 }
