@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Sidebar from '../components/Sidebar.astro';
 import { SITE } from '../lib/site';
 import { CATEGORIES, CATEGORY_KEYS } from '../lib/categories';
 
@@ -17,6 +18,8 @@ interface Props {
   noindex?: boolean;
   /** Extra JSON-LD structured data for this page. */
   jsonLd?: Record<string, unknown>;
+  /** Post-list pages get the profile/tags rail; reading pages stay full width. */
+  withSidebar?: boolean;
 }
 
 const {
@@ -29,11 +32,15 @@ const {
   tags = [],
   noindex = false,
   jsonLd,
+  withSidebar = false,
 } = Astro.props;
 
 const pageTitle = fullTitle ?? (title ? `${title} · ${SITE.name}` : SITE.name);
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const ogImageUrl = new URL(SITE.ogImage, SITE.url).href;
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 ---
 
 <!doctype html>
@@ -89,13 +96,18 @@ const ogImageUrl = new URL(SITE.ogImage, SITE.url).href;
           <span class="mono">~/</span>이승용<span class="mono">.log</span>
         </a>
         <nav>
-          <a href="/">Posts</a>
+          <a href="/" class:list={{ current: isCurrent('/') }} aria-current={path === '/' ? 'page' : undefined}>
+            Posts
+          </a>
           {CATEGORY_KEYS.map((key) => (
-            <a href={`/category/${key}`}>{CATEGORIES[key].label}</a>
+            <a
+              href={`/category/${key}`}
+              class:list={{ current: isCurrent(`/category/${key}`) }}
+              aria-current={isCurrent(`/category/${key}`) ? 'page' : undefined}
+            >
+              {CATEGORIES[key].label}
+            </a>
           ))}
-          <a href="/tags">Tags</a>
-          <a href="/tistory">예전 글</a>
-          <a href="/about">About</a>
         </nav>
         <a class="search-link mono" href="/search" aria-label="검색">$ /</a>
       </header>
@@ -103,17 +115,36 @@ const ogImageUrl = new URL(SITE.ogImage, SITE.url).href;
         <span class="prompt">{statusLine}</span>
         <span class="rss"><a href="/rss.xml">rss ↗</a></span>
       </div>
-      <main>
-        <slot />
-      </main>
+      {withSidebar ? (
+        <div class="with-sidebar">
+          <main>
+            <slot />
+          </main>
+          <Sidebar />
+        </div>
+      ) : (
+        <main>
+          <slot />
+        </main>
+      )}
       <footer class="mono">
-        <span>© {new Date().getFullYear()} 이승용</span>
-        {SITE.links.map((link) => (
-          <>
-            <span class="muted">·</span>
-            <a href={link.url} target="_blank" rel="noopener">{link.label} ↗</a>
-          </>
-        ))}
+        {/* The nav holds only Posts + categories, so these live here to stay
+            reachable from reading pages that have no sidebar. */}
+        <nav class="footer-nav" aria-label="보조 메뉴">
+          <a href="/about">About</a>
+          <a href="/tags">Tags</a>
+          <a href="/tistory">예전 글</a>
+          <a href="/search">Search</a>
+        </nav>
+        <div class="footer-meta">
+          <span>© {new Date().getFullYear()} 이승용</span>
+          {SITE.links.map((link) => (
+            <>
+              <span class="muted">·</span>
+              <a href={link.url} target="_blank" rel="noopener">{link.label} ↗</a>
+            </>
+          ))}
+        </div>
       </footer>
     </div>
   </body>
@@ -164,6 +195,21 @@ const ogImageUrl = new URL(SITE.ogImage, SITE.url).href;
     text-decoration: none;
   }
 
+  nav a.current {
+    color: var(--text);
+    position: relative;
+  }
+
+  nav a.current::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 2px;
+    background: var(--accent);
+  }
+
   .search-link {
     flex-shrink: 0;
     font-size: 0.82rem;
@@ -208,20 +254,77 @@ const ogImageUrl = new URL(SITE.ogImage, SITE.url).href;
     padding: 40px 0;
   }
 
+  .with-sidebar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 240px;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .with-sidebar main {
+    min-width: 0;
+  }
+
+  .with-sidebar :global(.sidebar) {
+    position: sticky;
+    top: 24px;
+    padding: 40px 0;
+  }
+
   footer {
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px 10px;
-    align-items: center;
+    flex-direction: column;
+    gap: 14px;
     font-size: 0.75rem;
     color: var(--text-muted);
     border-top: 1px solid var(--border);
     padding: 20px 0 48px;
   }
 
+  .footer-nav,
+  .footer-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    align-items: center;
+  }
+
+  .footer-meta {
+    gap: 6px 10px;
+  }
+
+  .footer-nav a {
+    color: var(--text);
+    font-size: 0.8rem;
+  }
+
+  .footer-nav a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
   footer span,
   footer a {
     white-space: nowrap;
+  }
+
+  /* Below this the two columns get too narrow to read; stack instead. */
+  @media (max-width: 860px) {
+    .with-sidebar {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .with-sidebar :global(.sidebar) {
+      position: static;
+      padding: 0 0 40px;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .with-sidebar main {
+      padding-bottom: 32px;
+    }
   }
 
   @media (max-width: 720px) {

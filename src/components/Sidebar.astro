@@ -1,0 +1,239 @@
+---
+import { getCollection } from 'astro:content';
+import archive from '../data/tistory-archive.json';
+
+/** Tags shown before the 더보기 toggle. */
+const VISIBLE_TAGS = 12;
+
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+
+const counts = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.data.tags) {
+    counts.set(tag, (counts.get(tag) ?? 0) + 1);
+  }
+}
+const tags = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+const visibleTags = tags.slice(0, VISIBLE_TAGS);
+const hiddenTags = tags.slice(VISIBLE_TAGS);
+---
+
+<aside class="sidebar" data-pagefind-ignore>
+  <section class="card profile">
+    <img class="avatar" src="/myprofile.png" alt="이승용 프로필 사진" width="64" height="64" />
+    <div class="who">
+      <p class="name">이승용</p>
+      <p class="role mono">Android Engineer</p>
+    </div>
+    <p class="bio muted">
+      누적 다운로드 300만 캘린더 서비스를 만들며 겪은 문제와 해결 과정을 기록합니다.
+    </p>
+    <a class="profile-link mono" href="/about">프로필 자세히 →</a>
+  </section>
+
+  <section class="block">
+    <h2 class="block-title mono">Tags</h2>
+    {tags.length === 0 ? (
+      <p class="empty muted">아직 태그가 없습니다.</p>
+    ) : (
+      <>
+        <ul class="tag-list">
+          {visibleTags.map(([tag, count]) => (
+            <li>
+              <a class="tag" href={`/tag/${tag}`}>
+                <span class="mono">#{tag}</span><span class="count muted mono">{count}</span>
+              </a>
+            </li>
+          ))}
+          {hiddenTags.map(([tag, count]) => (
+            <li class="extra" hidden>
+              <a class="tag" href={`/tag/${tag}`}>
+                <span class="mono">#{tag}</span><span class="count muted mono">{count}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        {hiddenTags.length > 0 && (
+          <button class="more mono" id="tag-more" type="button" aria-expanded="false">
+            더보기 <span class="muted">+{hiddenTags.length}</span>
+          </button>
+        )}
+        <a class="all-link mono" href="/tags">전체 태그 보기 →</a>
+      </>
+    )}
+  </section>
+
+  <section class="block">
+    <h2 class="block-title mono">Archive</h2>
+    <a class="archive-link" href="/tistory">
+      <span class="mono count-big">{archive.length}</span>
+      <span class="muted">예전 글 (Tistory) →</span>
+    </a>
+  </section>
+</aside>
+
+<script>
+  const button = document.getElementById('tag-more');
+  const extras = Array.from(document.querySelectorAll<HTMLLIElement>('.sidebar .extra'));
+
+  button?.addEventListener('click', () => {
+    const expanded = button.getAttribute('aria-expanded') === 'true';
+    for (const item of extras) item.hidden = expanded;
+    button.setAttribute('aria-expanded', String(!expanded));
+    button.innerHTML = expanded
+      ? `더보기 <span class="muted">+${extras.length}</span>`
+      : '접기';
+  });
+</script>
+
+<style>
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    font-size: 0.85rem;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+
+  .profile {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    grid-template-areas:
+      'avatar who'
+      'bio bio'
+      'link link';
+    gap: 12px;
+    align-items: center;
+  }
+
+  .avatar {
+    grid-area: avatar;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+  }
+
+  .who {
+    grid-area: who;
+  }
+
+  .name {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 800;
+  }
+
+  .role {
+    margin: 2px 0 0;
+    font-size: 0.72rem;
+    color: var(--accent);
+  }
+
+  .bio {
+    grid-area: bio;
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  .profile-link {
+    grid-area: link;
+    font-size: 0.78rem;
+  }
+
+  .block-title {
+    margin: 0 0 12px;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tag-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 5px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 0.76rem;
+    color: var(--text);
+  }
+
+  .tag:hover {
+    border-color: var(--accent-line);
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .count {
+    font-size: 0.68rem;
+  }
+
+  .more {
+    margin-top: 12px;
+    width: 100%;
+    background: transparent;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 7px 10px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    cursor: pointer;
+  }
+
+  .more:hover {
+    border-color: var(--accent-line);
+    color: var(--accent);
+  }
+
+  .all-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 0.76rem;
+  }
+
+  .archive-link {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    color: var(--text);
+  }
+
+  .archive-link:hover {
+    text-decoration: none;
+    color: var(--accent);
+  }
+
+  .count-big {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .empty {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+</style>
