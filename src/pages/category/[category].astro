@@ -15,15 +15,18 @@ const allPosts = await getCollection(
   ({ data }) => !data.draft && data.category === category,
 );
 const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const label = categoryLabel(category as string);
 ---
 
 <BaseLayout
-  title={categoryLabel(category as string)}
+  title={label}
+  description={`${label} 카테고리의 글 ${posts.length}편. 이승용의 Android 개발 블로그.`}
   statusLine={`$ grep -rl "category: ${category}" ./posts  →  ${posts.length}`}
+  noindex={posts.length === 0}
 >
   <section class="hero">
     <p class="kicker mono">&gt; category</p>
-    <h1>{categoryLabel(category as string)}</h1>
+    <h1>{label}</h1>
   </section>
 
   <section class="list">

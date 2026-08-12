@@ -21,7 +21,11 @@ const allPosts = await getCollection(
 const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<BaseLayout title={`#${tag}`} statusLine={`$ grep -rl "tags:.*${tag}" ./posts  →  ${posts.length}`}>
+<BaseLayout
+  title={`#${tag}`}
+  description={`${tag} 태그가 붙은 글 ${posts.length}편. 이승용의 Android 개발 블로그.`}
+  statusLine={`$ grep -rl "tags:.*${tag}" ./posts  →  ${posts.length}`}
+>
   <section class="hero">
     <p class="kicker mono">&gt; tag</p>
     <h1>#{tag}</h1>

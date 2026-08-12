@@ -13,7 +13,7 @@ const years = [...byYear.keys()].sort((a, b) => b.localeCompare(a));
 
 <BaseLayout
   title="예전 글 아카이브"
-  description="2022~2026년, Tistory(yongdragon9819.tistory.com)에 쓴 글 302편의 색인입니다."
+  description={`2022~2026년 Tistory(Win-Dev)에 쓴 Android·Kotlin·알고리즘 글 ${archive.length}편의 색인. 제목으로 검색해 원문으로 바로 이동할 수 있습니다.`}
   statusLine={`$ find ~/tistory -name "*.entry" | wc -l  →  ${archive.length}`}
 >
   <section class="hero">

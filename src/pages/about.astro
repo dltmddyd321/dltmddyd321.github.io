@@ -1,5 +1,27 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site';
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.author,
+  alternateName: 'Seungyong Lee',
+  jobTitle: 'Android Engineer',
+  url: new URL('/about', SITE.url).href,
+  image: new URL('/myprofile.png', SITE.url).href,
+  worksFor: { '@type': 'Organization', name: 'TimeBlocks' },
+  knowsAbout: [
+    'Kotlin',
+    'Android',
+    'Jetpack Compose',
+    'Coroutines',
+    'Retrofit',
+    'Room',
+    'WorkManager',
+  ],
+  sameAs: ['https://github.com/dltmddyd321', 'https://yongdragon9819.tistory.com'],
+};
 
 const achievements = [
   {
@@ -169,7 +191,12 @@ const statements = [
 ];
 ---
 
-<BaseLayout title="About" statusLine="$ cat ./about/profile.md">
+<BaseLayout
+  title="About"
+  description="Android 개발자 이승용의 이력과 프로젝트. 누적 다운로드 300만 캘린더 서비스 TimeBlocks에서 Coroutine·Retrofit·Compose 도입, 성능 개선, 데이터 동기화 최적화를 담당했습니다."
+  statusLine="$ cat ./about/profile.md"
+  jsonLd={personJsonLd}
+>
   <section class="hero">
     <div class="hero-text">
       <p class="kicker mono">&gt; whoami</p>

@@ -12,7 +12,11 @@ for (const post of allPosts) {
 const tags = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 ---
 
-<BaseLayout title="Tags" statusLine={`$ ls ./tags | wc -l  →  ${tags.length}`}>
+<BaseLayout
+  title="Tags"
+  description={`이 블로그의 전체 태그 ${tags.length}개. 주제별로 글을 모아볼 수 있습니다.`}
+  statusLine={`$ ls ./tags | wc -l  →  ${tags.length}`}
+>
   <section class="hero">
     <p class="kicker mono">&gt; tags</p>
     <h1>태그로 모아보기</h1>

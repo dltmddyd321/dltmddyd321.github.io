@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { categoryLabel } from '../lib/categories';
+import { SITE } from '../lib/site';
 
 interface Props {
   title: string;
@@ -12,9 +13,33 @@ interface Props {
 
 const { title, description, pubDate, category, tags } = Astro.props;
 const dateStr = pubDate.toISOString().slice(0, 10);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  dateModified: pubDate.toISOString(),
+  inLanguage: 'ko-KR',
+  author: { '@type': 'Person', name: SITE.author, url: SITE.url },
+  publisher: { '@type': 'Person', name: SITE.author, url: SITE.url },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': new URL(Astro.url.pathname, SITE.url).href },
+  image: new URL(SITE.ogImage, SITE.url).href,
+  articleSection: categoryLabel(category),
+  keywords: tags.join(', '),
+};
 ---
 
-<BaseLayout title={title} description={description} statusLine={`$ cat ./posts/${category}/*.md`}>
+<BaseLayout
+  title={title}
+  description={description}
+  statusLine={`$ cat ./posts/${category}/*.md`}
+  ogType="article"
+  publishedDate={pubDate}
+  tags={tags}
+  jsonLd={jsonLd}
+>
   <article class="post" data-pagefind-body>
     <header class="post-header">
       <p class="kicker mono">&gt; {categoryLabel(category)}</p>

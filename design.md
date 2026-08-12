@@ -115,8 +115,6 @@
 
 ### `/tistory` — 예전 글 아카이브
 
-### `/tistory` — 예전 글 아카이브
-
 이 블로그 이전에 [Tistory(yongdragon9819.tistory.com)](https://yongdragon9819.tistory.com)에 쓴
 글 302편의 색인 페이지. 전체 마이그레이션 대신, 제목·날짜·원문 링크만 정적 데이터
 (`src/data/tistory-archive.json`)로 만들어 연도별로 그룹핑해 보여주고 클릭 시 Tistory 원문으로
@@ -124,6 +122,39 @@
 빌드 시점에 한 번 수집해 만든 정적 스냅샷이며, 이후 새 글이 이 블로그로 이어지므로 주기적 재수집은
 필요 없다. 302개 목록은 `$ grep -i` 스타일의 클라이언트 사이드 텍스트 검색(바닐라 JS)으로
 탐색성을 보완했다.
+
+## SEO (검색 유입)
+
+기술적 SEO만 담당한다 — 순위·유입의 크기는 결국 콘텐츠가 결정하고, 새 도메인은 색인에 몇 주
+이상 걸린다는 전제를 깔고 "크롤러가 제대로 읽고 색인할 수 있는 상태"를 목표로 했다.
+
+- **사이트 정체성 단일화**: `src/lib/site.ts`의 `SITE` 상수(사이트명, 설명, 저자, OG 이미지)를
+  레이아웃·RSS·구조화 데이터가 공유한다. 사이트명은 검색 노출을 고려해 `dltmddyd321`(계정 ID)
+  대신 **"이승용 개발 블로그"**로 바꿨다 — 사람이 검색할 법한 단어로 제목이 잡히도록.
+- **`<head>` 메타**(`BaseLayout.astro`): 페이지별 `<title>`/`description`, `canonical`,
+  Open Graph, Twitter Card(`summary_large_image`), 포스트의 `article:published_time`·`article:tag`
+- **중복 description 제거**: 모든 페이지가 같은 설명을 쓰면 감점이라, 카테고리/태그/아카이브/
+  About 각각에 글 수·주제가 들어간 고유 설명을 넣었다
+- **구조화 데이터(JSON-LD)**: 포스트 `BlogPosting`, 홈 `Blog`, About `Person`(경력/기술 스택/
+  GitHub·Tistory `sameAs` 포함 — 이름 검색 대응)
+- **사이트맵**: `@astrojs/sitemap`. `robots.txt`에서 사이트맵 위치를 알린다
+- **thin content 제외**: 글이 0편인 카테고리는 `noindex`, `/search`는 결과가 클라이언트에서만
+  그려지는 빈 껍데기라 `noindex` + `robots.txt` Disallow.
+  **주의**: noindex 페이지를 사이트맵에 남기면 Search Console이 "Submitted URL marked noindex"로
+  경고하므로, `astro.config.mjs`의 sitemap `filter`가 동일 기준으로 제외해 둘을 동기화한다
+  (빈 카테고리 판별을 위해 config에서 `src/content/posts/`의 frontmatter를 직접 읽는다)
+- **OG 이미지**: `public/og-image.png` (1200×630). 링크 공유 시 클릭률에 영향이 커서 사이트 톤에
+  맞춘 정적 이미지를 만들어 넣었다
+
+### 배포 후 남은 수동 작업 (사람이 해야 함)
+
+기술적 준비는 끝났지만, 아래는 계정 소유자 인증이 필요해 코드로 대신할 수 없다.
+
+1. [Google Search Console](https://search.google.com/search-console) 등록 → 소유권 확인 →
+   `https://dltmddyd321.github.io/sitemap-index.xml` 제출
+2. [네이버 서치어드바이저](https://searchadvisor.naver.com) 등록 + 사이트맵 제출 (국내 유입에는
+   네이버 색인이 특히 중요)
+3. 기존 Tistory 블로그(302편)에서 새 블로그로 링크를 걸어두면 크롤러 발견이 빨라진다
 
 ## Responsive rules
 
@@ -157,6 +188,10 @@
   확인, 모든 페이지에서 가로 스크롤 없음(scrollWidth === clientWidth) 확인
 - 검색: `npm run build && npm run preview`로 "Markdown" 검색 시 실제 결과 1건, 하이라이트·볼드
   타이틀 등 스타일 정상 적용 확인. `npm run dev`(색인 없음)에서는 안내 메시지로 정상 대체됨 확인
+- SEO: 빌드 산출물에서 직접 검증 — 사이트맵 URL 목록(빈 카테고리·`/search` 제외 확인), 페이지별
+  canonical이 서로 다름, meta description이 페이지마다 고유함, 빈 카테고리에만 `noindex` 적용,
+  JSON-LD 3종(`BlogPosting`/`Blog`/`Person`)이 유효한 JSON으로 파싱되는지 확인. OG 이미지는
+  1200×630 렌더링 결과를 눈으로 확인
 - 폰트 로드 확인: `document.fonts`에서 `Pretendard Variable` status `loaded` 확인
 - 색상 대비 계산: 위 표 참고, 전부 AA 통과
 - 미검증/리스크: 코드 하이라이팅이 들어간 실제 포스트에서의 `pre`/`code` 가독성(현재는 샘플

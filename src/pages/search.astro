@@ -2,7 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Search" statusLine="$ pagefind --site ./dist">
+<BaseLayout
+  title="Search"
+  description="블로그 글을 제목과 본문 전체에서 검색합니다."
+  statusLine="$ pagefind --site ./dist"
+  noindex
+>
   <section class="hero">
     <p class="kicker mono">&gt; search</p>
     <h1>글 검색</h1>

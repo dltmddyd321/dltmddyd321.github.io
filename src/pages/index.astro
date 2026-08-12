@@ -2,12 +2,42 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostRow from '../components/PostRow.astro';
+import { SITE } from '../lib/site';
 
 const allPosts = await getCollection('posts', ({ data }) => !data.draft);
 const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  '@id': SITE.url,
+  name: SITE.name,
+  description: SITE.description,
+  url: SITE.url,
+  inLanguage: 'ko-KR',
+  author: {
+    '@type': 'Person',
+    name: SITE.author,
+    url: SITE.url,
+    jobTitle: 'Android Engineer',
+    sameAs: ['https://github.com/dltmddyd321', 'https://yongdragon9819.tistory.com'],
+  },
+  blogPost: posts.slice(0, 10).map((post) => ({
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.pubDate.toISOString(),
+    url: new URL(`/posts/${post.id}/`, SITE.url).href,
+  })),
+};
 ---
 
-<BaseLayout title="Posts" statusLine={`$ ls -la ./posts | wc -l  →  ${posts.length}`}>
+<BaseLayout
+  title="Posts"
+  fullTitle={`${SITE.name} — Android · Kotlin 개발 기록`}
+  statusLine={`$ ls -la ./posts | wc -l  →  ${posts.length}`}
+  jsonLd={jsonLd}
+>
   <section class="hero">
     <p class="kicker mono">&gt; 개발 인사이트 · 구현 과정 · 코딩 아카이브 · AI 뉴스</p>
     <h1>기록하고, 다시 꺼내 쓰는 개발 노트.</h1>
