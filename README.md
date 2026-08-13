@@ -12,7 +12,7 @@
 title: 글 제목
 description: 목록/RSS에 노출될 한 줄 요약
 pubDate: 2026-08-05
-category: insight # insight | dev-log | algorithm | archive | ai-lab
+category: insight # insight | dev-log | algorithm | read | archive | ai-lab
 tags: [kotlin, coroutine]
 ---
 
@@ -20,7 +20,7 @@ tags: [kotlin, coroutine]
 ```
 
 - `draft: true`를 추가하면 배포에서 제외됩니다.
-- 카테고리 5종: `insight`(Insight), `dev-log`(Dev Log), `algorithm`(Algorithm), `archive`(Archive), `ai-lab`(AI Lab).
+- 카테고리 6종: `insight`(Insight), `dev-log`(Dev Log), `algorithm`(Algorithm), `read`(Read), `archive`(Archive), `ai-lab`(AI Lab).
   추가·수정은 `src/lib/categories.ts` 한 곳만 고치면 nav·스키마·카테고리 페이지가 따라옵니다.
 
 ## 로컬 개발

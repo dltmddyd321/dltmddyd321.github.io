@@ -1,7 +1,8 @@
 /**
- * Display labels are English to match the nav and the terminal tone; the Korean
- * `description` carries the meaning for readers and for each category page's
- * meta description. Key order here is the nav order.
+ * Display labels are English to match the nav and the terminal tone. The Korean
+ * `description` is not rendered on the page — it only feeds each category page's
+ * meta description, so the pages don't all share one description in search
+ * results. Key order here is the nav order.
  */
 export const CATEGORIES = {
   insight: {
@@ -15,6 +16,10 @@ export const CATEGORIES = {
   algorithm: {
     label: 'Algorithm',
     description: '알고리즘 기본기와 코딩테스트 풀이 기록',
+  },
+  read: {
+    label: 'Read',
+    description: '읽은 기술 서적의 정리와 후기',
   },
   archive: {
     label: 'Archive',
