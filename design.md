@@ -2,7 +2,7 @@
 
 ## Product
 
-이승용의 개발 인사이트 · 구현 과정 · 코딩 아카이브 · AI 뉴스를 기록하는 개인 기술 블로그.
+이승용의 기술 인사이트 · 구현 과정 · 알고리즘 · 코딩 아카이브 · AI 활용기를 기록하는 개인 기술 블로그.
 기존 1페이지 포트폴리오(dltmddyd321.github.io)를 대체한다. 콘텐츠는 필자 1인이 Markdown으로
 직접 작성하는 정적 아카이브이며, 폼 제출·로그인·대시보드 등 앱 상호작용은 없다.
 
@@ -112,11 +112,11 @@
 ## Component inventory
 
 - `BaseLayout` — 헤더(로고/nav), 터미널풍 status line, footer, 선택적 사이드바
-- `Sidebar` — 프로필 카드 + 태그 위젯 + 예전 글 카운트 (목록 페이지 전용)
+- `Sidebar` — 프로필 카드 + 태그 위젯 + 외부 글 아카이브 카운트 (목록 페이지 전용)
 - `PostLayout` — 포스트 헤더 + 사이드바(날짜/카테고리/태그) + 본문 2컬럼 그리드
 - `PostRow` — 목록/카테고리 페이지 공용 글 목록 행
 - 페이지: `/`(목록), `/posts/[slug]`, `/category/[category]`, `/tag/[tag]`, `/tags`, `/search`,
-  `/about`, `/tistory`, `/rss.xml`
+  `/about`, `/archives`, `/rss.xml`
 
 ### 정보 구조 — nav는 계층, 나머지는 사이드바
 
@@ -125,20 +125,20 @@ nav에 카테고리·태그·About이 뒤섞여 있으면 "무엇이 글의 분�
 
 - **헤더 nav** = Posts + 카테고리 5종. 글의 분류 계층만 남긴다. 현재 위치는 accent 밑줄과
   `aria-current="page"`로 표시한다
-- **사이드바** = 프로필 카드(간단 소개 + About 링크), 태그 위젯, 예전 글 아카이브 카운트.
+- **사이드바** = 프로필 카드(간단 소개 + About 링크), 태그 위젯, 외부 글 아카이브 카운트.
   네이버 블로그처럼 본문 옆에 붙어 "훑어보는" 용도
-- **푸터** = About / Tags / 예전 글 / Search + 외부 프로필. 사이드바가 없는 읽기 페이지에서도
+- **푸터** = About / Tags / 외부 글 / Search + 외부 프로필. 사이드바가 없는 읽기 페이지에서도
   이 페이지들에 닿을 수 있어야 해서 넣었다 (nav에서 뺀 뒤 글 페이지가 막다른 길이 되는 걸 발견해
   추가한 것)
 
 **사이드바는 목록 페이지에만** 붙인다(홈, 카테고리, 태그) — `BaseLayout`의 `withSidebar` prop.
 글 페이지는 이미 왼쪽에 메타 레일(날짜/카테고리/태그)이 있어서 사이드바까지 붙이면 960px 안에서
-본문이 460px대로 좁아진다. 롱폼 가독성이 우선이라 읽기 페이지(글, About)는 전체 폭을 유지한다.
+본문이 지나치게 좁아진다. 롱폼 가독성이 우선이라 읽기 페이지(글, About)는 전체 폭을 유지한다.
 
 **태그 위젯**은 글 수 기준 정렬로 12개까지 보여주고, 넘치면 `더보기 +N` 버튼으로 펼친다
 (`aria-expanded` 토글, 펼치면 라벨이 `접기`로 바뀜). 전체 목록은 `/tags`로 연결한다.
 
-레이아웃은 860px 이하에서 1단으로 스택되고 sticky도 해제된다 — 그 아래로는 2단을 유지하면 양쪽
+레이아웃은 900px 이하에서 1단으로 스택되고 sticky도 해제된다 — 그 아래로는 2단을 유지하면 양쪽
 다 읽기 어려운 폭이 된다.
 
 ### 카테고리
@@ -168,19 +168,19 @@ nav에 카테고리·태그·About이 뒤섞여 있으면 "무엇이 글의 분�
 
 `posts` 컬렉션의 기존 `tags` 필드를 실제로 연결했다. `PostRow`(목록)와 `PostLayout` 사이드바에서
 태그가 `/tag/[tag]`로 링크되고, `/tags`는 전체 태그를 글 수 기준으로 정렬해 보여주는 인덱스다.
-카테고리(4종 고정)와 달리 태그는 자유 어휘라 별도 스키마 enum 없이 문자열 그대로 사용한다.
+카테고리(5종 고정)와 달리 태그는 자유 어휘라 별도 스키마 enum 없이 문자열 그대로 사용한다.
 
 ### 검색 — Pagefind
 
 빌드 시점에 정적으로 색인하는 [Pagefind](https://pagefind.app)를 붙였다. 제목만 찾는 게 아니라
-본문 전체를 검색해야 실용적이라고 판단해, `/tistory`처럼 클라이언트 사이드 문자열 매칭 대신
+본문 전체를 검색해야 실용적이라고 판단해, `/archives`처럼 클라이언트 사이드 문자열 매칭 대신
 이 방식을 택했다.
 
 - `package.json`의 `postbuild` 스크립트(`pagefind --site dist`)가 `astro build` 직후 자동 실행되어
   `dist/pagefind/`에 색인을 만든다 (npm이 `build` 실행 시 `postbuild`를 자동으로 이어서 실행하는
   라이프사이클 훅을 사용 — CI 워크플로우 수정 불필요)
 - `PostLayout`의 `<article>`에 `data-pagefind-body`를 달아 **포스트 본문만** 색인 대상으로
-  한정했다 (nav, about, tistory 아카이브 302개 링크 같은 노이즈 제외). 사이드바는
+  한정했다 (nav, about, 아카이브 307개 링크 같은 노이즈 제외). 사이드바는
   `data-pagefind-ignore`로 제외
 - `/search` 페이지는 Pagefind의 저수준 JS API(`pagefind.search()`)를 직접 호출해 터미널 톤에
   맞춘 커스텀 결과 UI를 그린다 (Pagefind 기본 제공 UI 위젯은 쓰지 않음)
@@ -197,15 +197,32 @@ nav에 카테고리·태그·About이 뒤섞여 있으면 "무엇이 글의 분�
 - `npm run dev`에서는 색인이 없어 검색이 "프로덕션 빌드에서만 생성됩니다" 안내만 뜬다 — 로컬
   검증은 `npm run build && npm run preview`로 한다
 
-### `/tistory` — 예전 글 아카이브
+### `/archives` — 외부 글 아카이브
 
-이 블로그 이전에 [Tistory(yongdragon9819.tistory.com)](https://yongdragon9819.tistory.com)에 쓴
-글 302편의 색인 페이지. 전체 마이그레이션 대신, 제목·날짜·원문 링크만 정적 데이터
-(`src/data/tistory-archive.json`)로 만들어 연도별로 그룹핑해 보여주고 클릭 시 Tistory 원문으로
-이동한다. 데이터는 Tistory `/category?page=N` 목록 페이지의 JSON-LD(`ListItem`) 구조화 데이터를
-빌드 시점에 한 번 수집해 만든 정적 스냅샷이며, 이후 새 글이 이 블로그로 이어지므로 주기적 재수집은
-필요 없다. 302개 목록은 `$ grep -i` 스타일의 클라이언트 사이드 텍스트 검색(바닐라 JS)으로
-탐색성을 보완했다.
+다른 플랫폼에 쓴 글 307편의 색인. 본문을 옮기지 않고 **제목·날짜·원문 링크만** 정적 데이터로
+두고, 연도별로 묶어 보여준 뒤 클릭하면 원문으로 보낸다. 본문을 복제하지 않으므로 중복 콘텐츠
+문제가 없고, 원문 수정에 따라 갱신할 필요도 없다.
+
+| 출처 | 편수 | 데이터 | 수집 방법 |
+| --- | --- | --- | --- |
+| [Tistory (Win-Dev)](https://yongdragon9819.tistory.com) | 302 | `src/data/tistory-archive.json` | `/category?page=N`의 JSON-LD(`ListItem`) 파싱 |
+| [KeyFlow (@win-dr)](https://www.keyflow.me/ko/@win-dr) | 5 | `src/data/keyflow-archive.json` | 아래 참고 |
+
+둘 다 **빌드 시점 정적 스냅샷**이다. 자동 동기화는 없다 — 새 글은 이 블로그에 쓰므로 목록이
+자라지 않고, 크롤링을 CI에 넣으면 외부 사이트 개편에 빌드가 깨진다.
+
+**탐색**: `$ grep -i` 스타일 제목 검색 + 출처 필터(전체 / Tistory / KeyFlow). 둘은 AND로 결합된다.
+
+**KeyFlow 수집이 까다로웠던 이유**: Next.js SPA라 목록이 무한 스크롤로 클라이언트에서 그려지고,
+글 카드가 `<a>`가 아니라 `cursor-pointer` `<div>`(JS 라우터)라 HTML에 URL이 없다. JSON-LD에도
+프로필 정보만 있었다. 결국 브라우저로 페이지를 끝까지 스크롤한 뒤 카드의 **React fiber
+(`__reactFiber$`)** 를 거슬러 올라가 `slug`/`createdAt`을 꺼냈고, 카드 하나를 실제로 클릭해
+URL 형식이 `/ko/@win-dr/post/<slug>`임을 확인한 뒤 5개 전부 200 OK로 검증했다.
+
+**URL 변경 이력**: 원래 `/tistory`였으나 KeyFlow가 추가되며 이름이 맞지 않아 `/archives`로 옮겼다.
+이미 사이트맵에 제출된 경로라 `astro.config.mjs`의 `redirects`로 `/tistory → /archives` 스텁을
+남겼다 (`noindex` + canonical이 자동으로 붙는다). 스텁은 사이트맵에서 제외한다.
+`/category/archive`와 헷갈리지 않도록 복수형 `/archives`를 썼다.
 
 ## SEO (검색 유입)
 
@@ -272,16 +289,19 @@ nav에 카테고리·태그·About이 뒤섞여 있으면 "무엇이 글의 분�
 
 - `npm run build` — 성공, `postbuild`(Pagefind 색인)까지 정상 실행
 - 로컬 프리뷰로 `/`, `/posts/blog-launch`, `/about`, `/category/dev-log`, `/tags`, `/tag/astro`,
-  `/search`, `/tistory` 브라우저 렌더링 확인 — 데스크톱(1200px)과 모바일(375px) 두 뷰포트 모두
+  `/search`, `/archives` 브라우저 렌더링 확인 — 데스크톱(1200px)과 모바일(375px) 두 뷰포트 모두
   확인, 모든 페이지에서 가로 스크롤 없음(scrollWidth === clientWidth) 확인
 - 검색: `npm run build && npm run preview`로 "Markdown" 검색 시 실제 결과 1건, 하이라이트·볼드
   타이틀 등 스타일 정상 적용 확인. `npm run dev`(색인 없음)에서는 안내 메시지로 정상 대체됨 확인
 - 반응형: 320 / 390 / 768 / 1280 / 1900 / 2560px에서 본문 줄당 글자 수를 실측하고(위 표),
-  전 요소 순회로 뷰포트를 넘는 요소가 0개임을 확인 (`/`, `/posts/*`, `/tistory` 기준)
+  전 요소 순회로 뷰포트를 넘는 요소가 0개임을 확인 (`/`, `/posts/*`, `/archives` 기준)
 - 사이드바: 태그 `더보기` 토글은 임시로 임계값을 12→1로 낮춰 빌드해 실제 클릭으로 펼침/접힘,
   라벨 전환(`더보기 +N` ↔ `접기`), `aria-expanded` 변화까지 확인한 뒤 임계값을 되돌렸다
   (글이 1편뿐이라 태그가 2개여서 기본 상태로는 버튼이 렌더링되지 않음). 목록/글/About 페이지의
-  사이드바 유무와 860px 스택 전환, 390px 가로 스크롤 없음도 확인
+  사이드바 유무와 900px 스택 전환, 390px 가로 스크롤 없음도 확인
+- 아카이브: `/archives`에서 출처 필터(KeyFlow 5/307)와 제목 검색이 AND로 결합되는지 확인
+  (`plove` + KeyFlow → 2건), `/tistory` → `/archives` 리다이렉트 동작 확인, 390px에서 전 요소
+  순회로 넘침 0개 확인 (`.count`의 `width:100%`가 패딩과 겹쳐 1px 넘치던 것을 `flex-basis`로 수정)
 - SEO: 빌드 산출물에서 직접 검증 — 사이트맵 URL 목록(빈 카테고리·`/search` 제외 확인), 페이지별
   canonical이 서로 다름, meta description이 페이지마다 고유함, 빈 카테고리에만 `noindex` 적용,
   JSON-LD 3종(`BlogPosting`/`Blog`/`Person`)이 유효한 JSON으로 파싱되는지 확인. OG 이미지는

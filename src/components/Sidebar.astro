@@ -1,6 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
-import archive from '../data/tistory-archive.json';
+import tistory from '../data/tistory-archive.json';
+import keyflow from '../data/keyflow-archive.json';
+
+const archiveCount = tistory.length + keyflow.length;
 
 /** Tags shown before the 더보기 toggle. */
 const VISIBLE_TAGS = 12;
@@ -65,9 +68,9 @@ const hiddenTags = tags.slice(VISIBLE_TAGS);
 
   <section class="block">
     <h2 class="block-title mono">Archive</h2>
-    <a class="archive-link" href="/tistory">
-      <span class="mono count-big">{archive.length}</span>
-      <span class="muted">예전 글 (Tistory) →</span>
+    <a class="archive-link" href="/archives">
+      <span class="mono count-big">{archiveCount}</span>
+      <span class="muted">외부 글 (Tistory · KeyFlow) →</span>
     </a>
   </section>
 </aside>

@@ -29,12 +29,19 @@ const activeCategories = categoriesWithPosts();
 // https://astro.build/config
 export default defineConfig({
   site: 'https://dltmddyd321.github.io',
+  // The archive page outgrew its old Tistory-only name once KeyFlow posts were
+  // added. It was already in the submitted sitemap, so keep the old path working.
+  redirects: {
+    '/tistory': '/archives',
+  },
   integrations: [
     sitemap({
       filter: (page) => {
         const path = new URL(page).pathname;
         // /search is an empty shell (results render client-side) — nothing to index.
         if (path.startsWith('/search')) return false;
+        // The redirect stub shouldn't compete with its destination.
+        if (path.startsWith('/tistory')) return false;
         const category = path.match(/^\/category\/([^/]+)\/?$/)?.[1];
         if (category) return activeCategories.has(category);
         return true;

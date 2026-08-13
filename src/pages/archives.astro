@@ -1,0 +1,349 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import tistory from '../data/tistory-archive.json';
+import keyflow from '../data/keyflow-archive.json';
+
+const SOURCES = {
+  tistory: { label: 'Tistory', home: 'https://yongdragon9819.tistory.com' },
+  keyflow: { label: 'KeyFlow', home: 'https://www.keyflow.me/ko/@win-dr' },
+} as const;
+
+type Entry = { title: string; url: string; date: string; source: keyof typeof SOURCES };
+
+const entries: Entry[] = [
+  ...tistory.map((p) => ({ ...p, source: 'tistory' as const })),
+  ...keyflow.map((p) => ({ ...p, source: 'keyflow' as const })),
+].sort((a, b) => b.date.localeCompare(a.date));
+
+const counts = {
+  tistory: tistory.length,
+  keyflow: keyflow.length,
+};
+
+const byYear = new Map<string, Entry[]>();
+for (const entry of entries) {
+  const year = entry.date.slice(0, 4);
+  if (!byYear.has(year)) byYear.set(year, []);
+  byYear.get(year)!.push(entry);
+}
+const years = [...byYear.keys()].sort((a, b) => b.localeCompare(a));
+---
+
+<BaseLayout
+  title="외부 글 아카이브"
+  description={`Tistory ${counts.tistory}편, KeyFlow ${counts.keyflow}편 — 다른 플랫폼에 쓴 글 ${entries.length}편의 색인. 제목으로 검색해 원문으로 바로 이동할 수 있습니다.`}
+  statusLine={`$ find ~/archives -name "*.entry" | wc -l  →  ${entries.length}`}
+>
+  <section class="hero">
+    <p class="kicker mono">&gt; external archive</p>
+    <h1>외부 글 아카이브</h1>
+    <p class="muted">
+      이 블로그를 만들기 전후로 다른 플랫폼에 쓴 글 {entries.length}편입니다. 옮기지 않고 원문은
+      그대로 둔 채 목록만 여기 모았습니다 — 제목을 누르면 원문으로 이동합니다.
+    </p>
+  </section>
+
+  <div class="controls">
+    <div class="filters mono" role="group" aria-label="출처 필터">
+      <button type="button" class="filter current" data-source="all" aria-pressed="true">
+        전체 <span class="muted">{entries.length}</span>
+      </button>
+      {(Object.keys(SOURCES) as (keyof typeof SOURCES)[]).map((key) => (
+        <button type="button" class="filter" data-source={key} aria-pressed="false">
+          {SOURCES[key].label} <span class="muted">{counts[key]}</span>
+        </button>
+      ))}
+    </div>
+
+    <div class="search-bar mono">
+      <span class="prompt">$ grep -i</span>
+      <input
+        type="text"
+        id="q"
+        placeholder="제목으로 검색…"
+        autocomplete="off"
+        aria-label="아카이브 글 제목 검색"
+      />
+      <span class="count muted" id="count">{entries.length} / {entries.length}</span>
+    </div>
+  </div>
+
+  <div id="years">
+    {years.map((year) => (
+      <section class="year-group" data-year={year} data-total={byYear.get(year)!.length}>
+        <h2 class="mono">
+          {year} <span class="muted year-count">· {byYear.get(year)!.length}편</span>
+        </h2>
+        <ul class="post-list">
+          {byYear.get(year)!.map((post) => (
+            <li class="post-item" data-title={post.title.toLowerCase()} data-source={post.source}>
+              <a href={post.url} target="_blank" rel="noopener">
+                <span class="date mono muted">{post.date}</span>
+                <span class={`src mono src-${post.source}`}>{SOURCES[post.source].label}</span>
+                <span class="title">{post.title}</span>
+                <span class="go mono muted">↗</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+    <p class="muted no-result" id="no-result" hidden>검색 결과가 없습니다.</p>
+  </div>
+</BaseLayout>
+
+<script>
+  const input = document.getElementById('q') as HTMLInputElement;
+  const countEl = document.getElementById('count')!;
+  const noResult = document.getElementById('no-result')!;
+  const items = Array.from(document.querySelectorAll<HTMLLIElement>('.post-item'));
+  const groups = Array.from(document.querySelectorAll<HTMLElement>('.year-group'));
+  const filters = Array.from(document.querySelectorAll<HTMLButtonElement>('.filter'));
+  const total = items.length;
+
+  let source = 'all';
+
+  function apply() {
+    const q = input.value.trim().toLowerCase();
+    let visible = 0;
+
+    for (const item of items) {
+      const matchesText = !q || (item.dataset.title ?? '').includes(q);
+      const matchesSource = source === 'all' || item.dataset.source === source;
+      const show = matchesText && matchesSource;
+      item.hidden = !show;
+      if (show) visible += 1;
+    }
+
+    for (const group of groups) {
+      const shown = group.querySelectorAll('.post-item:not([hidden])').length;
+      group.hidden = shown === 0;
+      const yearCount = group.querySelector('.year-count')!;
+      const groupTotal = group.dataset.total;
+      const filtered = q || source !== 'all';
+      yearCount.textContent = filtered ? `· ${shown} / ${groupTotal}편` : `· ${groupTotal}편`;
+    }
+
+    countEl.textContent = `${visible} / ${total}`;
+    noResult.hidden = visible !== 0;
+  }
+
+  input.addEventListener('input', apply);
+
+  for (const button of filters) {
+    button.addEventListener('click', () => {
+      source = button.dataset.source ?? 'all';
+      for (const other of filters) {
+        const on = other === button;
+        other.classList.toggle('current', on);
+        other.setAttribute('aria-pressed', String(on));
+      }
+      apply();
+    });
+  }
+</script>
+
+<style>
+  .hero {
+    padding: 8px 0 28px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+
+  .kicker {
+    color: var(--accent);
+    font-size: 0.8rem;
+    margin: 0 0 12px;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    margin: 0 0 14px;
+  }
+
+  .hero p.muted {
+    max-width: 70ch;
+    font-size: 1rem;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .filter {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 14px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    cursor: pointer;
+  }
+
+  .filter:hover {
+    border-color: var(--accent-line);
+    color: var(--accent);
+  }
+
+  .filter.current {
+    border-color: var(--accent-line);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .search-bar {
+    flex: 1;
+    min-width: 240px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+  }
+
+  .search-bar .prompt {
+    color: var(--accent);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .search-bar input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+  }
+
+  .search-bar input::placeholder {
+    color: var(--text-muted);
+  }
+
+  .search-bar .count {
+    font-size: 0.78rem;
+    flex-shrink: 0;
+  }
+
+  .year-group {
+    margin-bottom: 36px;
+  }
+
+  .year-group h2 {
+    font-size: 1rem;
+    color: var(--text);
+    margin: 0 0 4px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .year-count {
+    font-weight: 400;
+    font-size: 0.85rem;
+  }
+
+  .post-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .post-item a {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 11px 4px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .post-item:last-child a {
+    border-bottom: none;
+  }
+
+  .post-item a:hover {
+    text-decoration: none;
+    color: var(--accent);
+  }
+
+  .post-item a:hover .title {
+    text-decoration: underline;
+  }
+
+  .post-item .date {
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    width: 6.5em;
+  }
+
+  .post-item .src {
+    flex-shrink: 0;
+    font-size: 0.68rem;
+    width: 5.5em;
+    color: var(--text-muted);
+  }
+
+  .post-item .src-keyflow {
+    color: var(--accent);
+  }
+
+  .post-item .title {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: break-word;
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+
+  .post-item .go {
+    flex-shrink: 0;
+    font-size: 0.8rem;
+  }
+
+  .no-result {
+    padding: 24px 0;
+  }
+
+  @media (max-width: 560px) {
+    .search-bar {
+      flex-wrap: wrap;
+    }
+
+    /* flex-basis rather than width:100% — the latter resolves against the
+       padded container and spills by a pixel. */
+    .search-bar .count {
+      flex: 1 0 100%;
+      min-width: 0;
+      order: 3;
+    }
+
+    .post-item a {
+      flex-wrap: wrap;
+      gap: 4px 12px;
+    }
+
+    .post-item .date,
+    .post-item .src {
+      width: auto;
+    }
+
+    .post-item .title {
+      flex: 1 1 100%;
+    }
+  }
+</style>
