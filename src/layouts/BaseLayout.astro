@@ -109,7 +109,23 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
             </a>
           ))}
         </nav>
-        <a class="search-link mono" href="/search" aria-label="검색">$ /</a>
+        <a class="search-link mono" href="/search">
+          <svg
+            class="search-icon"
+            viewBox="0 0 16 16"
+            width="13"
+            height="13"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <circle cx="7" cy="7" r="4.5" />
+            <path d="M10.4 10.4 14 14" />
+          </svg>
+          <span>검색</span>
+        </a>
       </header>
       <div class="status-line mono">
         <span class="prompt">{statusLine}</span>
@@ -212,17 +228,24 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 
   .search-link {
     flex-shrink: 0;
-    font-size: 0.82rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
     color: var(--text-muted);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 3px 9px;
+    border-radius: 999px;
+    padding: 5px 12px;
   }
 
   .search-link:hover {
     color: var(--accent);
     border-color: var(--accent-line);
     text-decoration: none;
+  }
+
+  .search-icon {
+    flex-shrink: 0;
   }
 
   .status-line {

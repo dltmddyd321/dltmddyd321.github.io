@@ -345,5 +345,10 @@ const years = [...byYear.keys()].sort((a, b) => b.localeCompare(a));
     .post-item .title {
       flex: 1 1 100%;
     }
+
+    /* Same as the feed rows: avoid the arrow landing alone on a third line. */
+    .post-item .go {
+      display: none;
+    }
   }
 </style>

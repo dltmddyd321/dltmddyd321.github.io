@@ -42,6 +42,9 @@ export default defineConfig({
         if (path.startsWith('/search')) return false;
         // The redirect stub shouldn't compete with its destination.
         if (path.startsWith('/tistory')) return false;
+        // Feed pages 2+ render `noindex` (link lists, no original content);
+        // listing a noindex URL here trips Search Console.
+        if (/^\/\d+\/?$/.test(path)) return false;
         const category = path.match(/^\/category\/([^/]+)\/?$/)?.[1];
         if (category) return activeCategories.has(category);
         return true;

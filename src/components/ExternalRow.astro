@@ -1,0 +1,94 @@
+---
+interface Props {
+  title: string;
+  url: string;
+  date: string;
+  sourceLabel: string;
+  source: string;
+}
+
+const { title, url, date, sourceLabel, source } = Astro.props;
+---
+
+<article class="row">
+  <a href={url} target="_blank" rel="noopener">
+    <span class="date mono muted">{date}</span>
+    <span class={`src mono src-${source}`}>{sourceLabel}</span>
+    <span class="title">{title}</span>
+    <span class="go mono muted">↗</span>
+  </a>
+</article>
+
+<style>
+  .row {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .row a {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 11px 4px;
+    color: var(--text-muted);
+  }
+
+  .row a:hover {
+    text-decoration: none;
+    color: var(--accent);
+  }
+
+  .row a:hover .title {
+    text-decoration: underline;
+  }
+
+  .date {
+    flex-shrink: 0;
+    font-size: 0.74rem;
+    width: 6.5em;
+  }
+
+  .src {
+    flex-shrink: 0;
+    font-size: 0.66rem;
+    width: 5.5em;
+  }
+
+  .src-keyflow {
+    color: var(--accent);
+  }
+
+  .title {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: break-word;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .go {
+    flex-shrink: 0;
+    font-size: 0.76rem;
+  }
+
+  @media (max-width: 560px) {
+    .row a {
+      flex-wrap: wrap;
+      gap: 4px 12px;
+    }
+
+    .date,
+    .src {
+      width: auto;
+    }
+
+    .title {
+      flex: 1 1 100%;
+    }
+
+    /* The title takes the full row here, so the arrow would land alone on a
+       third line. The source badge already marks these as off-site links. */
+    .go {
+      display: none;
+    }
+  }
+</style>
