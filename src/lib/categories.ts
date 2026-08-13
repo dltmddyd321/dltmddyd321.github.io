@@ -1,5 +1,6 @@
 /**
- * Display labels are English to match the nav and the terminal tone. The Korean
+ * Display labels are English to match the nav and the terminal tone, and use
+ * underscores instead of spaces so they read like identifiers. The Korean
  * `description` is not rendered on the page — it only feeds each category page's
  * meta description, so the pages don't all share one description in search
  * results. Key order here is the nav order.
@@ -10,7 +11,7 @@ export const CATEGORIES = {
     description: '개념을 파고들어 정리한 기술 인사이트',
   },
   'dev-log': {
-    label: 'Dev Log',
+    label: 'Dev_Log',
     description: '기능을 만들며 겪은 문제와 해결 과정',
   },
   algorithm: {
@@ -26,7 +27,7 @@ export const CATEGORIES = {
     description: '다시 꺼내 쓸 코드와 설정 스니펫 모음',
   },
   'ai-lab': {
-    label: 'AI Lab',
+    label: 'AI_Lab',
     description: 'AI 도구를 실제로 써보고 남긴 활용기',
   },
 } as const;
