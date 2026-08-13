@@ -39,10 +39,9 @@ const jsonLd = {
   jsonLd={jsonLd}
   withSidebar
 >
-  <section class="hero">
-    <p class="kicker mono">&gt; 기술 인사이트 · 구현 과정 · 알고리즘 · 코딩 아카이브 · AI 활용기</p>
-    <h1>기록하고, 다시 꺼내 쓰는 개발 노트.</h1>
-  </section>
+  {/* The home page is just the list; the heading stays for document structure
+      (a page with no h1 is a screen-reader and SEO regression) but is hidden. */}
+  <h1 class="sr-only">{SITE.name} — 전체 글</h1>
 
   <section class="list">
     {posts.length === 0 && <p class="muted">아직 작성된 글이 없습니다.</p>}
@@ -60,22 +59,7 @@ const jsonLd = {
 </BaseLayout>
 
 <style>
-  .hero {
-    padding: 8px 0 36px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 12px;
-  }
-
-  .kicker {
-    color: var(--accent);
-    font-size: 0.8rem;
-    margin: 0 0 12px;
-  }
-
-  h1 {
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
-    line-height: 1.3;
-    margin: 0;
-    max-width: 20ch;
+  .list > :global(.row:first-child) {
+    padding-top: 0;
   }
 </style>
