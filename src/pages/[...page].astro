@@ -80,7 +80,7 @@ const jsonLd = isFirstPage
 
 <BaseLayout
   title={isFirstPage ? 'Posts' : `Posts — ${page.currentPage}페이지`}
-  fullTitle={isFirstPage ? `${SITE.name} — Android · Kotlin 개발 기록` : undefined}
+  fullTitle={isFirstPage ? SITE.name : undefined}
   description={
     isFirstPage
       ? undefined

@@ -258,8 +258,13 @@ URL 형식이 `/ko/@win-dr/post/<slug>`임을 확인한 뒤 5개 전부 200 OK�
 이상 걸린다는 전제를 깔고 "크롤러가 제대로 읽고 색인할 수 있는 상태"를 목표로 했다.
 
 - **사이트 정체성 단일화**: `src/lib/site.ts`의 `SITE` 상수(사이트명, 설명, 저자, OG 이미지)를
-  레이아웃·RSS·구조화 데이터가 공유한다. 사이트명은 검색 노출을 고려해 `dltmddyd321`(계정 ID)
-  대신 **"이승용 개발 블로그"**로 바꿨다 — 사람이 검색할 법한 단어로 제목이 잡히도록.
+  레이아웃·RSS·구조화 데이터가 공유한다. 사이트명(`SITE.name`)은 두 번 바뀌었다 — 처음
+  `dltmddyd321`(계정 ID)을 사람이 검색할 법한 "이승용 개발 블로그"로 바꿨다가, 카테고리가
+  Insight·Algorithm·Read·AI_Lab까지 넓어진 뒤 "Android·Kotlin 개발 기록"이라는 태그라인이
+  좁아 보여서 최종적으로 **"Win-Dev Log"**로 정리했다. 저자의 기존 채널명(Tistory "Win-Dev",
+  KeyFlow "@win-dr")과 파비콘 이니셜("WDr")에 맞춘 짧은 영문 브랜드명이라, `<title>`·
+  `og:site_name`·RSS·JSON-LD `Blog.name`에 전부 이 값이 쓰인다. 저자 개인 이름(`SITE.author`,
+  "이승용")과는 별개 값 — 사람 이름은 About 페이지의 `Person` 구조화 데이터에서만 쓴다.
 - **`<head>` 메타**(`BaseLayout.astro`): 페이지별 `<title>`/`description`, `canonical`,
   Open Graph, Twitter Card(`summary_large_image`), 포스트의 `article:published_time`·`article:tag`
 - **중복 description 제거**: 모든 페이지가 같은 설명을 쓰면 감점이라, 카테고리/태그/아카이브/
