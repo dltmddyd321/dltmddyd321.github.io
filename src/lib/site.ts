@@ -40,7 +40,7 @@ export const GOATCOUNTER_CODE = 'dltmddyd321';
  */
 export const GISCUS = {
   repo: 'dltmddyd321/dltmddyd321.github.io',
-  repoId: 'CHANGE_ME',
+  repoId: 'R_kgDOPmu63g',
   category: 'Announcements',
-  categoryId: 'CHANGE_ME',
+  categoryId: 'DIC_kwDOPmu63s4DDnSM',
 } as const;
