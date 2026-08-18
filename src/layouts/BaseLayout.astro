@@ -178,6 +178,8 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
               <a href={link.url} target="_blank" rel="noopener">{link.label} ↗</a>
             </>
           ))}
+          <span class="muted">·</span>
+          <a href={`mailto:${SITE.email}`}>email</a>
         </div>
       </footer>
     </div>

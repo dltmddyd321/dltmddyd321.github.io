@@ -18,6 +18,10 @@ export const SITE = {
     { label: 'youtube', url: 'https://www.youtube.com/@seungyong2477' },
     { label: 'instagram', url: 'https://www.instagram.com/wi.life_7/' },
   ],
+  /** Rendered in the footer as a mailto link. Kept out of `links`/`sameAs` —
+   * that array is profile URLs for schema.org identity linking, not contact
+   * methods. */
+  email: 'dltmddyd321@naver.com',
 } as const;
 
 /** Profile URLs for schema.org `sameAs`. */
