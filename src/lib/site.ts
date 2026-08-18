@@ -30,7 +30,7 @@ export const SAME_AS = SITE.links.map((link) => link.url);
  * counts on your website" under Settings — the visit_count() widget is off by
  * default to avoid leaking traffic data. Fill in once that's done.
  */
-export const GOATCOUNTER_CODE = 'CHANGE_ME';
+export const GOATCOUNTER_CODE = 'dltmddyd321';
 
 /**
  * giscus (GitHub Discussions comments) config — all public identifiers, not
