@@ -52,6 +52,16 @@ const REPO = 'dltmddyd321.github.io';
       <button type="button" class="linklike" id="logout">로그아웃</button>
     </div>
 
+    <div class="post-select-row">
+      <label>
+        글 선택
+        <select id="post-select">
+          <option value="">— 새 글 작성 —</option>
+        </select>
+      </label>
+      <span class="muted mono" id="load-status"></span>
+    </div>
+
     <div class="fields">
       <label>
         제목
@@ -123,6 +133,13 @@ const REPO = 'dltmddyd321.github.io';
   const whoami = document.getElementById('whoami') as HTMLElement;
   const logoutBtn = document.getElementById('logout') as HTMLButtonElement;
 
+  const postSelect = document.getElementById('post-select') as HTMLSelectElement;
+  const loadStatus = document.getElementById('load-status') as HTMLElement;
+  // Non-null while an existing post is loaded — publish() then updates that
+  // file in place (with its sha) instead of creating a new one.
+  let editingPath: string | null = null;
+  let editingSha: string | null = null;
+
   const titleInput = document.getElementById('f-title') as HTMLInputElement;
   const descriptionInput = document.getElementById('f-description') as HTMLInputElement;
   const dateInput = document.getElementById('f-date') as HTMLInputElement;
@@ -157,6 +174,52 @@ const REPO = 'dltmddyd321.github.io';
     return btoa(unescape(encodeURIComponent(str)));
   }
 
+  // Mirror of utf8ToBase64, for reading a post back out of the Contents API.
+  function base64ToUtf8(b64: string): string {
+    return decodeURIComponent(escape(atob(b64.replace(/\s/g, ''))));
+  }
+
+  interface ParsedPost {
+    title: string;
+    description: string;
+    pubDate: string;
+    category: string;
+    tags: string[];
+    draft: boolean;
+    body: string;
+  }
+
+  // A small parser tailored to the exact frontmatter shape this page (and the
+  // rest of the site's posts) writes — not a general YAML parser.
+  function parseFrontmatter(fileContent: string): ParsedPost {
+    const match = fileContent.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+    if (!match) throw new Error('invalid-frontmatter');
+    const [, frontmatter, body] = match;
+
+    const unquote = (s: string) => s.trim().replace(/^["'](.*)["']$/, '$1');
+    const data: Record<string, string> = {};
+    for (const line of frontmatter.split('\n')) {
+      const fieldMatch = line.match(/^(\w+):\s*(.*)$/);
+      if (fieldMatch) data[fieldMatch[1]] = fieldMatch[2];
+    }
+
+    const tagsRaw = (data.tags ?? '[]').trim().replace(/^\[/, '').replace(/\]$/, '');
+    const tags = tagsRaw
+      .split(',')
+      .map((t) => unquote(t))
+      .filter(Boolean);
+
+    return {
+      title: unquote(data.title ?? ''),
+      description: unquote(data.description ?? ''),
+      pubDate: (data.pubDate ?? '').trim(),
+      category: (data.category ?? '').trim(),
+      tags,
+      draft: (data.draft ?? '').trim() === 'true',
+      body: body.replace(/^\n+/, '').replace(/\s+$/, '\n'),
+    };
+  }
+
   function slugify(title: string): string {
     const ascii = title
       .toLowerCase()
@@ -185,7 +248,86 @@ const REPO = 'dltmddyd321.github.io';
     gate.hidden = true;
     editor.hidden = false;
     whoami.textContent = `@${login}로 로그인됨`;
+    loadPostList();
   }
+
+  function resetForm() {
+    titleInput.value = '';
+    descriptionInput.value = '';
+    tagsInput.value = '';
+    draftCheckbox.checked = false;
+    bodyTextarea.value = '';
+    dateInput.value = todayISO();
+    editingPath = null;
+    editingSha = null;
+    loadStatus.textContent = '';
+    publishBtn.textContent = '발행하기';
+  }
+
+  async function loadPostList() {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) return;
+    try {
+      const res = await fetch(`${API_ROOT}/repos/${OWNER}/${REPO}/contents/src/content/posts`, {
+        headers: ghHeaders(token),
+      });
+      if (!res.ok) return;
+      const files = (await res.json()) as Array<{ name: string; path: string }>;
+      const mdFiles = files
+        .filter((f) => f.name.endsWith('.md'))
+        .sort((a, b) => b.name.localeCompare(a.name));
+
+      const selected = postSelect.value;
+      postSelect.replaceChildren();
+      const defaultOption = document.createElement('option');
+      defaultOption.value = '';
+      defaultOption.textContent = '— 새 글 작성 —';
+      postSelect.appendChild(defaultOption);
+      for (const file of mdFiles) {
+        const option = document.createElement('option');
+        option.value = file.path;
+        option.textContent = file.name.replace(/\.md$/, '');
+        postSelect.appendChild(option);
+      }
+      postSelect.value = selected;
+    } catch {
+      // Listing failure just leaves the dropdown at "새 글 작성" — not fatal.
+    }
+  }
+
+  postSelect.addEventListener('change', async () => {
+    const path = postSelect.value;
+    if (!path) {
+      resetForm();
+      return;
+    }
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) return;
+
+    loadStatus.textContent = '불러오는 중…';
+    try {
+      const res = await fetch(`${API_ROOT}/repos/${OWNER}/${REPO}/contents/${path}`, {
+        headers: ghHeaders(token),
+      });
+      if (!res.ok) throw new Error(`http-${res.status}`);
+      const data = (await res.json()) as { content: string; sha: string };
+      const parsed = parseFrontmatter(base64ToUtf8(data.content));
+
+      titleInput.value = parsed.title;
+      descriptionInput.value = parsed.description;
+      dateInput.value = parsed.pubDate || todayISO();
+      categorySelect.value = parsed.category;
+      tagsInput.value = parsed.tags.join(', ');
+      draftCheckbox.checked = parsed.draft;
+      bodyTextarea.value = parsed.body;
+      editingPath = path;
+      editingSha = data.sha;
+      loadStatus.textContent = `불러옴: ${path}`;
+      publishBtn.textContent = '수정 저장';
+    } catch {
+      loadStatus.textContent = '불러오기 실패. 다시 시도해주세요.';
+    }
+  });
 
   function showGate(message?: string) {
     editor.hidden = true;
@@ -381,24 +523,30 @@ const REPO = 'dltmddyd321.github.io';
     frontmatterLines.push('---', '');
 
     const fileContent = `${frontmatterLines.join('\n')}\n${body}\n`;
+    const isEdit = editingPath !== null;
     const slug = slugify(title);
-    const path = `src/content/posts/${slug}.md`;
+    const path = editingPath ?? `src/content/posts/${slug}.md`;
 
     publishBtn.disabled = true;
-    publishStatus.textContent = '발행 중…';
+    publishStatus.textContent = isEdit ? '수정 저장 중…' : '발행 중…';
     try {
+      const payload: Record<string, unknown> = {
+        message: isEdit ? `fix: update post "${title}"` : `feat: add post "${title}"`,
+        content: utf8ToBase64(fileContent),
+        branch: BRANCH,
+      };
+      if (isEdit) payload.sha = editingSha;
+
       const res = await fetch(`${API_ROOT}/repos/${OWNER}/${REPO}/contents/${path}`, {
         method: 'PUT',
         headers: { ...ghHeaders(token), 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: `feat: add post "${title}"`,
-          content: utf8ToBase64(fileContent),
-          branch: BRANCH,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (res.status === 422) {
-        publishStatus.textContent = `이미 같은 이름(${slug}.md)의 글이 있습니다. 제목을 바꿔주세요.`;
+        publishStatus.textContent = isEdit
+          ? '수정 충돌이 발생했습니다. 목록에서 글을 다시 불러온 뒤 시도해주세요.'
+          : `이미 같은 이름(${slug}.md)의 글이 있습니다. 제목을 바꿔주세요.`;
         return;
       }
       if (res.status === 401) {
@@ -406,19 +554,24 @@ const REPO = 'dltmddyd321.github.io';
         return;
       }
       if (!res.ok) {
-        publishStatus.textContent = `발행 실패 (HTTP ${res.status}).`;
+        publishStatus.textContent = `${isEdit ? '수정' : '발행'} 실패 (HTTP ${res.status}).`;
         return;
       }
 
-      publishStatus.innerHTML = `발행 완료! <a href="https://github.com/${OWNER}/${REPO}/actions" target="_blank" rel="noopener">배포 진행 상황 ↗</a>`;
-      titleInput.value = '';
-      descriptionInput.value = '';
-      tagsInput.value = '';
-      draftCheckbox.checked = false;
-      bodyTextarea.value = '';
-      dateInput.value = todayISO();
+      const resData = (await res.json()) as { content: { sha: string } };
+      publishStatus.innerHTML = `${isEdit ? '수정' : '발행'} 완료! <a href="https://github.com/${OWNER}/${REPO}/actions" target="_blank" rel="noopener">배포 진행 상황 ↗</a>`;
+
+      if (isEdit) {
+        // Stay on the same post — just refresh the sha so a second save
+        // in a row doesn't 409 against the now-stale one.
+        editingSha = resData.content.sha;
+      } else {
+        resetForm();
+        postSelect.value = '';
+        loadPostList();
+      }
     } catch {
-      publishStatus.textContent = '네트워크 오류로 발행에 실패했습니다.';
+      publishStatus.textContent = '네트워크 오류로 저장에 실패했습니다.';
     } finally {
       publishBtn.disabled = false;
     }
@@ -490,6 +643,24 @@ const REPO = 'dltmddyd321.github.io';
 
   .linklike:hover {
     color: var(--accent);
+  }
+
+  .post-select-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--border);
+  }
+
+  .post-select-row label {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
   }
 
   .fields {
