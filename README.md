@@ -1,5 +1,7 @@
 # dltmddyd321.log
 
+[![Visit Blog](https://img.shields.io/badge/Win--Dev_Log-바로가기-e0a458?style=for-the-badge)](https://dltmddyd321.github.io)
+
 이승용의 개발 인사이트 · 구현 과정 · 코딩 아카이브 · AI 뉴스 기록 블로그.
 [Astro](https://astro.build) Content Collections 기반 정적 사이트이며, `main` 브랜치 push 시 GitHub Actions가 자동으로 `https://dltmddyd321.github.io`에 배포합니다.
 
