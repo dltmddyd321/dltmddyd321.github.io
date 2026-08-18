@@ -17,7 +17,6 @@ export const SITE = {
     { label: 'github', url: 'https://github.com/dltmddyd321' },
     { label: 'youtube', url: 'https://www.youtube.com/@seungyong2477' },
     { label: 'instagram', url: 'https://www.instagram.com/wi.life_7/' },
-    { label: 'tistory', url: 'https://yongdragon9819.tistory.com' },
   ],
 } as const;
 
@@ -30,7 +29,7 @@ export const SAME_AS = SITE.links.map((link) => link.url);
  * counts on your website" under Settings — the visit_count() widget is off by
  * default to avoid leaking traffic data. Fill in once that's done.
  */
-export const GOATCOUNTER_CODE = 'dltmddyd321';
+export const GOATCOUNTER_CODE: string = 'dltmddyd321';
 
 /**
  * giscus (GitHub Discussions comments) config — all public identifiers, not
@@ -38,9 +37,14 @@ export const GOATCOUNTER_CODE = 'dltmddyd321';
  * on the repo and the giscus GitHub App (https://github.com/apps/giscus) is
  * installed on it.
  */
-export const GISCUS = {
+export const GISCUS: {
+  repo: string;
+  repoId: string;
+  category: string;
+  categoryId: string;
+} = {
   repo: 'dltmddyd321/dltmddyd321.github.io',
   repoId: 'R_kgDOPmu63g',
   category: 'Announcements',
   categoryId: 'DIC_kwDOPmu63s4DDnSM',
-} as const;
+};

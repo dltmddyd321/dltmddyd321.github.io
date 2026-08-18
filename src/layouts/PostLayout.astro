@@ -85,6 +85,7 @@ const jsonLd = {
 
     <footer class="post-footer">
       <a href="/">&larr; 목록으로</a>
+      <button type="button" id="share-btn" class="mono" data-share-title={title}>공유하기 ↗</button>
     </footer>
 
     {giscusEnabled && (
@@ -111,6 +112,37 @@ const jsonLd = {
     )}
   </article>
 </BaseLayout>
+
+<script>
+  const shareBtn = document.getElementById('share-btn') as HTMLButtonElement | null;
+
+  shareBtn?.addEventListener('click', async () => {
+    const shareData = {
+      title: shareBtn.dataset.shareTitle ?? document.title,
+      url: location.href,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch {
+        // User cancelled the share sheet — not an error.
+      }
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(shareData.url);
+      const original = shareBtn.textContent;
+      shareBtn.textContent = '링크 복사됨!';
+      setTimeout(() => {
+        shareBtn.textContent = original;
+      }, 1500);
+    } catch {
+      alert(shareData.url);
+    }
+  });
+</script>
 
 <style>
   /* Header and grid share one width so the title lines up with the meta rail
@@ -230,11 +262,30 @@ const jsonLd = {
   }
 
   .post-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
     margin-top: 48px;
     padding-top: 20px;
     border-top: 1px solid var(--border);
     font-family: var(--font-mono);
     font-size: 0.85rem;
+  }
+
+  #share-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-muted);
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  #share-btn:hover {
+    border-color: var(--accent-line);
+    color: var(--accent);
   }
 
   .comments {
