@@ -1,0 +1,609 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CATEGORIES, CATEGORY_KEYS } from '../lib/categories';
+
+const OWNER = 'dltmddyd321';
+const REPO = 'dltmddyd321.github.io';
+---
+
+<BaseLayout
+  title="Write"
+  description="글쓰기 도구 (관리자 전용)."
+  statusLine="$ git commit -m 'new post'"
+  noindex
+>
+  <section class="hero">
+    <p class="kicker mono">&gt; write</p>
+    <h1>새 글 작성</h1>
+    <p class="muted">
+      GitHub Personal Access Token으로 인증한 뒤, 이 저장소의 <code>main</code> 브랜치에 직접 커밋합니다.
+      커밋되면 기존 배포 워크플로가 자동으로 실행됩니다.
+    </p>
+  </section>
+
+  <section id="gate" class="panel">
+    <h2>로그인</h2>
+    <p class="muted">
+      이 저장소(<code>{OWNER}/{REPO}</code>)에 대한 <strong>Contents: Read and write</strong> 권한을 가진
+      fine-grained personal access token이 필요합니다.
+      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">
+        토큰 발급 페이지 ↗
+      </a>
+      에서 이 저장소만 선택해 발급하세요. 토큰은 이 브라우저의 localStorage에만 저장되고 어디로도 전송되지 않습니다
+      (GitHub API 호출 시에만 사용).
+    </p>
+    <form id="gate-form">
+      <input
+        type="password"
+        id="token-input"
+        placeholder="github_pat_..."
+        autocomplete="off"
+        spellcheck="false"
+        required
+      />
+      <button type="submit" id="gate-submit">확인</button>
+    </form>
+    <p class="status muted mono" id="gate-status" hidden></p>
+  </section>
+
+  <section id="editor" class="panel" hidden>
+    <div class="editor-topbar">
+      <span class="muted mono" id="whoami"></span>
+      <button type="button" class="linklike" id="logout">로그아웃</button>
+    </div>
+
+    <div class="fields">
+      <label>
+        제목
+        <input type="text" id="f-title" required />
+      </label>
+      <label>
+        요약 (목록/RSS 노출)
+        <input type="text" id="f-description" required />
+      </label>
+      <div class="fields-row">
+        <label>
+          날짜
+          <input type="date" id="f-date" required />
+        </label>
+        <label>
+          카테고리
+          <select id="f-category">
+            {CATEGORY_KEYS.map((key) => <option value={key}>{CATEGORIES[key].label}</option>)}
+          </select>
+        </label>
+      </div>
+      <label>
+        태그 (쉼표로 구분)
+        <input type="text" id="f-tags" placeholder="kotlin, coroutine" />
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" id="f-draft" />
+        초안으로 저장 (배포에서 제외)
+      </label>
+    </div>
+
+    <div class="toolbar mono" role="toolbar" aria-label="서식">
+      <button type="button" data-action="bold" title="굵게"><strong>B</strong></button>
+      <button type="button" data-action="h2" title="큰 제목">H2</button>
+      <button type="button" data-action="h3" title="중간 제목">H3</button>
+      <button type="button" data-action="h4" title="작은 제목">H4</button>
+      <button type="button" data-action="code-inline" title="인라인 코드">{'`code`'}</button>
+      <button type="button" data-action="code-block" title="코드 블록">{'```'}</button>
+      <button type="button" data-action="paragraph" title="문단 나누기">¶</button>
+      <button type="button" id="image-btn" title="이미지 삽입">🖼 이미지</button>
+      <input type="file" id="image-input" accept="image/*" hidden />
+    </div>
+
+    <textarea id="f-body" class="mono" rows="20" placeholder="마크다운으로 본문을 작성하세요…"></textarea>
+
+    <div class="publish-row">
+      <button type="button" id="publish" class="primary">발행하기</button>
+      <p class="status muted mono" id="publish-status"></p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const OWNER = 'dltmddyd321';
+  const REPO = 'dltmddyd321.github.io';
+  const BRANCH = 'main';
+  const TOKEN_KEY = 'gh_pat';
+  const API_ROOT = 'https://api.github.com';
+
+  const gate = document.getElementById('gate') as HTMLElement;
+  const gateForm = document.getElementById('gate-form') as HTMLFormElement;
+  const tokenInput = document.getElementById('token-input') as HTMLInputElement;
+  const gateStatus = document.getElementById('gate-status') as HTMLElement;
+  const gateSubmit = document.getElementById('gate-submit') as HTMLButtonElement;
+
+  const editor = document.getElementById('editor') as HTMLElement;
+  const whoami = document.getElementById('whoami') as HTMLElement;
+  const logoutBtn = document.getElementById('logout') as HTMLButtonElement;
+
+  const titleInput = document.getElementById('f-title') as HTMLInputElement;
+  const descriptionInput = document.getElementById('f-description') as HTMLInputElement;
+  const dateInput = document.getElementById('f-date') as HTMLInputElement;
+  const categorySelect = document.getElementById('f-category') as HTMLSelectElement;
+  const tagsInput = document.getElementById('f-tags') as HTMLInputElement;
+  const draftCheckbox = document.getElementById('f-draft') as HTMLInputElement;
+  const bodyTextarea = document.getElementById('f-body') as HTMLTextAreaElement;
+
+  const imageBtn = document.getElementById('image-btn') as HTMLButtonElement;
+  const imageInput = document.getElementById('image-input') as HTMLInputElement;
+
+  const publishBtn = document.getElementById('publish') as HTMLButtonElement;
+  const publishStatus = document.getElementById('publish-status') as HTMLElement;
+
+  function todayISO(): string {
+    const now = new Date();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+  }
+  dateInput.value = todayISO();
+
+  function ghHeaders(token: string): HeadersInit {
+    return {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
+    };
+  }
+
+  // btoa only handles latin1, so UTF-8 text (Korean) has to be escaped first.
+  function utf8ToBase64(str: string): string {
+    return btoa(unescape(encodeURIComponent(str)));
+  }
+
+  function slugify(title: string): string {
+    const ascii = title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    if (ascii) return ascii;
+    // Korean-only (or otherwise non-ASCII) titles slugify to nothing — fall
+    // back to a timestamp so the commit never collides or 400s on an empty path.
+    return `post-${Date.now()}`;
+  }
+
+  function yamlString(value: string): string {
+    return `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
+  }
+
+  async function validateToken(token: string): Promise<string> {
+    const res = await fetch(`${API_ROOT}/user`, { headers: ghHeaders(token) });
+    if (!res.ok) throw new Error(res.status === 401 ? 'invalid-token' : `http-${res.status}`);
+    const data = (await res.json()) as { login: string };
+    if (data.login !== OWNER) throw new Error('wrong-user');
+    return data.login;
+  }
+
+  function showEditor(login: string) {
+    gate.hidden = true;
+    editor.hidden = false;
+    whoami.textContent = `@${login}로 로그인됨`;
+  }
+
+  function showGate(message?: string) {
+    editor.hidden = true;
+    gate.hidden = false;
+    if (message) {
+      gateStatus.hidden = false;
+      gateStatus.textContent = message;
+    }
+  }
+
+  function clearToken(message?: string) {
+    localStorage.removeItem(TOKEN_KEY);
+    showGate(message);
+  }
+
+  async function init() {
+    const stored = localStorage.getItem(TOKEN_KEY);
+    if (!stored) {
+      showGate();
+      return;
+    }
+    try {
+      const login = await validateToken(stored);
+      showEditor(login);
+    } catch {
+      clearToken('저장된 토큰이 더 이상 유효하지 않습니다. 다시 로그인해주세요.');
+    }
+  }
+
+  gateForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const token = tokenInput.value.trim();
+    if (!token) return;
+    gateSubmit.disabled = true;
+    gateStatus.hidden = false;
+    gateStatus.textContent = '확인 중…';
+    try {
+      const login = await validateToken(token);
+      localStorage.setItem(TOKEN_KEY, token);
+      tokenInput.value = '';
+      showEditor(login);
+    } catch (err) {
+      const reason = err instanceof Error ? err.message : 'unknown';
+      gateStatus.textContent =
+        reason === 'wrong-user'
+          ? `이 토큰은 @${OWNER} 계정 소유가 아닙니다.`
+          : reason === 'invalid-token'
+            ? '토큰이 유효하지 않습니다.'
+            : '확인에 실패했습니다. 잠시 후 다시 시도해주세요.';
+    } finally {
+      gateSubmit.disabled = false;
+    }
+  });
+
+  logoutBtn.addEventListener('click', () => clearToken());
+
+  // --- Toolbar: wraps/inserts text around the current textarea selection ---
+  function wrapSelection(before: string, after: string, placeholder: string) {
+    const start = bodyTextarea.selectionStart;
+    const end = bodyTextarea.selectionEnd;
+    const selected = bodyTextarea.value.slice(start, end) || placeholder;
+    const next = bodyTextarea.value.slice(0, start) + before + selected + after + bodyTextarea.value.slice(end);
+    bodyTextarea.value = next;
+    const cursorStart = start + before.length;
+    bodyTextarea.setSelectionRange(cursorStart, cursorStart + selected.length);
+    bodyTextarea.focus();
+  }
+
+  function prefixLine(prefix: string) {
+    const start = bodyTextarea.selectionStart;
+    const lineStart = bodyTextarea.value.lastIndexOf('\n', start - 1) + 1;
+    const next = bodyTextarea.value.slice(0, lineStart) + prefix + bodyTextarea.value.slice(lineStart);
+    bodyTextarea.value = next;
+    const cursor = start + prefix.length;
+    bodyTextarea.setSelectionRange(cursor, cursor);
+    bodyTextarea.focus();
+  }
+
+  function insertAtCursor(text: string) {
+    const start = bodyTextarea.selectionStart;
+    const end = bodyTextarea.selectionEnd;
+    bodyTextarea.value = bodyTextarea.value.slice(0, start) + text + bodyTextarea.value.slice(end);
+    const cursor = start + text.length;
+    bodyTextarea.setSelectionRange(cursor, cursor);
+    bodyTextarea.focus();
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.toolbar [data-action]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      switch (btn.dataset.action) {
+        case 'bold':
+          wrapSelection('**', '**', '굵은 텍스트');
+          break;
+        case 'h2':
+          prefixLine('## ');
+          break;
+        case 'h3':
+          prefixLine('### ');
+          break;
+        case 'h4':
+          prefixLine('#### ');
+          break;
+        case 'code-inline':
+          wrapSelection('`', '`', 'code');
+          break;
+        case 'code-block':
+          wrapSelection('\n```\n', '\n```\n', '코드');
+          break;
+        case 'paragraph':
+          insertAtCursor('\n\n');
+          break;
+      }
+    });
+  });
+
+  imageBtn.addEventListener('click', () => imageInput.click());
+
+  imageInput.addEventListener('change', async () => {
+    const file = imageInput.files?.[0];
+    if (!file) return;
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) return;
+
+    imageBtn.disabled = true;
+    imageBtn.textContent = '업로드 중…';
+    try {
+      const dataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+      });
+      const base64 = dataUrl.split(',')[1];
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '-');
+      const uploadName = `${Date.now()}-${safeName}`;
+      const path = `public/uploads/${uploadName}`;
+
+      const res = await fetch(
+        `${API_ROOT}/repos/${OWNER}/${REPO}/contents/${path}`,
+        {
+          method: 'PUT',
+          headers: { ...ghHeaders(token), 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: `chore: add uploaded image ${safeName}`,
+            content: base64,
+            branch: BRANCH,
+          }),
+        },
+      );
+      if (!res.ok) throw new Error(`upload-failed-${res.status}`);
+
+      insertAtCursor(`![${file.name}](/uploads/${uploadName})`);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+      alert('이미지 업로드에 실패했습니다.');
+    } finally {
+      imageBtn.disabled = false;
+      imageBtn.textContent = '🖼 이미지';
+      imageInput.value = '';
+    }
+  });
+
+  publishBtn.addEventListener('click', async () => {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) {
+      clearToken('세션이 만료되었습니다. 다시 로그인해주세요.');
+      return;
+    }
+
+    const title = titleInput.value.trim();
+    const description = descriptionInput.value.trim();
+    const body = bodyTextarea.value.trim();
+    if (!title || !description || !body) {
+      publishStatus.textContent = '제목, 요약, 본문은 필수입니다.';
+      return;
+    }
+
+    const tags = tagsInput.value
+      .split(',')
+      .map((t) => t.trim())
+      .filter(Boolean);
+
+    const frontmatterLines = [
+      '---',
+      `title: ${yamlString(title)}`,
+      `description: ${yamlString(description)}`,
+      `pubDate: ${dateInput.value}`,
+      `category: ${categorySelect.value}`,
+      `tags: [${tags.map(yamlString).join(', ')}]`,
+    ];
+    if (draftCheckbox.checked) frontmatterLines.push('draft: true');
+    frontmatterLines.push('---', '');
+
+    const fileContent = `${frontmatterLines.join('\n')}\n${body}\n`;
+    const slug = slugify(title);
+    const path = `src/content/posts/${slug}.md`;
+
+    publishBtn.disabled = true;
+    publishStatus.textContent = '발행 중…';
+    try {
+      const res = await fetch(`${API_ROOT}/repos/${OWNER}/${REPO}/contents/${path}`, {
+        method: 'PUT',
+        headers: { ...ghHeaders(token), 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: `feat: add post "${title}"`,
+          content: utf8ToBase64(fileContent),
+          branch: BRANCH,
+        }),
+      });
+
+      if (res.status === 422) {
+        publishStatus.textContent = `이미 같은 이름(${slug}.md)의 글이 있습니다. 제목을 바꿔주세요.`;
+        return;
+      }
+      if (res.status === 401) {
+        clearToken('토큰이 만료되었거나 취소되었습니다. 다시 로그인해주세요.');
+        return;
+      }
+      if (!res.ok) {
+        publishStatus.textContent = `발행 실패 (HTTP ${res.status}).`;
+        return;
+      }
+
+      publishStatus.innerHTML = `발행 완료! <a href="https://github.com/${OWNER}/${REPO}/actions" target="_blank" rel="noopener">배포 진행 상황 ↗</a>`;
+      titleInput.value = '';
+      descriptionInput.value = '';
+      tagsInput.value = '';
+      draftCheckbox.checked = false;
+      bodyTextarea.value = '';
+      dateInput.value = todayISO();
+    } catch {
+      publishStatus.textContent = '네트워크 오류로 발행에 실패했습니다.';
+    } finally {
+      publishBtn.disabled = false;
+    }
+  });
+
+  init();
+</script>
+
+<style>
+  .hero {
+    padding: 8px 0 28px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+
+  .kicker {
+    color: var(--accent);
+    font-size: 0.8rem;
+    margin: 0 0 12px;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    margin: 0 0 10px;
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .panel h2 {
+    margin: 0 0 12px;
+    font-size: 1.1rem;
+  }
+
+  #gate-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  #gate-form input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .editor-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+  }
+
+  .linklike {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: var(--font-sans);
+    padding: 0;
+  }
+
+  .linklike:hover {
+    color: var(--accent);
+  }
+
+  .fields {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .fields-row {
+    display: flex;
+    gap: 14px;
+  }
+
+  .fields-row label {
+    flex: 1;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  label.checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  input[type='text'],
+  input[type='password'],
+  input[type='date'],
+  select,
+  textarea {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent-line);
+  }
+
+  input[type='checkbox'] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent);
+  }
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .toolbar button {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  .toolbar button:hover {
+    border-color: var(--accent-line);
+    color: var(--accent);
+  }
+
+  textarea#f-body {
+    width: 100%;
+    resize: vertical;
+    line-height: 1.6;
+    font-size: 0.9rem;
+  }
+
+  .publish-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  button.primary {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  button.primary:hover {
+    opacity: 0.9;
+  }
+
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .status {
+    font-size: 0.82rem;
+    margin: 0;
+  }
+</style>

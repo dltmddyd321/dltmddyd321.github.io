@@ -126,6 +126,25 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
           </svg>
           <span>검색</span>
         </a>
+        <!-- Revealed client-side only when a GitHub token is stored locally
+             (see script below) — nobody else's build of this same static HTML
+             gets a visible link. -->
+        <a class="write-link mono" href="/write" id="write-link" hidden>
+          <svg
+            viewBox="0 0 16 16"
+            width="13"
+            height="13"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M11 2.5 13.5 5 5 13.5H2.5V11z" />
+          </svg>
+          <span>Write</span>
+        </a>
       </header>
       <div class="status-line mono">
         <span class="prompt">{statusLine}</span>
@@ -163,6 +182,15 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
         </div>
       </footer>
     </div>
+    <script is:inline>
+      try {
+        if (localStorage.getItem('gh_pat')) {
+          document.getElementById('write-link')?.removeAttribute('hidden');
+        }
+      } catch {
+        // localStorage can throw in locked-down contexts (private mode, etc.) — just stay hidden.
+      }
+    </script>
   </body>
 </html>
 
@@ -246,6 +274,23 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 
   .search-icon {
     flex-shrink: 0;
+  }
+
+  .write-link {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--accent);
+    border: 1px solid var(--accent-line);
+    border-radius: 999px;
+    padding: 5px 12px;
+  }
+
+  .write-link:hover {
+    background: var(--accent-soft);
+    text-decoration: none;
   }
 
   .status-line {
