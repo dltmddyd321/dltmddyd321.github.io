@@ -49,7 +49,6 @@ const jsonLd = {
     <header class="post-header">
       <p class="kicker mono">&gt; {categoryLabel(category)}</p>
       <h1>{title}</h1>
-      <p class="lede">{description}</p>
     </header>
 
     {aiPreview && (
@@ -140,20 +139,12 @@ const jsonLd = {
     margin: 0 0 14px;
   }
 
-  .lede {
-    color: var(--text-muted);
-    font-size: 1.1rem;
-    max-width: 60ch;
-    margin: 0;
-  }
-
   .ai-preview {
     display: flex;
     flex-direction: column;
     gap: 6px;
     margin-top: 20px;
     padding: 14px 18px;
-    max-width: 60ch;
     background: var(--accent-soft);
     border: 1px solid var(--accent-line);
     border-radius: 10px;
