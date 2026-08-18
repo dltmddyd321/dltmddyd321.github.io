@@ -48,7 +48,20 @@ Claude Code를 쓰다 보면 프로젝트 루트에 `CLAUDE.md`라는 파일을 
 
 ## 실제로 돌려본 결과
 
-제 프로젝트 CLAUDE.md에 돌려봤더니 대략 B등급 초반 점수가 나왔습니다. 아키텍처 설명이나 간결성 쪽은 점수가 높았는데, 최신성과 비직관적 패턴 항목에서 감점이 컸습니다.
+제 프로젝트 CLAUDE.md에 돌려봤더니 이런 리포트가 나왔습니다.
+
+**Score: 71/100 (Grade: B)**
+
+| Criterion | Score | Notes |
+|---|---|---|
+| Commands/workflows | 12/20 | 검증 루프(compile→lint→test) 태스크명은 있지만 `./gradlew` 접두사, 앱 실행/설치 명령, 단일 테스트 실행법 없음 |
+| Architecture clarity | 18/20 | Dual DB, TimeBlock 도메인, 하네스 파이프라인 등 구조 설명이 탄탄함 |
+| Non-obvious patterns | 8/15 | Realm 스레드 안전성 등 일부 있으나, 실제 코드 검증 결과 중요한 gotcha 2개가 누락됨 (아래 참조) |
+| Conciseness | 14/15 | 군더더기 없이 밀도 높음 |
+| Currency | 8/15 | 버전 정보 여러 개가 실제 코드와 불일치 (아래 참조) |
+| Actionability | 11/15 | 대부분 실행 가능하나 `./gradlew` 누락으로 바로 복붙은 안 됨 |
+
+아키텍처 설명이나 간결성 쪽은 점수가 높았는데, 최신성과 비직관적 패턴 항목에서 감점이 컸습니다.
 
 구체적으로는 이런 식이었습니다.
 
