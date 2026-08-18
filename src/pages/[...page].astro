@@ -5,6 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PostRow from '../components/PostRow.astro';
 import ExternalRow from '../components/ExternalRow.astro';
 import { SAME_AS, SITE } from '../lib/site';
+import { firstImage } from '../lib/postThumbnail';
 import tistory from '../data/tistory-archive.json';
 import keyflow from '../data/keyflow-archive.json';
 
@@ -107,6 +108,7 @@ const jsonLd = isFirstPage
           pubDate={item.post.data.pubDate}
           category={item.post.data.category}
           tags={item.post.data.tags}
+          thumbnail={firstImage(item.post.body)}
         />
       ) : (
         <ExternalRow

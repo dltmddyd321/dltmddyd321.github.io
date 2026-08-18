@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostRow from '../../components/PostRow.astro';
 import { CATEGORY_KEYS, categoryDescription, categoryLabel } from '../../lib/categories';
+import { firstImage } from '../../lib/postThumbnail';
 
 export async function getStaticPaths() {
   return CATEGORY_KEYS.map((category) => ({ params: { category } }));
@@ -41,6 +42,7 @@ const blurb = categoryDescription(category as string);
         pubDate={post.data.pubDate}
         category={post.data.category}
         tags={post.data.tags}
+        thumbnail={firstImage(post.body)}
       />
     ))}
   </section>
