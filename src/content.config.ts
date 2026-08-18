@@ -16,6 +16,9 @@ const posts = defineCollection({
      * Short teaser Claude writes when it authors a post directly (not a form
      * field in /write) — rendered as a distinct "AI Preview" banner, separate
      * from the human-written `description` lede.
+     *
+     * Start with the substance. The banner is already labelled "AI Preview",
+     * so lead-ins like "핵심만 보면 —" only restate the label.
      */
     aiPreview: z.string().optional(),
   }),
