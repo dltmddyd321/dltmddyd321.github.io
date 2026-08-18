@@ -152,6 +152,40 @@ pre {
   text-transform: lowercase;
 }
 
+/*
+ * Shared control for every outline pill-shaped button/link on the site
+ * (header search/write links, post-page edit/delete/share). A fixed height
+ * instead of relying on padding alone is what keeps <a> and <button> pills
+ * the same size — the two elements have different intrinsic line box and
+ * UA default sizing, so padding-only alignment drifts between them.
+ */
+.pill {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 14px;
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.pill:hover {
+  border-color: var(--accent-line);
+  color: var(--accent);
+  text-decoration: none;
+}
+
 .muted {
   color: var(--text-muted);
 }

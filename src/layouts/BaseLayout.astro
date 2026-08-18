@@ -109,7 +109,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
             </a>
           ))}
         </nav>
-        <a class="search-link mono" href="/search">
+        <a class="pill search-link mono" href="/search">
           <svg
             class="search-icon"
             viewBox="0 0 16 16"
@@ -129,7 +129,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
         <!-- Revealed client-side only when a GitHub token is stored locally
              (see script below) — nobody else's build of this same static HTML
              gets a visible link. -->
-        <a class="write-link mono" href="/write" id="write-link" hidden>
+        <a class="pill write-link mono" href="/write" id="write-link" hidden>
           <svg
             viewBox="0 0 16 16"
             width="13"
@@ -264,41 +264,22 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 
   .search-link {
     flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 5px 12px;
-  }
-
-  .search-link:hover {
-    color: var(--accent);
-    border-color: var(--accent-line);
-    text-decoration: none;
   }
 
   .search-icon {
     flex-shrink: 0;
   }
 
+  /* Write is the one pill that's accent-colored at rest, not just on hover —
+     it marks an admin-only action, so it should read as distinct immediately. */
   .write-link {
     flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.78rem;
     color: var(--accent);
-    border: 1px solid var(--accent-line);
-    border-radius: 999px;
-    padding: 5px 12px;
+    border-color: var(--accent-line);
   }
 
   .write-link:hover {
     background: var(--accent-soft);
-    text-decoration: none;
   }
 
   .status-line {

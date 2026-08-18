@@ -93,7 +93,7 @@ const jsonLd = {
         <a
           href={`/write?edit=${encodeURIComponent(sourcePath)}`}
           id="edit-link"
-          class="mono"
+          class="pill mono"
           hidden
         >
           ✎ 수정
@@ -101,14 +101,14 @@ const jsonLd = {
         <button
           type="button"
           id="delete-btn"
-          class="mono"
+          class="pill mono"
           data-path={sourcePath}
           data-title={title}
           hidden
         >
           🗑 삭제
         </button>
-        <button type="button" id="share-btn" class="mono" data-share-title={title}>공유하기 ↗</button>
+        <button type="button" id="share-btn" class="pill mono" data-share-title={title}>공유하기 ↗</button>
       </div>
     </footer>
 
@@ -498,25 +498,8 @@ const jsonLd = {
     gap: 10px;
   }
 
-  #share-btn,
-  #edit-link,
-  #delete-btn {
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    color: var(--text-muted);
-    padding: 6px 14px;
-    font-size: 0.8rem;
-    cursor: pointer;
-  }
-
-  #share-btn:hover,
-  #edit-link:hover {
-    border-color: var(--accent-line);
-    color: var(--accent);
-    text-decoration: none;
-  }
-
+  /* The one place a pill deviates from the shared hover accent — delete is
+     destructive, so its hover state reads as a warning instead. */
   #delete-btn:hover {
     border-color: #d9534f;
     color: #d9534f;
