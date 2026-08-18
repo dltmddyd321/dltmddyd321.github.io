@@ -55,7 +55,7 @@ const jsonLd = {
       <h1>{title}</h1>
 
       {aiPreview && (
-        <aside class="ai-preview">
+        <aside class="ai-preview bracketed">
           <span class="ai-preview-tag mono">✦ AI Preview</span>
           <p>{aiPreview}</p>
         </aside>
@@ -292,15 +292,16 @@ const jsonLd = {
     margin: 0 0 14px;
   }
 
+  /* Square corners here, unlike the site's other boxes — crop marks only read
+     as registration marks against a hard corner, not a rounded one. */
   .ai-preview {
     display: flex;
     flex-direction: column;
     gap: 6px;
     margin-top: 20px;
-    padding: 14px 18px;
+    padding: 16px 20px;
     background: var(--accent-soft);
     border: 1px solid var(--accent-line);
-    border-radius: 10px;
   }
 
   .ai-preview-tag {
@@ -374,6 +375,18 @@ const jsonLd = {
 
   .content :global(p) {
     margin: 0 0 1.2em;
+  }
+
+  /* Editorial drop cap on the opening paragraph only. Korean syllables are
+     full-width and visually heavier than a Latin capital, so the scale is
+     kept modest — a 3-line cap that works for "A" swallows "안". */
+  .content :global(> p:first-child::first-letter) {
+    float: left;
+    margin: 0.08em 0.12em 0 0;
+    font-size: 2.8em;
+    line-height: 0.86;
+    font-weight: 800;
+    color: var(--accent);
   }
 
   .content :global(ul),

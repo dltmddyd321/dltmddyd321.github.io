@@ -190,12 +190,79 @@ pre {
   color: var(--text-muted);
 }
 
+/*
+ * Crop-mark corner brackets — printer's registration marks, offset outside
+ * the box so the frame reads as a plate being positioned rather than another
+ * rounded card. Applied to callout boxes (pull quotes, the AI Preview banner);
+ * the host element supplies its own border and needs `position: relative`.
+ */
+.bracketed {
+  position: relative;
+}
+
+.bracketed::before,
+.bracketed::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--accent);
+  border-style: solid;
+  pointer-events: none;
+}
+
+.bracketed::before {
+  top: -5px;
+  left: -5px;
+  border-width: 1px 0 0 1px;
+}
+
+.bracketed::after {
+  right: -5px;
+  bottom: -5px;
+  border-width: 0 1px 1px 0;
+}
+
+/* Pull quotes get the same crop-mark treatment. They come from markdown, so
+   the brackets are attached here by element rather than via `.bracketed`. */
 blockquote {
-  margin: 24px 0;
-  padding: 4px 20px;
-  border-left: 3px solid var(--accent);
+  position: relative;
+  margin: 28px 0;
+  padding: 18px 22px;
+  border: 1px solid var(--accent-line);
   color: var(--text-muted);
   font-style: italic;
+}
+
+blockquote::before,
+blockquote::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--accent);
+  border-style: solid;
+  pointer-events: none;
+}
+
+blockquote::before {
+  top: -5px;
+  left: -5px;
+  border-width: 1px 0 0 1px;
+}
+
+blockquote::after {
+  right: -5px;
+  bottom: -5px;
+  border-width: 0 1px 1px 0;
+}
+
+blockquote > :first-child {
+  margin-top: 0;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
 }
 
 hr {
