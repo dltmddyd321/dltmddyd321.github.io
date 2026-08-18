@@ -12,6 +12,12 @@ const posts = defineCollection({
     category: z.enum(CATEGORY_KEYS as [CategoryKey, ...CategoryKey[]]),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    /**
+     * Short teaser Claude writes when it authors a post directly (not a form
+     * field in /write) — rendered as a distinct "AI Preview" banner, separate
+     * from the human-written `description` lede.
+     */
+    aiPreview: z.string().optional(),
   }),
 });
 
