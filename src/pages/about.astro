@@ -6,7 +6,7 @@ const personJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: SITE.author,
-  alternateName: 'Seungyong Lee',
+  alternateName: '이승용',
   jobTitle: 'Android Developer',
   url: new URL('/about', SITE.url).href,
   image: new URL('/myprofile.png', SITE.url).href,
@@ -193,14 +193,14 @@ const statements = [
 
 <BaseLayout
   title="About"
-  description="Android 개발자 이승용의 이력과 프로젝트. 누적 다운로드 300만 캘린더 서비스 TimeBlocks에서 Coroutine·Retrofit·Compose 도입, 성능 개선, 데이터 동기화 최적화를 담당했습니다."
+  description="Android 개발자 LeeSeungYong의 이력과 프로젝트. 누적 다운로드 300만 캘린더 서비스 TimeBlocks에서 Coroutine·Retrofit·Compose 도입, 성능 개선, 데이터 동기화 최적화를 담당했습니다."
   statusLine="$ cat ./about/profile.md"
   jsonLd={personJsonLd}
 >
   <section class="hero">
     <div class="hero-text">
       <p class="kicker mono">&gt; whoami</p>
-      <h1>새로운 도전과 문제 해결을 성장의 연료로 삼는 개발자, 이승용입니다.</h1>
+      <h1>새로운 도전과 문제 해결을 성장의 연료로 삼는 개발자, LeeSeungYong입니다.</h1>
       <p class="muted">
         누적 다운로드 300만 캘린더 서비스의 신규 기능/성능 개선 담당. Coroutine/Retrofit/Compose를
         최초 도입하여 안정성과 생산성 향상에 기여. 성능 개선과 데이터 처리 최적화를 통해 사용자
@@ -216,7 +216,7 @@ const statements = [
       </div>
     </div>
     <div class="card facts">
-      <img class="avatar" src="/myprofile.png" alt="이승용 프로필 사진" />
+      <img class="avatar" src="/myprofile.png" alt="LeeSeungYong 프로필 사진" />
       <h3 class="mono">quick facts</h3>
       <ul class="muted">
         <li>총 경력: <span id="tenure">계산 중…</span></li>

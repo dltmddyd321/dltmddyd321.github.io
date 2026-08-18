@@ -93,7 +93,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     <div class="wrap">
       <header class="site-header">
         <a class="logo" href="/">
-          <span class="mono">~/</span>이승용<span class="mono">.log</span>
+          <span class="mono">~/</span>LeeSeungYong<span class="mono">.log</span>
         </a>
         <nav>
           <a href="/" class:list={{ current: isCurrent('/') }} aria-current={path === '/' ? 'page' : undefined}>
@@ -172,7 +172,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
           <a href="/search">Search</a>
         </nav>
         <div class="footer-meta">
-          <span>© {new Date().getFullYear()} 이승용</span>
+          <span>© {new Date().getFullYear()} LeeSeungYong</span>
           {SITE.links.map((link) => (
             <>
               <span class="muted">·</span>
