@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
-import { SITE } from '../lib/site';
+import { SITE, GOATCOUNTER_CODE } from '../lib/site';
 import { CATEGORIES, CATEGORY_KEYS } from '../lib/categories';
 
 interface Props {
@@ -191,6 +191,14 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
         // localStorage can throw in locked-down contexts (private mode, etc.) — just stay hidden.
       }
     </script>
+    {GOATCOUNTER_CODE !== 'CHANGE_ME' && (
+      <script
+        is:inline
+        data-goatcounter={`https://${GOATCOUNTER_CODE}.goatcounter.com/count`}
+        async
+        src="//gc.zgo.at/count.js"
+      />
+    )}
   </body>
 </html>
 

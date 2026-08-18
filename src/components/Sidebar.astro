@@ -2,8 +2,10 @@
 import { getCollection } from 'astro:content';
 import tistory from '../data/tistory-archive.json';
 import keyflow from '../data/keyflow-archive.json';
+import { GOATCOUNTER_CODE } from '../lib/site';
 
 const archiveCount = tistory.length + keyflow.length;
+const goatCounterEnabled = GOATCOUNTER_CODE !== 'CHANGE_ME';
 
 /** Tags shown before the 더보기 toggle. */
 const VISIBLE_TAGS = 12;
@@ -66,6 +68,13 @@ const hiddenTags = tags.slice(VISIBLE_TAGS);
     )}
   </section>
 
+  {goatCounterEnabled && (
+    <section class="block">
+      <h2 class="block-title mono">Visitors</h2>
+      <div id="goatcounter-widget" class="visitor-widget"></div>
+    </section>
+  )}
+
   <section class="block">
     <h2 class="block-title mono">Archive</h2>
     <a class="archive-link" href="/archives">
@@ -87,6 +96,26 @@ const hiddenTags = tags.slice(VISIBLE_TAGS);
       ? `더보기 <span class="muted">+${extras.length}</span>`
       : '접기';
   });
+
+  // count.js loads async, so poll for window.goatcounter rather than racing it
+  // (this is GoatCounter's own documented pattern for the visitor widget).
+  type GoatCounterWindow = Window & {
+    goatcounter?: { visit_count?: (opts: Record<string, unknown>) => void };
+  };
+  const gcWindow = window as GoatCounterWindow;
+
+  if (document.getElementById('goatcounter-widget')) {
+    const timer = setInterval(() => {
+      if (gcWindow.goatcounter?.visit_count) {
+        clearInterval(timer);
+        gcWindow.goatcounter.visit_count({
+          append: '#goatcounter-widget',
+          path: 'TOTAL',
+          no_branding: true,
+        });
+      }
+    }, 100);
+  }
 </script>
 
 <style>
@@ -238,5 +267,16 @@ const hiddenTags = tags.slice(VISIBLE_TAGS);
   .empty {
     margin: 0;
     font-size: 0.8rem;
+  }
+
+  /* GoatCounter renders its own markup here — style is loose on purpose since
+     the exact tag structure isn't something we control. */
+  .visitor-widget {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  .visitor-widget :global(a) {
+    color: var(--accent);
   }
 </style>

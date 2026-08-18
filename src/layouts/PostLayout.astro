@@ -1,7 +1,9 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { categoryLabel } from '../lib/categories';
-import { SITE } from '../lib/site';
+import { SITE, GISCUS } from '../lib/site';
+
+const giscusEnabled = GISCUS.repoId !== 'CHANGE_ME' && GISCUS.categoryId !== 'CHANGE_ME';
 
 interface Props {
   title: string;
@@ -75,6 +77,29 @@ const jsonLd = {
     <footer class="post-footer">
       <a href="/">&larr; 목록으로</a>
     </footer>
+
+    {giscusEnabled && (
+      <section class="comments">
+        <h2 class="comments-title mono">Comments</h2>
+        <script
+          is:inline
+          src="https://giscus.app/client.js"
+          data-repo={GISCUS.repo}
+          data-repo-id={GISCUS.repoId}
+          data-category={GISCUS.category}
+          data-category-id={GISCUS.categoryId}
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="transparent_dark"
+          data-lang="ko"
+          crossorigin="anonymous"
+          async
+        />
+      </section>
+    )}
   </article>
 </BaseLayout>
 
@@ -183,6 +208,17 @@ const jsonLd = {
     border-top: 1px solid var(--border);
     font-family: var(--font-mono);
     font-size: 0.85rem;
+  }
+
+  .comments {
+    max-width: var(--prose-max);
+    margin: 40px auto 0;
+  }
+
+  .comments-title {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0 0 16px;
   }
 
   /* Keeping the rail below this squeezes prose under ~35 Korean chars a line,

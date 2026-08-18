@@ -23,3 +23,24 @@ export const SITE = {
 
 /** Profile URLs for schema.org `sameAs`. */
 export const SAME_AS = SITE.links.map((link) => link.url);
+
+/**
+ * GoatCounter site code (the `MYCODE` in `https://MYCODE.goatcounter.com`).
+ * Sign up at https://www.goatcounter.com/, then enable "Allow adding visitor
+ * counts on your website" under Settings — the visit_count() widget is off by
+ * default to avoid leaking traffic data. Fill in once that's done.
+ */
+export const GOATCOUNTER_CODE = 'CHANGE_ME';
+
+/**
+ * giscus (GitHub Discussions comments) config — all public identifiers, not
+ * secrets. Generate these at https://giscus.app once Discussions is enabled
+ * on the repo and the giscus GitHub App (https://github.com/apps/giscus) is
+ * installed on it.
+ */
+export const GISCUS = {
+  repo: 'dltmddyd321/dltmddyd321.github.io',
+  repoId: 'CHANGE_ME',
+  category: 'Announcements',
+  categoryId: 'CHANGE_ME',
+} as const;
