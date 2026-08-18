@@ -118,13 +118,7 @@ const REPO = 'dltmddyd321.github.io';
 </BaseLayout>
 
 <script>
-  const OWNER = 'dltmddyd321';
-  const REPO = 'dltmddyd321.github.io';
-  const BRANCH = 'main';
-  const TOKEN_KEY = 'gh_pat';
-  const API_ROOT = 'https://api.github.com';
-  // GitHub accounts allowed to publish — the repo owner plus any invited collaborator.
-  const ALLOWED_USERS = ['dltmddyd321', 'LeeSeungYongg'];
+  import { OWNER, REPO, BRANCH, TOKEN_KEY, API_ROOT, ghHeaders, validateToken } from '../lib/adminAuth';
 
   const gate = document.getElementById('gate') as HTMLElement;
   const gateForm = document.getElementById('gate-form') as HTMLFormElement;
@@ -166,14 +160,6 @@ const REPO = 'dltmddyd321.github.io';
     return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
   }
   dateInput.value = todayISO();
-
-  function ghHeaders(token: string): HeadersInit {
-    return {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-    };
-  }
 
   // btoa only handles latin1, so UTF-8 text (Korean) has to be escaped first.
   function utf8ToBase64(str: string): string {
@@ -262,19 +248,16 @@ const REPO = 'dltmddyd321.github.io';
     return match ? match[1] : null;
   }
 
-  async function validateToken(token: string): Promise<string> {
-    const res = await fetch(`${API_ROOT}/user`, { headers: ghHeaders(token) });
-    if (!res.ok) throw new Error(res.status === 401 ? 'invalid-token' : `http-${res.status}`);
-    const data = (await res.json()) as { login: string };
-    if (!ALLOWED_USERS.includes(data.login)) throw new Error('wrong-user');
-    return data.login;
-  }
-
-  function showEditor(login: string) {
+  async function showEditor(login: string) {
     gate.hidden = true;
     editor.hidden = false;
     whoami.textContent = `@${login}로 로그인됨`;
-    loadPostList();
+    await loadPostList();
+
+    // A post page's "수정" link lands here as /write?edit=<path> — jump
+    // straight into editing that post instead of the blank new-post form.
+    const editPath = new URLSearchParams(location.search).get('edit');
+    if (editPath) loadPost(editPath);
   }
 
   function resetForm() {
@@ -321,12 +304,7 @@ const REPO = 'dltmddyd321.github.io';
     }
   }
 
-  postSelect.addEventListener('change', async () => {
-    const path = postSelect.value;
-    if (!path) {
-      resetForm();
-      return;
-    }
+  async function loadPost(path: string) {
     const token = localStorage.getItem(TOKEN_KEY);
     if (!token) return;
 
@@ -348,11 +326,21 @@ const REPO = 'dltmddyd321.github.io';
       bodyTextarea.value = parsed.body;
       editingPath = path;
       editingSha = data.sha;
+      postSelect.value = path;
       loadStatus.textContent = `불러옴: ${path}`;
       publishBtn.textContent = '수정 저장';
     } catch {
       loadStatus.textContent = '불러오기 실패. 다시 시도해주세요.';
     }
+  }
+
+  postSelect.addEventListener('change', () => {
+    const path = postSelect.value;
+    if (!path) {
+      resetForm();
+      return;
+    }
+    loadPost(path);
   });
 
   function showGate(message?: string) {

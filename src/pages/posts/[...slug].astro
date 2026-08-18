@@ -21,6 +21,7 @@ const { Content } = await render(post);
   category={post.data.category}
   tags={post.data.tags}
   aiPreview={post.data.aiPreview}
+  sourcePath={`src/content/posts/${post.id}.md`}
 >
   <Content />
 </PostLayout>

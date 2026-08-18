@@ -14,9 +14,13 @@ interface Props {
   /** Short teaser Claude writes when authoring a post — rendered as a
    * distinct banner, separate from the human-written `description` lede. */
   aiPreview?: string;
+  /** Repo-relative path to this post's source file — used by the edit/delete
+   * controls, which only reveal themselves once a valid admin token is
+   * present in localStorage (see the script below). */
+  sourcePath: string;
 }
 
-const { title, description, pubDate, category, tags, aiPreview } = Astro.props;
+const { title, description, pubDate, category, tags, aiPreview, sourcePath } = Astro.props;
 const dateStr = pubDate.toISOString().slice(0, 10);
 
 const jsonLd = {
@@ -85,7 +89,27 @@ const jsonLd = {
 
     <footer class="post-footer">
       <a href="/">&larr; 목록으로</a>
-      <button type="button" id="share-btn" class="mono" data-share-title={title}>공유하기 ↗</button>
+      <div class="post-actions">
+        <a
+          href={`/write?edit=${encodeURIComponent(sourcePath)}`}
+          id="edit-link"
+          class="mono"
+          hidden
+        >
+          ✎ 수정
+        </a>
+        <button
+          type="button"
+          id="delete-btn"
+          class="mono"
+          data-path={sourcePath}
+          data-title={title}
+          hidden
+        >
+          🗑 삭제
+        </button>
+        <button type="button" id="share-btn" class="mono" data-share-title={title}>공유하기 ↗</button>
+      </div>
     </footer>
 
     {giscusEnabled && (
@@ -112,6 +136,64 @@ const jsonLd = {
     )}
   </article>
 </BaseLayout>
+
+<script>
+  import { OWNER, REPO, BRANCH, TOKEN_KEY, API_ROOT, ghHeaders, validateToken } from '../lib/adminAuth';
+
+  const editLink = document.getElementById('edit-link') as HTMLAnchorElement | null;
+  const deleteBtn = document.getElementById('delete-btn') as HTMLButtonElement | null;
+
+  // Cheap presence check only — same as the header's Write link. The real
+  // authorization check runs against GitHub when delete is actually clicked.
+  const storedToken = localStorage.getItem(TOKEN_KEY);
+  if (storedToken) {
+    editLink?.removeAttribute('hidden');
+    deleteBtn?.removeAttribute('hidden');
+  }
+
+  deleteBtn?.addEventListener('click', async () => {
+    const path = deleteBtn.dataset.path;
+    const title = deleteBtn.dataset.title ?? '이 글';
+    if (!path) return;
+    if (!confirm(`정말 "${title}"을(를) 삭제하시겠습니까? 되돌릴 수 없습니다.`)) return;
+
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) {
+      alert('로그인이 만료되었습니다. /write에서 다시 로그인해주세요.');
+      return;
+    }
+
+    deleteBtn.disabled = true;
+    deleteBtn.textContent = '삭제 중…';
+    try {
+      await validateToken(token);
+
+      const getRes = await fetch(`${API_ROOT}/repos/${OWNER}/${REPO}/contents/${path}`, {
+        headers: ghHeaders(token),
+      });
+      if (!getRes.ok) throw new Error(`http-${getRes.status}`);
+      const file = (await getRes.json()) as { sha: string };
+
+      const delRes = await fetch(`${API_ROOT}/repos/${OWNER}/${REPO}/contents/${path}`, {
+        method: 'DELETE',
+        headers: { ...ghHeaders(token), 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: `fix: delete post "${title}"`,
+          sha: file.sha,
+          branch: BRANCH,
+        }),
+      });
+      if (!delRes.ok) throw new Error(`http-${delRes.status}`);
+
+      alert('삭제되었습니다. 배포가 끝나면 목록에서 사라집니다.');
+      location.href = '/';
+    } catch {
+      alert('삭제에 실패했습니다.');
+      deleteBtn.disabled = false;
+      deleteBtn.textContent = '🗑 삭제';
+    }
+  });
+</script>
 
 <script>
   const shareBtn = document.getElementById('share-btn') as HTMLButtonElement | null;
@@ -410,7 +492,15 @@ const jsonLd = {
     font-size: 0.85rem;
   }
 
-  #share-btn {
+  .post-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #share-btn,
+  #edit-link,
+  #delete-btn {
     background: transparent;
     border: 1px solid var(--border);
     border-radius: 999px;
@@ -420,9 +510,16 @@ const jsonLd = {
     cursor: pointer;
   }
 
-  #share-btn:hover {
+  #share-btn:hover,
+  #edit-link:hover {
     border-color: var(--accent-line);
     color: var(--accent);
+    text-decoration: none;
+  }
+
+  #delete-btn:hover {
+    border-color: #d9534f;
+    color: #d9534f;
   }
 
   .comments {
