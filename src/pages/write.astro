@@ -110,6 +110,8 @@ const REPO = 'dltmddyd321.github.io';
   const BRANCH = 'main';
   const TOKEN_KEY = 'gh_pat';
   const API_ROOT = 'https://api.github.com';
+  // GitHub accounts allowed to publish — the repo owner plus any invited collaborator.
+  const ALLOWED_USERS = ['dltmddyd321', 'LeeSeungYongg'];
 
   const gate = document.getElementById('gate') as HTMLElement;
   const gateForm = document.getElementById('gate-form') as HTMLFormElement;
@@ -175,7 +177,7 @@ const REPO = 'dltmddyd321.github.io';
     const res = await fetch(`${API_ROOT}/user`, { headers: ghHeaders(token) });
     if (!res.ok) throw new Error(res.status === 401 ? 'invalid-token' : `http-${res.status}`);
     const data = (await res.json()) as { login: string };
-    if (data.login !== OWNER) throw new Error('wrong-user');
+    if (!ALLOWED_USERS.includes(data.login)) throw new Error('wrong-user');
     return data.login;
   }
 
@@ -229,7 +231,7 @@ const REPO = 'dltmddyd321.github.io';
       const reason = err instanceof Error ? err.message : 'unknown';
       gateStatus.textContent =
         reason === 'wrong-user'
-          ? `이 토큰은 @${OWNER} 계정 소유가 아닙니다.`
+          ? '허용되지 않은 계정입니다.'
           : reason === 'invalid-token'
             ? '토큰이 유효하지 않습니다.'
             : '확인에 실패했습니다. 잠시 후 다시 시도해주세요.';
