@@ -103,6 +103,9 @@ const REPO = 'dltmddyd321.github.io';
       <button type="button" data-action="paragraph" title="문단 나누기">¶</button>
       <button type="button" id="image-btn" title="이미지 삽입">🖼 이미지</button>
       <input type="file" id="image-input" accept="image/*" hidden />
+      <button type="button" id="youtube-btn" title="유튜브 영상 삽입">▶ 유튜브</button>
+      <button type="button" id="mermaid-btn" title="Mermaid 다이어그램 삽입">◇ 다이어그램</button>
+      <button type="button" id="link-preview-btn" title="링크 미리보기 카드 삽입">🔗 링크 미리보기</button>
     </div>
 
     <textarea id="f-body" class="mono" rows="20" placeholder="마크다운으로 본문을 작성하세요…"></textarea>
@@ -150,6 +153,9 @@ const REPO = 'dltmddyd321.github.io';
 
   const imageBtn = document.getElementById('image-btn') as HTMLButtonElement;
   const imageInput = document.getElementById('image-input') as HTMLInputElement;
+  const youtubeBtn = document.getElementById('youtube-btn') as HTMLButtonElement;
+  const mermaidBtn = document.getElementById('mermaid-btn') as HTMLButtonElement;
+  const linkPreviewBtn = document.getElementById('link-preview-btn') as HTMLButtonElement;
 
   const publishBtn = document.getElementById('publish') as HTMLButtonElement;
   const publishStatus = document.getElementById('publish-status') as HTMLElement;
@@ -234,6 +240,26 @@ const REPO = 'dltmddyd321.github.io';
 
   function yamlString(value: string): string {
     return `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
+  }
+
+  // Link-preview data comes from a third-party page's own metadata — never
+  // trust it enough to drop straight into the raw HTML the post body allows.
+  function escapeHtml(value: string): string {
+    return value
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function extractYouTubeId(input: string): string | null {
+    const trimmed = input.trim();
+    if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) return trimmed;
+    const match = trimmed.match(
+      /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/,
+    );
+    return match ? match[1] : null;
   }
 
   async function validateToken(token: string): Promise<string> {
@@ -488,6 +514,72 @@ const REPO = 'dltmddyd321.github.io';
       imageBtn.disabled = false;
       imageBtn.textContent = '🖼 이미지';
       imageInput.value = '';
+    }
+  });
+
+  youtubeBtn.addEventListener('click', () => {
+    const input = prompt('유튜브 영상 URL을 입력하세요');
+    if (!input) return;
+    const videoId = extractYouTubeId(input);
+    if (!videoId) {
+      alert('유튜브 URL에서 영상 ID를 찾지 못했습니다.');
+      return;
+    }
+    insertAtCursor(
+      `\n<div class="video-embed">\n  <iframe src="https://www.youtube.com/embed/${videoId}" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>\n</div>\n\n`,
+    );
+  });
+
+  mermaidBtn.addEventListener('click', () => {
+    insertAtCursor(
+      '\n```mermaid\ngraph TD\n    A[시작] --> B{조건}\n    B -->|예| C[처리 A]\n    B -->|아니오| D[처리 B]\n```\n\n',
+    );
+  });
+
+  linkPreviewBtn.addEventListener('click', async () => {
+    const input = prompt('미리보기를 만들 링크 URL을 입력하세요');
+    if (!input) return;
+
+    let url: URL;
+    try {
+      url = new URL(input.trim());
+    } catch {
+      alert('올바른 URL이 아닙니다 (https:// 로 시작해야 합니다).');
+      return;
+    }
+
+    linkPreviewBtn.disabled = true;
+    linkPreviewBtn.textContent = '불러오는 중…';
+    try {
+      const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url.href)}`);
+      if (!res.ok) throw new Error(`http-${res.status}`);
+      const json = (await res.json()) as {
+        status: string;
+        data: { title?: string; description?: string; image?: { url?: string } };
+      };
+      if (json.status !== 'success') throw new Error('microlink-failed');
+
+      const title = escapeHtml(json.data.title ?? url.hostname);
+      const description = escapeHtml(json.data.description ?? '');
+      const imageUrl = json.data.image?.url;
+      const safeImage = imageUrl && /^https?:\/\//.test(imageUrl) ? escapeHtml(imageUrl) : '';
+      const imageStyle = safeImage ? ` style="background-image:url('${safeImage}')"` : '';
+
+      insertAtCursor(
+        `\n<a class="link-preview-card" href="${escapeHtml(url.href)}" target="_blank" rel="noopener">\n` +
+          `  <div class="link-preview-image"${imageStyle}></div>\n` +
+          `  <div class="link-preview-body">\n` +
+          `    <span class="link-preview-domain">${escapeHtml(url.hostname)}</span>\n` +
+          `    <span class="link-preview-title">${title}</span>\n` +
+          `    <span class="link-preview-desc">${description}</span>\n` +
+          `  </div>\n` +
+          `</a>\n\n`,
+      );
+    } catch {
+      alert('링크 미리보기를 가져오지 못했습니다.');
+    } finally {
+      linkPreviewBtn.disabled = false;
+      linkPreviewBtn.textContent = '🔗 링크 미리보기';
     }
   });
 

@@ -1,8 +1,29 @@
 // @ts-check
 import { readdirSync, readFileSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
+import { visit } from 'unist-util-visit';
 
 import sitemap from '@astrojs/sitemap';
+
+/**
+ * ```mermaid fenced code blocks would otherwise go through Shiki like any
+ * other code sample, which loses the plain-text `.mermaid` structure the
+ * client-side renderer (see PostLayout) looks for. Swap them for a raw HTML
+ * node instead, before Shiki ever sees them — the same source still renders
+ * natively as a diagram when viewed as a plain .md file on GitHub.
+ */
+function remarkMermaid() {
+  /** @param {import('mdast').Root} tree */
+  return (tree) => {
+    visit(tree, 'code', (node, index, parent) => {
+      if (node.lang !== 'mermaid' || !parent || typeof index !== 'number') return;
+      parent.children[index] = {
+        type: 'html',
+        value: `<div class="mermaid">\n${node.value}\n</div>`,
+      };
+    });
+  };
+}
 
 /**
  * Category pages are always generated (the nav links to all four), but an empty
@@ -33,6 +54,9 @@ export default defineConfig({
   // added. It was already in the submitted sitemap, so keep the old path working.
   redirects: {
     '/tistory': '/archives',
+  },
+  markdown: {
+    remarkPlugins: [remarkMermaid],
   },
   integrations: [
     sitemap({
