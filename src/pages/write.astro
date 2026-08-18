@@ -136,6 +136,9 @@ const REPO = 'dltmddyd321.github.io';
   // file in place (with its sha) instead of creating a new one.
   let editingPath: string | null = null;
   let editingSha: string | null = null;
+  // The loaded post's pubDate verbatim, so re-saving an edit keeps its original
+  // publish time (and thus its feed position) instead of restamping it.
+  let editingPubDate: string | null = null;
 
   const titleInput = document.getElementById('f-title') as HTMLInputElement;
   const descriptionInput = document.getElementById('f-description') as HTMLInputElement;
@@ -160,6 +163,21 @@ const REPO = 'dltmddyd321.github.io';
     return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
   }
   dateInput.value = todayISO();
+
+  /**
+   * Stamps the chosen date with the current UTC time-of-day. The time exists
+   * purely so two posts published on the same day still sort newest-first —
+   * without it their pubDates are identical and the feed falls back to
+   * filename order. Deliberately UTC time-of-day pinned to the *selected*
+   * date, so the UTC calendar date always matches what was picked and the
+   * rendered date (which formats via toISOString) can never drift a day.
+   */
+  function stampedPubDate(dateValue: string): string {
+    const now = new Date();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const time = `${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())}`;
+    return `${dateValue}T${time}Z`;
+  }
 
   // btoa only handles latin1, so UTF-8 text (Korean) has to be escaped first.
   function utf8ToBase64(str: string): string {
@@ -269,6 +287,7 @@ const REPO = 'dltmddyd321.github.io';
     dateInput.value = todayISO();
     editingPath = null;
     editingSha = null;
+    editingPubDate = null;
     loadStatus.textContent = '';
     publishBtn.textContent = '발행하기';
   }
@@ -319,13 +338,16 @@ const REPO = 'dltmddyd321.github.io';
 
       titleInput.value = parsed.title;
       descriptionInput.value = parsed.description;
-      dateInput.value = parsed.pubDate || todayISO();
+      // pubDate may carry a time (see stampedPubDate); <input type="date">
+      // only accepts the YYYY-MM-DD part.
+      dateInput.value = parsed.pubDate.slice(0, 10) || todayISO();
       categorySelect.value = parsed.category;
       tagsInput.value = parsed.tags.join(', ');
       draftCheckbox.checked = parsed.draft;
       bodyTextarea.value = parsed.body;
       editingPath = path;
       editingSha = data.sha;
+      editingPubDate = parsed.pubDate;
       postSelect.value = path;
       loadStatus.textContent = `불러옴: ${path}`;
       publishBtn.textContent = '수정 저장';
@@ -591,11 +613,18 @@ const REPO = 'dltmddyd321.github.io';
       .map((t) => t.trim())
       .filter(Boolean);
 
+    // Keep the loaded post's exact pubDate when its date wasn't touched, so
+    // editing doesn't silently move the post to the top of the feed.
+    const pubDate =
+      editingPubDate && editingPubDate.slice(0, 10) === dateInput.value
+        ? editingPubDate
+        : stampedPubDate(dateInput.value);
+
     const frontmatterLines = [
       '---',
       `title: ${yamlString(title)}`,
       `description: ${yamlString(description)}`,
-      `pubDate: ${dateInput.value}`,
+      `pubDate: ${pubDate}`,
       `category: ${categorySelect.value}`,
       `tags: [${tags.map(yamlString).join(', ')}]`,
     ];

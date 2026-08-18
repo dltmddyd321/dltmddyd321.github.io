@@ -1,7 +1,7 @@
 ---
 title: CLAUDE.md도 리팩터링이 필요하다
 description: Claude Code에게 프로젝트 맥락을 알려주는 CLAUDE.md가 코드보다 조용히 뒤처진다는 걸, 공식 플러그인 claude-md-management로 점검하며 확인한 과정을 정리합니다.
-pubDate: 2026-08-18
+pubDate: 2026-08-18T06:33:58Z
 category: ai-lab
 tags: [claude-code, llm, tooling]
 aiPreview: 핵심만 보면 — CLAUDE.md는 세션마다 그대로 프롬프트에 실려 들어가지만, 한 번 써두면 코드가 바뀌어도 저절로 갱신되지 않습니다. claude-md-management 플러그인은 6개 기준(커맨드, 아키텍처, 특이사항, 간결성, 최신성, 실행 가능성)으로 점수를 매겨 어디가 낡았는지 짚어주고, 승인 후에만 diff를 반영합니다.

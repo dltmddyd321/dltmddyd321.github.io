@@ -22,11 +22,13 @@ export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getCollection('posts', ({ data }) => !data.draft);
 
   // One feed, two shapes: full post rows for this blog, compact link rows for
-  // anything published elsewhere. `sortKey` normalises the two date formats.
+  // anything published elsewhere. `sortKey` normalises the two date formats to
+  // a timestamp — truncating to the day made same-day posts tie, and a stable
+  // sort then fell back to filename order rather than newest-first.
   const feed = [
     ...posts.map((post) => ({
       kind: 'post' as const,
-      sortKey: post.data.pubDate.toISOString().slice(0, 10),
+      sortKey: post.data.pubDate.valueOf(),
       post,
     })),
     ...[
@@ -34,10 +36,10 @@ export const getStaticPaths = (async ({ paginate }) => {
       ...keyflow.map((entry) => ({ ...entry, source: 'keyflow' })),
     ].map((entry) => ({
       kind: 'external' as const,
-      sortKey: entry.date.replaceAll('.', '-'),
+      sortKey: new Date(entry.date.replaceAll('.', '-')).valueOf(),
       entry,
     })),
-  ].sort((a, b) => b.sortKey.localeCompare(a.sortKey));
+  ].sort((a, b) => b.sortKey - a.sortKey);
 
   return paginate(feed, { pageSize: PAGE_SIZE });
 }) satisfies GetStaticPaths;

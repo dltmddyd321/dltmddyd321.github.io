@@ -1,7 +1,7 @@
 ---
 title: 안드로이드 태블릿 판별과 폴더블 함정
 description: 화면 크기로 태블릿 여부를 판별하는 표준 공식과, 그 값을 어디서 갱신해야 폴더블 기기에서도 깨지지 않는지 정리합니다.
-pubDate: 2026-08-18
+pubDate: 2026-08-18T03:11:13Z
 category: archive
 tags: [android, kotlin, device]
 aiPreview: 핵심만 보면 — 폭/높이 단순 비교 대신 smallestWidthDp(min(width, height) / density)로 태블릿을 판별하고, 폴더블 기기에서는 앱 시작 시 한 번이 아니라 화면 구성이 바뀔 때마다 이 값을 다시 계산해야 펼치는 도중에도 깨지지 않습니다.
