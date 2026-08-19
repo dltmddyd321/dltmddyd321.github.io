@@ -83,7 +83,7 @@ const recentNotes = await Promise.all(
       <h2 class="block-title mono">Notes</h2>
       <div class="note-rail">
         {recentNotes.map(({ note, Content }) => (
-          <a class="note-link" href={`/notes#${note.id}`}>
+          <a class="note-link" href={`/notes/${note.id}`}>
             <NoteBlock id={`rail-${note.id}`} pubDate={note.data.pubDate} compact>
               <Content />
             </NoteBlock>

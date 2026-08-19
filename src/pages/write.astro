@@ -46,7 +46,7 @@ const REPO = 'dltmddyd321.github.io';
     <p class="status muted mono" id="gate-status" hidden></p>
   </section>
 
-  <section id="editor" class="panel" hidden>
+  <section id="editor" class="panel" data-kind="post" hidden>
     <div class="editor-topbar">
       <span class="muted mono" id="whoami"></span>
       <button type="button" class="linklike" id="logout">로그아웃</button>
@@ -89,11 +89,11 @@ const REPO = 'dltmddyd321.github.io';
           </select>
         </label>
       </div>
-      <label>
+      <label class="post-only">
         태그 (쉼표로 구분)
         <input type="text" id="f-tags" placeholder="kotlin, coroutine" />
       </label>
-      <label class="checkbox">
+      <label class="checkbox post-only">
         <input type="checkbox" id="f-draft" />
         초안으로 저장 (배포에서 제외)
       </label>
@@ -309,6 +309,7 @@ const REPO = 'dltmddyd321.github.io';
     for (const field of postOnlyFields) {
       field.hidden = next === 'note';
     }
+    editor.dataset.kind = next;
     const isNote = next === 'note';
     kindHint.textContent = isNote
       ? '제목 없이 본문만 남깁니다. 수정은 지원하지 않고, 삭제는 /notes에서 합니다.'
@@ -682,7 +683,7 @@ const REPO = 'dltmddyd321.github.io';
 
     const frontmatterLines =
       kind === 'note'
-        ? ['---', `pubDate: ${pubDate}`, `tags: [${tags.map(yamlString).join(', ')}]`]
+        ? ['---', `pubDate: ${pubDate}`]
         : [
             '---',
             `title: ${yamlString(title)}`,
@@ -845,6 +846,18 @@ const REPO = 'dltmddyd321.github.io';
 
   .kind-hint {
     font-size: 0.78rem;
+  }
+
+  /* Note mode restyles the composer into the terminal pane notes actually
+     render as, so there's no mistaking which of the two you're writing. */
+  #editor[data-kind='note'] {
+    border-color: var(--accent-line);
+  }
+
+  #editor[data-kind='note'] textarea#f-body {
+    background: var(--surface);
+    border-color: var(--accent-line);
+    font-size: 0.86rem;
   }
 
   .post-select-row {

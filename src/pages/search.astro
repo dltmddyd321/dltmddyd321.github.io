@@ -33,7 +33,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   type PagefindResult = {
     url: string;
     excerpt: string;
-    meta: { title?: string };
+    // `kind` is stamped via data-pagefind-meta on each page's body — '글' for
+    // posts, '메모' for notes — so results can say which they are.
+    meta: { title?: string; kind?: string };
   };
 
   type PagefindModule = {
@@ -111,7 +113,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         (item) => `
           <li class="result">
             <a href="${item.url}">
-              <span class="title">${item.meta.title ?? item.url}</span>
+              <span class="result-head">
+                ${item.meta.kind ? `<span class="kind kind-${item.meta.kind === '메모' ? 'note' : 'post'}">${item.meta.kind}</span>` : ''}
+                <span class="title">${item.meta.title ?? item.url}</span>
+              </span>
               <span class="excerpt">${item.excerpt}</span>
             </a>
           </li>
@@ -215,11 +220,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     text-decoration: underline;
   }
 
+  .result-head {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
   .result .title {
-    display: block;
     font-size: 1.1rem;
     font-weight: 700;
-    margin-bottom: 6px;
+  }
+
+  /* Notes and posts read very differently — a note result is a stray line of
+     text with a timestamp for a title — so label which is which up front. */
+  .result .kind {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 2px 8px;
+    color: var(--text-muted);
+  }
+
+  .result .kind-note {
+    color: var(--accent);
+    border-color: var(--accent-line);
+    background: var(--accent-soft);
   }
 
   .result .excerpt {

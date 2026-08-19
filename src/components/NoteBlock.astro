@@ -3,8 +3,7 @@ interface Props {
   /** Rendered note body — passed as a slot; this is just the terminal chrome. */
   id: string;
   pubDate: Date;
-  tags?: string[];
-  /** Sidebar renders a trimmed version: no tags, no timestamp row. */
+  /** Sidebar renders a trimmed version: no timestamp row. */
   compact?: boolean;
   /** Repo-relative path to the note's source file. Supplying it renders a
    * delete control, which only reveals itself once an admin token is present
@@ -12,7 +11,7 @@ interface Props {
   sourcePath?: string;
 }
 
-const { id, pubDate, tags = [], compact = false, sourcePath } = Astro.props;
+const { id, pubDate, compact = false, sourcePath } = Astro.props;
 
 // Notes are timestamped to the minute — the whole point is "when did I jot
 // this", which a date alone doesn't answer for several notes in one day.
@@ -33,12 +32,7 @@ const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
 
   {!compact && (
     <div class="note-meta mono">
-      <a class="stamp" href={`/notes#${id}`}>{stamp}</a>
-      {tags.length > 0 && (
-        <span class="note-tags">
-          {tags.map((tag) => <a class="note-tag" href={`/tag/${tag}`}>#{tag}</a>)}
-        </span>
-      )}
+      <a class="stamp" href={`/notes/${id}`}>{stamp}</a>
       {sourcePath && (
         <button type="button" class="note-delete" data-path={sourcePath} hidden>
           🗑 삭제
@@ -153,20 +147,6 @@ const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
   .stamp:hover {
     color: var(--accent);
     text-decoration: none;
-  }
-
-  .note-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .note-tag {
-    color: var(--text-muted);
-  }
-
-  .note-tag:hover {
-    color: var(--accent);
   }
 
   /* Pushed to the trailing edge so it never sits between the timestamp and

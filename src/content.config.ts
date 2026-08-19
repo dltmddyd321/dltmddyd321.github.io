@@ -25,15 +25,14 @@ const posts = defineCollection({
 });
 
 /**
- * Short, gist-like jottings that don't warrant a full post — no title,
- * category, or comments, just a timestamped line or two. Rendered as terminal
- * blocks on /notes and surfaced (3 most recent) in the sidebar.
+ * Short, gist-like jottings that don't warrant a full post — deliberately just
+ * body text and a timestamp: no title, category, tags, or comments. Rendered
+ * as terminal blocks on /notes and surfaced (3 most recent) in the sidebar.
  */
 const notes = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/notes' }),
   schema: z.object({
     pubDate: z.coerce.date(),
-    tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   }),
 });

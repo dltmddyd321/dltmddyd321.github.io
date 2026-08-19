@@ -1,0 +1,65 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NoteBlock from '../../components/NoteBlock.astro';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes', ({ data }) => !data.draft);
+  return notes.map((note) => ({ params: { slug: note.id }, props: { note } }));
+}
+
+const { note } = Astro.props;
+const { Content } = await render(note);
+
+const stamp = note.data.pubDate.toISOString().slice(0, 16).replace('T', ' ');
+
+// A note has no title, so its timestamp stands in as the heading — both for
+// search results and for the page's (otherwise missing) h1.
+const searchTitle = `메모 · ${stamp}`;
+---
+
+<BaseLayout
+  title={searchTitle}
+  description={`${stamp}에 남긴 메모.`}
+  statusLine={`$ cat ./notes/${note.id}.md`}
+  ogType="article"
+  publishedDate={note.data.pubDate}
+>
+  <article class="note-page" data-pagefind-body data-pagefind-meta="kind:메모">
+    <h1 class="sr-only">{searchTitle}</h1>
+    <NoteBlock
+      id={note.id}
+      pubDate={note.data.pubDate}
+      sourcePath={`src/content/notes/${note.id}.md`}
+    >
+      <Content />
+    </NoteBlock>
+
+    <footer class="note-footer mono" data-pagefind-ignore>
+      <a href="/notes">&larr; 메모 목록</a>
+    </footer>
+  </article>
+</BaseLayout>
+
+<script>
+  import { initNoteDelete } from '../../lib/noteDelete';
+
+  // The note being deleted is the whole page — send the reader back to the list.
+  initNoteDelete(() => {
+    location.href = '/notes';
+  });
+</script>
+
+<style>
+  .note-page {
+    max-width: var(--prose-max);
+    margin: 0 auto;
+  }
+
+  .note-footer {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+  }
+</style>

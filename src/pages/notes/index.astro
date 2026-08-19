@@ -1,0 +1,73 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NoteBlock from '../../components/NoteBlock.astro';
+import { SITE } from '../../lib/site';
+
+const all = await getCollection('notes', ({ data }) => !data.draft);
+const notes = all.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// `render()` is async and can't be awaited inside the JSX map below.
+const rendered = await Promise.all(
+  notes.map(async (note) => ({ note, Content: (await render(note)).Content })),
+);
+---
+
+<BaseLayout
+  title="Notes"
+  description={`짧게 남기는 메모 ${notes.length}개. ${SITE.name}`}
+  statusLine={`$ tail -n ${notes.length} ./notes.log`}
+  noindex={notes.length === 0}
+  withSidebar
+>
+  <section class="hero">
+    <p class="kicker mono">&gt; notes</p>
+    <h1>메모</h1>
+  </section>
+
+  {/* Every note here also has its own page, which is what search indexes —
+      indexing the list too would return the same text twice. */}
+  <section class="note-list" data-pagefind-ignore>
+    {notes.length === 0 && <p class="muted">아직 메모가 없습니다.</p>}
+    {rendered.map(({ note, Content }) => (
+      <NoteBlock
+        id={note.id}
+        pubDate={note.data.pubDate}
+        sourcePath={`src/content/notes/${note.id}.md`}
+      >
+        <Content />
+      </NoteBlock>
+    ))}
+  </section>
+</BaseLayout>
+
+<script>
+  import { initNoteDelete } from '../../lib/noteDelete';
+
+  // Drop the note from the page immediately — the rebuild takes a minute, and
+  // leaving it on screen reads as the delete having failed.
+  initNoteDelete((button) => button.closest('.note')?.remove());
+</script>
+
+<style>
+  .hero {
+    padding: 8px 0 28px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+
+  .kicker {
+    color: var(--accent);
+    font-size: 0.8rem;
+    margin: 0 0 12px;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    margin: 0 0 10px;
+  }
+
+  .note-list {
+    max-width: var(--prose-max);
+  }
+</style>
