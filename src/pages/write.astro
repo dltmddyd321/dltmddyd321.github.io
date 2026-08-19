@@ -52,9 +52,15 @@ const REPO = 'dltmddyd321.github.io';
       <button type="button" class="linklike" id="logout">로그아웃</button>
     </div>
 
+    <div class="kind-row" role="radiogroup" aria-label="작성 종류">
+      <button type="button" class="pill mono kind-btn is-on" data-kind="post">글</button>
+      <button type="button" class="pill mono kind-btn" data-kind="note">메모</button>
+      <span class="muted kind-hint" id="kind-hint">제목·카테고리가 있는 정식 글입니다.</span>
+    </div>
+
     <div class="post-select-row">
       <label>
-        글 선택
+        <span id="select-label">글 선택</span>
         <select id="post-select">
           <option value="">— 새 글 작성 —</option>
         </select>
@@ -63,11 +69,11 @@ const REPO = 'dltmddyd321.github.io';
     </div>
 
     <div class="fields">
-      <label>
+      <label class="post-only">
         제목
         <input type="text" id="f-title" required />
       </label>
-      <label>
+      <label class="post-only">
         요약 (목록/RSS 노출)
         <input type="text" id="f-description" required />
       </label>
@@ -76,7 +82,7 @@ const REPO = 'dltmddyd321.github.io';
           날짜
           <input type="date" id="f-date" required />
         </label>
-        <label>
+        <label class="post-only">
           카테고리
           <select id="f-category">
             {CATEGORY_KEYS.map((key) => <option value={key}>{CATEGORIES[key].label}</option>)}
@@ -132,6 +138,24 @@ const REPO = 'dltmddyd321.github.io';
 
   const postSelect = document.getElementById('post-select') as HTMLSelectElement;
   const loadStatus = document.getElementById('load-status') as HTMLElement;
+  const selectLabel = document.getElementById('select-label') as HTMLElement;
+  const kindHint = document.getElementById('kind-hint') as HTMLElement;
+  const kindButtons = Array.from(
+    document.querySelectorAll<HTMLButtonElement>('.kind-btn'),
+  );
+  const postOnlyFields = Array.from(document.querySelectorAll<HTMLElement>('.post-only'));
+
+  /**
+   * Posts and notes are the same editor with different frontmatter — a note is
+   * just a body and a timestamp, so the title/description/category fields are
+   * hidden rather than duplicated into a second page.
+   */
+  type Kind = 'post' | 'note';
+  const DIRS: Record<Kind, string> = {
+    post: 'src/content/posts',
+    note: 'src/content/notes',
+  };
+  let kind: Kind = 'post';
   // Non-null while an existing post is loaded — publish() then updates that
   // file in place (with its sha) instead of creating a new one.
   let editingPath: string | null = null;
@@ -278,6 +302,39 @@ const REPO = 'dltmddyd321.github.io';
     if (editPath) loadPost(editPath);
   }
 
+  function applyKind(next: Kind) {
+    kind = next;
+    for (const btn of kindButtons) {
+      btn.classList.toggle('is-on', btn.dataset.kind === next);
+    }
+    for (const field of postOnlyFields) {
+      field.hidden = next === 'note';
+    }
+    const isNote = next === 'note';
+    selectLabel.textContent = isNote ? '메모 선택' : '글 선택';
+    kindHint.textContent = isNote
+      ? '제목 없이 본문만 남기는 짧은 기록입니다. 댓글은 달리지 않습니다.'
+      : '제목·카테고리가 있는 정식 글입니다.';
+    bodyTextarea.placeholder = isNote
+      ? '짧게 남길 내용을 적으세요…'
+      : '마크다운으로 본문을 작성하세요…';
+    bodyTextarea.rows = isNote ? 6 : 20;
+    (postSelect.firstElementChild as HTMLOptionElement).textContent = isNote
+      ? '— 새 메모 작성 —'
+      : '— 새 글 작성 —';
+  }
+
+  for (const btn of kindButtons) {
+    btn.addEventListener('click', () => {
+      const next = btn.dataset.kind as Kind;
+      if (next === kind) return;
+      applyKind(next);
+      resetForm();
+      postSelect.value = '';
+      loadPostList();
+    });
+  }
+
   function resetForm() {
     titleInput.value = '';
     descriptionInput.value = '';
@@ -289,16 +346,17 @@ const REPO = 'dltmddyd321.github.io';
     editingSha = null;
     editingPubDate = null;
     loadStatus.textContent = '';
-    publishBtn.textContent = '발행하기';
+    publishBtn.textContent = kind === 'note' ? '메모 남기기' : '발행하기';
   }
 
   async function loadPostList() {
     const token = localStorage.getItem(TOKEN_KEY);
     if (!token) return;
     try {
-      const res = await fetch(`${API_ROOT}/repos/${OWNER}/${REPO}/contents/src/content/posts`, {
+      const res = await fetch(`${API_ROOT}/repos/${OWNER}/${REPO}/contents/${DIRS[kind]}`, {
         headers: ghHeaders(token),
       });
+      // 404 just means the directory has no files committed yet.
       if (!res.ok) return;
       const files = (await res.json()) as Array<{ name: string; path: string }>;
       const mdFiles = files
@@ -309,7 +367,7 @@ const REPO = 'dltmddyd321.github.io';
       postSelect.replaceChildren();
       const defaultOption = document.createElement('option');
       defaultOption.value = '';
-      defaultOption.textContent = '— 새 글 작성 —';
+      defaultOption.textContent = kind === 'note' ? '— 새 메모 작성 —' : '— 새 글 작성 —';
       postSelect.appendChild(defaultOption);
       for (const file of mdFiles) {
         const option = document.createElement('option');
@@ -603,7 +661,11 @@ const REPO = 'dltmddyd321.github.io';
     const title = titleInput.value.trim();
     const description = descriptionInput.value.trim();
     const body = bodyTextarea.value.trim();
-    if (!title || !description || !body) {
+    if (!body) {
+      publishStatus.textContent = '본문은 필수입니다.';
+      return;
+    }
+    if (kind === 'post' && (!title || !description)) {
       publishStatus.textContent = '제목, 요약, 본문은 필수입니다.';
       return;
     }
@@ -620,27 +682,38 @@ const REPO = 'dltmddyd321.github.io';
         ? editingPubDate
         : stampedPubDate(dateInput.value);
 
-    const frontmatterLines = [
-      '---',
-      `title: ${yamlString(title)}`,
-      `description: ${yamlString(description)}`,
-      `pubDate: ${pubDate}`,
-      `category: ${categorySelect.value}`,
-      `tags: [${tags.map(yamlString).join(', ')}]`,
-    ];
+    const frontmatterLines =
+      kind === 'note'
+        ? ['---', `pubDate: ${pubDate}`, `tags: [${tags.map(yamlString).join(', ')}]`]
+        : [
+            '---',
+            `title: ${yamlString(title)}`,
+            `description: ${yamlString(description)}`,
+            `pubDate: ${pubDate}`,
+            `category: ${categorySelect.value}`,
+            `tags: [${tags.map(yamlString).join(', ')}]`,
+          ];
     if (draftCheckbox.checked) frontmatterLines.push('draft: true');
     frontmatterLines.push('---', '');
 
     const fileContent = `${frontmatterLines.join('\n')}\n${body}\n`;
     const isEdit = editingPath !== null;
-    const slug = slugify(title);
-    const path = editingPath ?? `src/content/posts/${slug}.md`;
+    // Notes have no title to slug from, so the timestamp is the filename —
+    // which also makes the directory listing sort chronologically.
+    // pubDate is `YYYY-MM-DDTHH:MM:SSZ` — reduce it to `YYYY-MM-DD-HHMM`.
+    const noteSlug = `${pubDate.slice(0, 10)}-${pubDate.slice(11, 13)}${pubDate.slice(14, 16)}`;
+    const slug = kind === 'note' ? noteSlug : slugify(title);
+    const path = editingPath ?? `${DIRS[kind]}/${slug}.md`;
+    const label = kind === 'note' ? 'note' : 'post';
+    const subject = kind === 'note' ? slug : title;
 
     publishBtn.disabled = true;
     publishStatus.textContent = isEdit ? '수정 저장 중…' : '발행 중…';
     try {
       const payload: Record<string, unknown> = {
-        message: isEdit ? `fix: update post "${title}"` : `feat: add post "${title}"`,
+        message: isEdit
+          ? `fix: update ${label} "${subject}"`
+          : `feat: add ${label} "${subject}"`,
         content: utf8ToBase64(fileContent),
         branch: BRANCH,
       };
@@ -654,8 +727,10 @@ const REPO = 'dltmddyd321.github.io';
 
       if (res.status === 422) {
         publishStatus.textContent = isEdit
-          ? '수정 충돌이 발생했습니다. 목록에서 글을 다시 불러온 뒤 시도해주세요.'
-          : `이미 같은 이름(${slug}.md)의 글이 있습니다. 제목을 바꿔주세요.`;
+          ? '수정 충돌이 발생했습니다. 목록에서 다시 불러온 뒤 시도해주세요.'
+          : kind === 'note'
+            ? '같은 시각에 남긴 메모가 이미 있습니다. 잠시 후 다시 시도해주세요.'
+            : `이미 같은 이름(${slug}.md)의 글이 있습니다. 제목을 바꿔주세요.`;
         return;
       }
       if (res.status === 401) {
@@ -752,6 +827,26 @@ const REPO = 'dltmddyd321.github.io';
 
   .linklike:hover {
     color: var(--accent);
+  }
+
+  .kind-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin-bottom: 18px;
+  }
+
+  /* Selected state is the same accent treatment the header's Write pill uses,
+     so "which mode am I in" reads the same as "which nav item is current". */
+  .kind-btn.is-on {
+    color: var(--accent);
+    border-color: var(--accent-line);
+    background: var(--accent-soft);
+  }
+
+  .kind-hint {
+    font-size: 0.78rem;
   }
 
   .post-select-row {

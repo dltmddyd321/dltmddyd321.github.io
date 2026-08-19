@@ -1,5 +1,6 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
+import NoteBlock from './NoteBlock.astro';
 import tistory from '../data/tistory-archive.json';
 import keyflow from '../data/keyflow-archive.json';
 
@@ -19,6 +20,17 @@ for (const post of posts) {
 const tags = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 const visibleTags = tags.slice(0, VISIBLE_TAGS);
 const hiddenTags = tags.slice(VISIBLE_TAGS);
+
+/** Notes surfaced in the rail before the "전체 보기" link. */
+const RECENT_NOTES = 3;
+
+const allNotes = await getCollection('notes', ({ data }) => !data.draft);
+const recentNotes = await Promise.all(
+  allNotes
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+    .slice(0, RECENT_NOTES)
+    .map(async (note) => ({ note, Content: (await render(note)).Content })),
+);
 ---
 
 <aside class="sidebar" data-pagefind-ignore>
@@ -65,6 +77,22 @@ const hiddenTags = tags.slice(VISIBLE_TAGS);
       </>
     )}
   </section>
+
+  {recentNotes.length > 0 && (
+    <section class="block">
+      <h2 class="block-title mono">Notes</h2>
+      <div class="note-rail">
+        {recentNotes.map(({ note, Content }) => (
+          <a class="note-link" href={`/notes#${note.id}`}>
+            <NoteBlock id={`rail-${note.id}`} pubDate={note.data.pubDate} compact>
+              <Content />
+            </NoteBlock>
+          </a>
+        ))}
+      </div>
+      <a class="all-link mono" href="/notes">전체 메모 보기 →</a>
+    </section>
+  )}
 
   <section class="block">
     <h2 class="block-title mono">Archive</h2>
@@ -238,5 +266,34 @@ const hiddenTags = tags.slice(VISIBLE_TAGS);
   .empty {
     margin: 0;
     font-size: 0.8rem;
+  }
+
+  .note-rail {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* The whole pane is the link, but it should stay looking like a terminal
+     block — no accent text colour, no underline. */
+  .note-link {
+    display: block;
+    color: inherit;
+  }
+
+  .note-link:hover {
+    text-decoration: none;
+  }
+
+  .note-link:hover :global(.note-screen) {
+    border-color: var(--accent-line);
+  }
+
+  /* Rail notes are a peek, not the note itself — clamp long ones. */
+  .note-link :global(.note-content) {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 </style>

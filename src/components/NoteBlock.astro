@@ -1,0 +1,178 @@
+---
+interface Props {
+  /** Rendered note body — passed as a slot; this is just the terminal chrome. */
+  id: string;
+  pubDate: Date;
+  tags?: string[];
+  /** Sidebar renders a trimmed version: no tags, no timestamp row. */
+  compact?: boolean;
+}
+
+const { id, pubDate, tags = [], compact = false } = Astro.props;
+
+// Notes are timestamped to the minute — the whole point is "when did I jot
+// this", which a date alone doesn't answer for several notes in one day.
+const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
+---
+
+<article class:list={['note', { compact }]} id={id}>
+  <div class="note-screen mono">
+    <div class="note-body">
+      <span class="prompt" aria-hidden="true">$</span>
+      <div class="note-content"><slot /></div>
+    </div>
+    <div class="note-caret" aria-hidden="true">
+      <span class="prompt">$</span>
+      <span class="cursor"></span>
+    </div>
+  </div>
+
+  {!compact && (
+    <div class="note-meta mono">
+      <a class="stamp" href={`/notes#${id}`}>{stamp}</a>
+      {tags.length > 0 && (
+        <span class="note-tags">
+          {tags.map((tag) => <a class="note-tag" href={`/tag/${tag}`}>#{tag}</a>)}
+        </span>
+      )}
+    </div>
+  )}
+</article>
+
+<style>
+  .note {
+    margin: 0 0 20px;
+  }
+
+  /* The terminal pane itself. Squared-off and flat on purpose — it should read
+     as a console window, not as another card in the feed. */
+  .note-screen {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    font-size: 0.86rem;
+    line-height: 1.7;
+  }
+
+  .note-body {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+  }
+
+  .prompt {
+    color: var(--accent);
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  .note-content {
+    min-width: 0;
+    flex: 1;
+    color: var(--text);
+  }
+
+  /* Markdown inside a note stays tight — a note is a couple of lines, so the
+     usual post spacing would leave the pane mostly empty. */
+  .note-content :global(p) {
+    margin: 0 0 0.7em;
+  }
+
+  .note-content :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .note-content :global(pre) {
+    margin: 0.7em 0;
+    font-size: 0.92em;
+  }
+
+  .note-content :global(ul),
+  .note-content :global(ol) {
+    margin: 0.5em 0;
+    padding-left: 1.3em;
+  }
+
+  .note-caret {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 2px;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.05em;
+    background: var(--accent);
+    animation: note-blink 1.1s step-end infinite;
+  }
+
+  @keyframes note-blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* A blinking block is exactly the kind of motion that triggers discomfort —
+     keep the caret, drop the flicker. */
+  @media (prefers-reduced-motion: reduce) {
+    .cursor {
+      animation: none;
+    }
+  }
+
+  .note-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 12px;
+    margin-top: 8px;
+    padding-left: 4px;
+    font-size: 0.72rem;
+  }
+
+  .stamp {
+    color: var(--text-muted);
+  }
+
+  .stamp:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .note-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .note-tag {
+    color: var(--text-muted);
+  }
+
+  .note-tag:hover {
+    color: var(--accent);
+  }
+
+  /* Sidebar variant: same pane, smaller and quieter. */
+  .compact .note-screen {
+    padding: 10px 12px;
+    font-size: 0.76rem;
+    line-height: 1.6;
+  }
+
+  .compact .note-body {
+    gap: 7px;
+  }
+
+  .compact .cursor {
+    width: 0.5em;
+    height: 0.95em;
+  }
+</style>
