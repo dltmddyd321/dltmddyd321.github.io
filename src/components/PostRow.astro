@@ -36,7 +36,7 @@ const dateStr = pubDate.toISOString().slice(0, 10);
   </div>
   {thumbnail && (
     <a class="row-thumb" href={`/posts/${slug}`} aria-hidden="true" tabindex="-1">
-      <img src={thumbnail} alt="" loading="lazy" width="120" height="80" />
+      <img src={thumbnail} alt="" loading="lazy" width="200" height="133" />
     </a>
   )}
 </article>
@@ -60,11 +60,14 @@ const dateStr = pubDate.toISOString().slice(0, 10);
     color: var(--accent);
   }
 
+  /* Scales with the viewport so it stays proportionate to the row, which is
+     four lines tall (date, title, description, tags) — a fixed 120px read as
+     an afterthought next to it. aspect-ratio keeps the crop consistent. */
   .row-thumb {
     flex-shrink: 0;
     display: block;
-    width: 120px;
-    height: 80px;
+    width: clamp(140px, 16vw, 200px);
+    aspect-ratio: 3 / 2;
     border: 1px solid var(--border);
     border-radius: 8px;
     overflow: hidden;
