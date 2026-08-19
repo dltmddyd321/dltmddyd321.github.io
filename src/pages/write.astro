@@ -116,6 +116,8 @@ const REPO = 'dltmddyd321.github.io';
 
     <textarea id="f-body" class="mono" rows="20" placeholder="마크다운으로 본문을 작성하세요…"></textarea>
 
+    <p class="counter mono muted" id="body-count" aria-live="polite">0자</p>
+
     <div class="publish-row">
       <button type="button" id="publish" class="primary">발행하기</button>
       <p class="status muted mono" id="publish-status"></p>
@@ -177,8 +179,16 @@ const REPO = 'dltmddyd321.github.io';
   const mermaidBtn = document.getElementById('mermaid-btn') as HTMLButtonElement;
   const linkPreviewBtn = document.getElementById('link-preview-btn') as HTMLButtonElement;
 
+  const bodyCount = document.getElementById('body-count') as HTMLElement;
   const publishBtn = document.getElementById('publish') as HTMLButtonElement;
   const publishStatus = document.getElementById('publish-status') as HTMLElement;
+
+  // No limit is enforced — the count is there so a note that's drifting into
+  // post territory is visible while writing it.
+  function updateBodyCount() {
+    bodyCount.textContent = `${bodyTextarea.value.length.toLocaleString('ko-KR')}자`;
+  }
+  bodyTextarea.addEventListener('input', updateBodyCount);
 
   function todayISO(): string {
     const now = new Date();
@@ -340,6 +350,7 @@ const REPO = 'dltmddyd321.github.io';
     tagsInput.value = '';
     draftCheckbox.checked = false;
     bodyTextarea.value = '';
+    updateBodyCount();
     dateInput.value = todayISO();
     editingPath = null;
     editingSha = null;
@@ -402,6 +413,7 @@ const REPO = 'dltmddyd321.github.io';
       tagsInput.value = parsed.tags.join(', ');
       draftCheckbox.checked = parsed.draft;
       bodyTextarea.value = parsed.body;
+      updateBodyCount();
       editingPath = path;
       editingSha = data.sha;
       editingPubDate = parsed.pubDate;
@@ -487,6 +499,7 @@ const REPO = 'dltmddyd321.github.io';
     const cursorStart = start + before.length;
     bodyTextarea.setSelectionRange(cursorStart, cursorStart + selected.length);
     bodyTextarea.focus();
+    updateBodyCount();
   }
 
   function prefixLine(prefix: string) {
@@ -497,6 +510,7 @@ const REPO = 'dltmddyd321.github.io';
     const cursor = start + prefix.length;
     bodyTextarea.setSelectionRange(cursor, cursor);
     bodyTextarea.focus();
+    updateBodyCount();
   }
 
   function insertAtCursor(text: string) {
@@ -506,6 +520,7 @@ const REPO = 'dltmddyd321.github.io';
     const cursor = start + text.length;
     bodyTextarea.setSelectionRange(cursor, cursor);
     bodyTextarea.focus();
+    updateBodyCount();
   }
 
   document.querySelectorAll<HTMLButtonElement>('.toolbar [data-action]').forEach((btn) => {
@@ -962,6 +977,12 @@ const REPO = 'dltmddyd321.github.io';
     resize: vertical;
     line-height: 1.6;
     font-size: 0.9rem;
+  }
+
+  .counter {
+    margin: 6px 0 0;
+    text-align: right;
+    font-size: 0.74rem;
   }
 
   .publish-row {

@@ -5,25 +5,31 @@ interface Props {
   pubDate: Date;
   /** Sidebar renders a trimmed version: no timestamp row. */
   compact?: boolean;
+  /** Long notes are cut short in the list and continue on their own page. */
+  clamped?: boolean;
   /** Repo-relative path to the note's source file. Supplying it renders a
    * delete control, which only reveals itself once an admin token is present
    * in localStorage (see the /notes script). */
   sourcePath?: string;
 }
 
-const { id, pubDate, compact = false, sourcePath } = Astro.props;
+const { id, pubDate, compact = false, clamped = false, sourcePath } = Astro.props;
 
 // Notes are timestamped to the minute — the whole point is "when did I jot
 // this", which a date alone doesn't answer for several notes in one day.
 const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
 ---
 
-<article class:list={['note', { compact }]} id={id}>
+<article class:list={['note', { compact, clamped }]} id={id}>
   <div class="note-screen mono">
     <div class="note-body">
       <span class="prompt" aria-hidden="true">$</span>
       <div class="note-content"><slot /></div>
     </div>
+
+    {clamped && (
+      <a class="note-more mono" href={`/notes/${id}`}>더 보기 →</a>
+    )}
   </div>
 
   {!compact && (
@@ -131,6 +137,23 @@ const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
     .note-content > ol:last-child > li:last-child::after {
       animation: none;
     }
+  }
+
+  /* Cut by lines rather than characters so the fold lands on a clean edge;
+     the caret is part of the last line, so a clamped note doesn't show one —
+     the "더 보기" link stands in for it. */
+  .clamped .note-content {
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .note-more {
+    display: inline-block;
+    margin-top: 10px;
+    padding-left: 20px;
+    font-size: 0.76rem;
   }
 
   .note-meta {
