@@ -1,5 +1,5 @@
 // @ts-check
-import { readdirSync, readFileSync } from 'node:fs';
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import { visit } from 'unist-util-visit';
 
@@ -47,6 +47,31 @@ function categoriesWithPosts() {
 
 const activeCategories = categoriesWithPosts();
 
+/*
+ * Stamp the build once, here, before any page renders — src/lib/buildId.ts
+ * reads this same variable, so the meta tag baked into each page and the
+ * version.json written below always match. In CI the commit SHA makes the id
+ * meaningful; locally a timestamp is enough.
+ */
+process.env.PUBLIC_BUILD_ID ??=
+  process.env.GITHUB_SHA?.slice(0, 7) ?? String(Date.now());
+
+/** Emits the file the client polls to detect that a new deploy has landed. */
+function buildVersionFile() {
+  return {
+    name: 'build-version-file',
+    hooks: {
+      /** @param {{ dir: URL }} context */
+      'astro:build:done': ({ dir }) => {
+        writeFileSync(
+          new URL('version.json', dir),
+          JSON.stringify({ build: process.env.PUBLIC_BUILD_ID }),
+        );
+      },
+    },
+  };
+}
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://dltmddyd321.github.io',
@@ -59,6 +84,7 @@ export default defineConfig({
     remarkPlugins: [remarkMermaid],
   },
   integrations: [
+    buildVersionFile(),
     sitemap({
       filter: (page) => {
         const path = new URL(page).pathname;

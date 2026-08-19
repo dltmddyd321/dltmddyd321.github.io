@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Sidebar from '../components/Sidebar.astro';
 import { SITE, GOATCOUNTER_CODE } from '../lib/site';
+import { BUILD_ID } from '../lib/buildId';
 import { CATEGORIES, CATEGORY_KEYS } from '../lib/categories';
 
 interface Props {
@@ -54,6 +55,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="author" content={SITE.author} />
+    <meta name="build-id" content={BUILD_ID} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, follow" />}
 
@@ -191,6 +193,10 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
           <a href={`mailto:${SITE.email}`}>email ↗</a>
         </div>
       </footer>
+      <div class="update-toast mono" id="update-toast" hidden role="status">
+        <span>새 버전이 배포되었습니다.</span>
+        <button type="button" id="update-reload">새로고침</button>
+      </div>
     </div>
     <script is:inline>
       try {
@@ -201,6 +207,57 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
         // localStorage can throw in locked-down contexts (private mode, etc.) — just stay hidden.
       }
     </script>
+    <script>
+      // Static hosting can't push, so the page polls a file the build stamps.
+      // Cheap: one small request on tab focus and every few minutes.
+      const CHECK_INTERVAL_MS = 5 * 60 * 1000;
+
+      const currentBuild = document
+        .querySelector('meta[name="build-id"]')
+        ?.getAttribute('content');
+      const toast = document.getElementById('update-toast');
+      const reloadBtn = document.getElementById('update-reload');
+      let notified = false;
+
+      reloadBtn?.addEventListener('click', () => location.reload());
+
+      /** True when anything on the page holds text the reader would lose. */
+      function hasUnsavedInput(): boolean {
+        const fields = document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+          'textarea, input:not([type="checkbox"]):not([type="radio"]):not([type="date"])',
+        );
+        return Array.from(fields).some((field) => field.value.trim() !== '');
+      }
+
+      async function checkForUpdate() {
+        if (notified || !currentBuild || currentBuild === 'dev') return;
+        try {
+          // GitHub Pages caches aggressively — bypass it, or we'd compare the
+          // deployed id against a stale copy of itself forever.
+          const res = await fetch(`/version.json?t=${Date.now()}`, { cache: 'no-store' });
+          if (!res.ok) return;
+          const { build } = (await res.json()) as { build?: string };
+          if (!build || build === currentBuild) return;
+
+          notified = true;
+          // Reloading out from under someone mid-read (or mid-draft in /write)
+          // is hostile, so only do it silently while they're looking elsewhere.
+          if (document.hidden && !hasUnsavedInput()) {
+            location.reload();
+            return;
+          }
+          toast?.removeAttribute('hidden');
+        } catch {
+          // Offline or a failed deploy — try again on the next tick.
+        }
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) checkForUpdate();
+      });
+      setInterval(checkForUpdate, CHECK_INTERVAL_MS);
+    </script>
+
     {GOATCOUNTER_CODE !== 'CHANGE_ME' && (
       <script
         is:inline
@@ -213,6 +270,38 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 </html>
 
 <style>
+  .update-toast {
+    position: fixed;
+    right: clamp(12px, 4vw, 28px);
+    bottom: clamp(12px, 4vw, 28px);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--accent-line);
+    border-radius: 8px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+  }
+
+  .update-toast button {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 12px;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    cursor: pointer;
+  }
+
+  .update-toast button:hover {
+    border-color: var(--accent-line);
+  }
+
   .site-header {
     display: flex;
     align-items: center;
