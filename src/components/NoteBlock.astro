@@ -24,10 +24,6 @@ const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
       <span class="prompt" aria-hidden="true">$</span>
       <div class="note-content"><slot /></div>
     </div>
-    <div class="note-caret" aria-hidden="true">
-      <span class="prompt">$</span>
-      <span class="cursor"></span>
-    </div>
   </div>
 
   {!compact && (
@@ -97,17 +93,22 @@ const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
     padding-left: 1.3em;
   }
 
-  .note-caret {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-top: 2px;
-  }
-
-  .cursor {
+  /*
+   * Caret sits at the end of the note's last line, as it would in a real
+   * terminal. It's a pseudo-element on the last block rather than an element
+   * of its own so it flows inline with the text instead of starting a line.
+   * Lists need the deepest item targeted — `ul::after` would drop below the
+   * final bullet rather than trailing its text.
+   */
+  .note-content > :last-child:not(ul):not(ol)::after,
+  .note-content > ul:last-child > li:last-child::after,
+  .note-content > ol:last-child > li:last-child::after {
+    content: '';
     display: inline-block;
     width: 0.55em;
     height: 1.05em;
+    margin-left: 0.35em;
+    vertical-align: -0.15em;
     background: var(--accent);
     animation: note-blink 1.1s step-end infinite;
   }
@@ -125,7 +126,9 @@ const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
   /* A blinking block is exactly the kind of motion that triggers discomfort —
      keep the caret, drop the flicker. */
   @media (prefers-reduced-motion: reduce) {
-    .cursor {
+    .note-content > :last-child:not(ul):not(ol)::after,
+    .note-content > ul:last-child > li:last-child::after,
+    .note-content > ol:last-child > li:last-child::after {
       animation: none;
     }
   }
@@ -182,7 +185,9 @@ const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
     gap: 7px;
   }
 
-  .compact .cursor {
+  .compact .note-content > :last-child:not(ul):not(ol)::after,
+  .compact .note-content > ul:last-child > li:last-child::after,
+  .compact .note-content > ol:last-child > li:last-child::after {
     width: 0.5em;
     height: 0.95em;
   }
