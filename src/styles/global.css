@@ -34,6 +34,15 @@
   box-sizing: border-box;
 }
 
+/*
+ * The UA stylesheet's `[hidden] { display: none }` loses to any author rule
+ * that sets `display` (e.g. `label { display: flex }`), which silently breaks
+ * every `element.hidden = true`. Restate it with enough weight to win.
+ */
+[hidden] {
+  display: none !important;
+}
+
 /* Fluid root size: every rem/ch value scales with it, so line length in
    characters stays put while the layout breathes on larger displays. */
 html {

@@ -68,12 +68,12 @@ const REPO = 'dltmddyd321.github.io';
       <span class="muted mono" id="load-status"></span>
     </div>
 
-    <div class="fields">
-      <label class="post-only">
+    <div class="fields post-only">
+      <label>
         제목
         <input type="text" id="f-title" required />
       </label>
-      <label class="post-only">
+      <label>
         요약 (목록/RSS 노출)
         <input type="text" id="f-description" required />
       </label>
@@ -82,24 +82,24 @@ const REPO = 'dltmddyd321.github.io';
           날짜
           <input type="date" id="f-date" required />
         </label>
-        <label class="post-only">
+        <label>
           카테고리
           <select id="f-category">
             {CATEGORY_KEYS.map((key) => <option value={key}>{CATEGORIES[key].label}</option>)}
           </select>
         </label>
       </div>
-      <label class="post-only">
+      <label>
         태그 (쉼표로 구분)
         <input type="text" id="f-tags" placeholder="kotlin, coroutine" />
       </label>
-      <label class="checkbox post-only">
+      <label class="checkbox">
         <input type="checkbox" id="f-draft" />
         초안으로 저장 (배포에서 제외)
       </label>
     </div>
 
-    <div class="toolbar mono" role="toolbar" aria-label="서식">
+    <div class="toolbar mono post-only" role="toolbar" aria-label="서식">
       <button type="button" data-action="bold" title="굵게"><strong>B</strong></button>
       <button type="button" data-action="h2" title="큰 제목">H2</button>
       <button type="button" data-action="h3" title="중간 제목">H3</button>
@@ -312,7 +312,7 @@ const REPO = 'dltmddyd321.github.io';
     editor.dataset.kind = next;
     const isNote = next === 'note';
     kindHint.textContent = isNote
-      ? '제목 없이 본문만 남깁니다. 수정은 지원하지 않고, 삭제는 /notes에서 합니다.'
+      ? '본문만 남깁니다. 수정은 지원하지 않고, 삭제는 /notes에서 합니다.'
       : '제목·카테고리가 있는 정식 글입니다.';
     bodyTextarea.placeholder = isNote
       ? '짧게 남길 내용을 적으세요…'
