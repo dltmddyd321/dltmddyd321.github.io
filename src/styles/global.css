@@ -49,6 +49,14 @@ html {
   font-size: clamp(15.5px, 15px + 0.2vw, 18px);
 }
 
+/* Anchor jumps (the post table of contents) glide rather than teleport, so
+   the reader keeps their bearings — unless they've asked for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 html,
 body {
   margin: 0;

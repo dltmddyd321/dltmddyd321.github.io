@@ -18,9 +18,17 @@ interface Props {
    * controls, which only reveal themselves once a valid admin token is
    * present in localStorage (see the script below). */
   sourcePath: string;
+  /** Section headings from `render()`, used to build the table of contents. */
+  headings?: { depth: number; slug: string; text: string }[];
 }
 
-const { title, description, pubDate, category, tags, aiPreview, sourcePath } = Astro.props;
+const { title, description, pubDate, category, tags, aiPreview, sourcePath, headings = [] } =
+  Astro.props;
+
+// h2/h3 only — h4 and deeper are detail within a section, and a one-entry
+// table of contents is just noise.
+const toc = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+const showToc = toc.length > 1;
 const dateStr = pubDate.toISOString().slice(0, 10);
 
 const jsonLd = {
@@ -79,6 +87,19 @@ const jsonLd = {
               {tags.map((tag: string) => <a class="tag" href={`/tag/${tag}`}>#{tag}</a>)}
             </div>
           </div>
+        )}
+
+        {showToc && (
+          <nav class="side-block toc" aria-label="목차">
+            <span class="side-label">contents</span>
+            <ol>
+              {toc.map((heading) => (
+                <li class:list={{ sub: heading.depth === 3 }}>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
         )}
       </aside>
 
@@ -193,6 +214,41 @@ const jsonLd = {
       deleteBtn.textContent = '🗑 삭제';
     }
   });
+</script>
+
+<script>
+  // Highlights the section currently being read. rootMargin pins the trigger
+  // line near the top of the viewport so a heading counts as "current" once it
+  // reaches reading position, not when it first peeks in from the bottom.
+  const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc a'));
+
+  if (tocLinks.length > 0) {
+    const byId = new Map(
+      tocLinks.map((link) => [decodeURIComponent(link.hash.slice(1)), link]),
+    );
+    const headings = tocLinks
+      .map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
+      .filter((el): el is HTMLElement => el !== null);
+
+    let current: HTMLAnchorElement | null = null;
+    const setCurrent = (link: HTMLAnchorElement | undefined) => {
+      if (!link || link === current) return;
+      current?.classList.remove('current');
+      link.classList.add('current');
+      current = link;
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setCurrent(byId.get(entry.target.id));
+        }
+      },
+      { rootMargin: '0px 0px -75% 0px', threshold: 0 },
+    );
+
+    for (const heading of headings) observer.observe(heading);
+  }
 </script>
 
 <script>
@@ -327,11 +383,57 @@ const jsonLd = {
     padding-top: 32px;
   }
 
+  /* Sticky so the table of contents stays reachable while reading. Capped to
+     the viewport with its own scroll, or a long list would run off-screen with
+     no way back to it. */
   .side {
     display: flex;
     flex-direction: column;
     gap: 20px;
     font-size: 0.78rem;
+    position: sticky;
+    top: 24px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+  }
+
+  .toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .toc li.sub {
+    padding-left: 12px;
+  }
+
+  .toc a {
+    color: var(--text-muted);
+    line-height: 1.45;
+    display: block;
+    border-left: 2px solid transparent;
+    padding-left: 8px;
+    margin-left: -10px;
+  }
+
+  .toc a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* Set by the observer below as each section scrolls into view. */
+  .toc a.current {
+    color: var(--text);
+    border-left-color: var(--accent);
+  }
+
+  /* Anchor jumps otherwise land the heading flush against the viewport edge. */
+  .content :global(h2),
+  .content :global(h3) {
+    scroll-margin-top: 24px;
   }
 
   .side-block {
@@ -543,6 +645,13 @@ const jsonLd = {
       gap: 24px;
       padding-bottom: 20px;
       border-bottom: 1px solid var(--border);
+      position: static;
+      max-height: none;
+      overflow-y: visible;
+    }
+
+    .toc {
+      flex-basis: 100%;
     }
   }
 </style>
