@@ -46,6 +46,22 @@ const recentNotes = await Promise.all(
     <a class="profile-link mono" href="/about">Detail →</a>
   </section>
 
+  {recentNotes.length > 0 && (
+    <section class="block">
+      <h2 class="block-title mono">Notes</h2>
+      <div class="note-rail">
+        {recentNotes.map(({ note, Content }) => (
+          <a class="note-link" href={`/notes/${note.id}`}>
+            <NoteBlock id={`rail-${note.id}`} pubDate={note.data.pubDate} compact>
+              <Content />
+            </NoteBlock>
+          </a>
+        ))}
+      </div>
+      <a class="all-link mono" href="/notes">전체 메모 보기 →</a>
+    </section>
+  )}
+
   <section class="block">
     <h2 class="block-title mono">Tags</h2>
     {tags.length === 0 ? (
@@ -78,21 +94,6 @@ const recentNotes = await Promise.all(
     )}
   </section>
 
-  {recentNotes.length > 0 && (
-    <section class="block">
-      <h2 class="block-title mono">Notes</h2>
-      <div class="note-rail">
-        {recentNotes.map(({ note, Content }) => (
-          <a class="note-link" href={`/notes/${note.id}`}>
-            <NoteBlock id={`rail-${note.id}`} pubDate={note.data.pubDate} compact>
-              <Content />
-            </NoteBlock>
-          </a>
-        ))}
-      </div>
-      <a class="all-link mono" href="/notes">전체 메모 보기 →</a>
-    </section>
-  )}
 
   <section class="block">
     <h2 class="block-title mono">Archive</h2>
