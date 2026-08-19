@@ -24,18 +24,82 @@ const rendered = await Promise.all(
   <section class="hero">
     <p class="kicker mono">&gt; notes</p>
     <h1>메모</h1>
-    <p class="muted">글로 쓰기엔 짧은 기록들.</p>
   </section>
 
   <section class="note-list">
     {notes.length === 0 && <p class="muted">아직 메모가 없습니다.</p>}
     {rendered.map(({ note, Content }) => (
-      <NoteBlock id={note.id} pubDate={note.data.pubDate} tags={note.data.tags}>
+      <NoteBlock
+        id={note.id}
+        pubDate={note.data.pubDate}
+        tags={note.data.tags}
+        sourcePath={`src/content/notes/${note.id}.md`}
+      >
         <Content />
       </NoteBlock>
     ))}
   </section>
 </BaseLayout>
+
+<script>
+  import { OWNER, REPO, BRANCH, TOKEN_KEY, API_ROOT, ghHeaders, validateToken } from '../lib/adminAuth';
+
+  const deleteButtons = Array.from(
+    document.querySelectorAll<HTMLButtonElement>('.note-delete'),
+  );
+
+  // Cheap presence check only — same as the header's Write link. The real
+  // authorization check runs against GitHub when delete is actually clicked.
+  if (localStorage.getItem(TOKEN_KEY)) {
+    for (const btn of deleteButtons) btn.removeAttribute('hidden');
+  }
+
+  for (const btn of deleteButtons) {
+    btn.addEventListener('click', async () => {
+      const path = btn.dataset.path;
+      if (!path) return;
+      if (!confirm('이 메모를 삭제하시겠습니까? 되돌릴 수 없습니다.')) return;
+
+      const token = localStorage.getItem(TOKEN_KEY);
+      if (!token) {
+        alert('로그인이 만료되었습니다. /write에서 다시 로그인해주세요.');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = '삭제 중…';
+      try {
+        await validateToken(token);
+
+        const getRes = await fetch(`${API_ROOT}/repos/${OWNER}/${REPO}/contents/${path}`, {
+          headers: ghHeaders(token),
+        });
+        if (!getRes.ok) throw new Error(`http-${getRes.status}`);
+        const file = (await getRes.json()) as { sha: string };
+
+        const delRes = await fetch(`${API_ROOT}/repos/${OWNER}/${REPO}/contents/${path}`, {
+          method: 'DELETE',
+          headers: { ...ghHeaders(token), 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: `fix: delete note "${path.split('/').pop()?.replace(/\.md$/, '')}"`,
+            sha: file.sha,
+            branch: BRANCH,
+          }),
+        });
+        if (!delRes.ok) throw new Error(`http-${delRes.status}`);
+
+        // Drop it from the page immediately — the rebuild takes a minute, and
+        // leaving it on screen reads as the delete having failed.
+        btn.closest('.note')?.remove();
+        alert('삭제되었습니다. 배포가 끝나면 목록에서 사라집니다.');
+      } catch {
+        alert('삭제에 실패했습니다.');
+        btn.disabled = false;
+        btn.textContent = '🗑 삭제';
+      }
+    });
+  }
+</script>
 
 <style>
   .hero {

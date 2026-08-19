@@ -58,7 +58,7 @@ const REPO = 'dltmddyd321.github.io';
       <span class="muted kind-hint" id="kind-hint">제목·카테고리가 있는 정식 글입니다.</span>
     </div>
 
-    <div class="post-select-row">
+    <div class="post-select-row post-only">
       <label>
         <span id="select-label">글 선택</span>
         <select id="post-select">
@@ -138,7 +138,6 @@ const REPO = 'dltmddyd321.github.io';
 
   const postSelect = document.getElementById('post-select') as HTMLSelectElement;
   const loadStatus = document.getElementById('load-status') as HTMLElement;
-  const selectLabel = document.getElementById('select-label') as HTMLElement;
   const kindHint = document.getElementById('kind-hint') as HTMLElement;
   const kindButtons = Array.from(
     document.querySelectorAll<HTMLButtonElement>('.kind-btn'),
@@ -311,9 +310,8 @@ const REPO = 'dltmddyd321.github.io';
       field.hidden = next === 'note';
     }
     const isNote = next === 'note';
-    selectLabel.textContent = isNote ? '메모 선택' : '글 선택';
     kindHint.textContent = isNote
-      ? '제목 없이 본문만 남기는 짧은 기록입니다. 댓글은 달리지 않습니다.'
+      ? '제목 없이 본문만 남깁니다. 수정은 지원하지 않고, 삭제는 /notes에서 합니다.'
       : '제목·카테고리가 있는 정식 글입니다.';
     bodyTextarea.placeholder = isNote
       ? '짧게 남길 내용을 적으세요…'
@@ -331,7 +329,7 @@ const REPO = 'dltmddyd321.github.io';
       applyKind(next);
       resetForm();
       postSelect.value = '';
-      loadPostList();
+      if (next === 'post') loadPostList();
     });
   }
 

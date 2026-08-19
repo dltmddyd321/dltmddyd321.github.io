@@ -6,9 +6,13 @@ interface Props {
   tags?: string[];
   /** Sidebar renders a trimmed version: no tags, no timestamp row. */
   compact?: boolean;
+  /** Repo-relative path to the note's source file. Supplying it renders a
+   * delete control, which only reveals itself once an admin token is present
+   * in localStorage (see the /notes script). */
+  sourcePath?: string;
 }
 
-const { id, pubDate, tags = [], compact = false } = Astro.props;
+const { id, pubDate, tags = [], compact = false, sourcePath } = Astro.props;
 
 // Notes are timestamped to the minute — the whole point is "when did I jot
 // this", which a date alone doesn't answer for several notes in one day.
@@ -34,6 +38,11 @@ const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
         <span class="note-tags">
           {tags.map((tag) => <a class="note-tag" href={`/tag/${tag}`}>#{tag}</a>)}
         </span>
+      )}
+      {sourcePath && (
+        <button type="button" class="note-delete" data-path={sourcePath} hidden>
+          🗑 삭제
+        </button>
       )}
     </div>
   )}
@@ -158,6 +167,28 @@ const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
 
   .note-tag:hover {
     color: var(--accent);
+  }
+
+  /* Pushed to the trailing edge so it never sits between the timestamp and
+     the tags, which read as one meta line. */
+  .note-delete {
+    margin-left: auto;
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    cursor: pointer;
+  }
+
+  .note-delete:hover {
+    color: #d9534f;
+  }
+
+  .note-delete:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 
   /* Sidebar variant: same pane, smaller and quieter. */
