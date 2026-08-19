@@ -108,6 +108,15 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
               {CATEGORIES[key].label}
             </a>
           ))}
+          {/* Not a category — a separate content type, so it sits after the
+              category group behind a divider rather than inside it. */}
+          <a
+            class:list={['nav-notes', { current: isCurrent('/notes') }]}
+            href="/notes"
+            aria-current={isCurrent('/notes') ? 'page' : undefined}
+          >
+            Notes
+          </a>
         </nav>
         <a class="pill search-link mono" href="/search">
           <svg
@@ -167,7 +176,6 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
             reachable from reading pages that have no sidebar. */}
         <nav class="footer-nav" aria-label="보조 메뉴">
           <a href="/about">About</a>
-          <a href="/notes">Notes</a>
           <a href="/tags">Tags</a>
           <a href="/search">Search</a>
         </nav>
@@ -242,6 +250,11 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     font-family: var(--font-mono);
     font-size: 0.82rem;
     color: var(--text-muted);
+  }
+
+  .nav-notes {
+    padding-left: 18px;
+    border-left: 1px solid var(--border);
   }
 
   nav a:hover {
