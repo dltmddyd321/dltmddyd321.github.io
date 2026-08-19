@@ -79,6 +79,9 @@ export default defineConfig({
   // added. It was already in the submitted sitemap, so keep the old path working.
   redirects: {
     '/tistory': '/archives',
+    // Published briefly under the timestamp slug that a Korean-only title
+    // falls back to, before being renamed — keep the old link working.
+    '/posts/post-1787111131692': '/posts/ai-rewrite-prompt',
   },
   markdown: {
     remarkPlugins: [remarkMermaid],
@@ -90,8 +93,9 @@ export default defineConfig({
         const path = new URL(page).pathname;
         // /search is an empty shell (results render client-side) — nothing to index.
         if (path.startsWith('/search')) return false;
-        // The redirect stub shouldn't compete with its destination.
+        // Redirect stubs shouldn't compete with their destinations.
         if (path.startsWith('/tistory')) return false;
+        if (path === '/posts/post-1787111131692/') return false;
         // Feed pages 2+ render `noindex` (link lists, no original content);
         // listing a noindex URL here trips Search Console.
         if (/^\/\d+\/?$/.test(path)) return false;
