@@ -29,7 +29,7 @@ const page = feedPage(await buildFeed(), current);
   <section class="hero">
     <p class="kicker mono">&gt; posts</p>
     <h1>전체 글 <span class="muted">— {page.current}페이지</span></h1>
-    <p class="muted mono count-line">총 {page.total}개의 글 (레거시 글 포함)</p>
+    <p class="muted mono count-line">총 {page.total}개의 글</p>
   </section>
 
   <FeedList items={page.items} />
