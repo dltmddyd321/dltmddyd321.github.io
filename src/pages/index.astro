@@ -81,7 +81,7 @@ const jsonLd = {
       <div class="note-strip">
         {notes.map(({ note, Content }) => (
           <a class="note-card" href={`/notes/${note.id}`}>
-            <NoteBlock id={`home-${note.id}`} pubDate={note.data.pubDate} compact>
+            <NoteBlock id={`home-${note.id}`} pubDate={note.data.pubDate} compact clampLines={4}>
               <Content />
             </NoteBlock>
           </a>
@@ -132,6 +132,7 @@ const jsonLd = {
 
   .note-card {
     flex: 0 0 clamp(220px, 46%, 300px);
+    min-width: 0;
     scroll-snap-align: start;
     color: inherit;
   }
@@ -144,15 +145,10 @@ const jsonLd = {
     border-color: var(--accent-line);
   }
 
-  /* Cards are a peek, so keep every one the same height regardless of length. */
+  /* Cards are a peek, so keep every one the same height regardless of length.
+     Safe now that the body is clamped — before, one runaway card stretched
+     every sibling with it. */
   .note-card :global(.note-screen) {
     height: 100%;
-  }
-
-  .note-card :global(.note-content) {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
 </style>
