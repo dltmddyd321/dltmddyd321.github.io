@@ -17,6 +17,7 @@ export const SITE = {
     { label: 'github', url: 'https://github.com/dltmddyd321' },
     { label: 'youtube', url: 'https://www.youtube.com/@seungyong2477' },
     { label: 'instagram', url: 'https://www.instagram.com/wi.life_7/' },
+    { label: 'linkedin', url: 'https://www.linkedin.com/in/seungyong-lee-b507ba218/' },
   ],
   /** Rendered in the footer as a mailto link. Kept out of `links`/`sameAs` —
    * that array is profile URLs for schema.org identity linking, not contact
