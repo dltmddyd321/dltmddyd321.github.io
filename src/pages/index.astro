@@ -80,11 +80,17 @@ const jsonLd = {
           make a handful of one-liners as tall as the post list above. */}
       <div class="note-strip">
         {notes.map(({ note, Content }) => (
-          <a class="note-card" href={`/notes/${note.id}`}>
-            <NoteBlock id={`home-${note.id}`} pubDate={note.data.pubDate} compact clampLines={4}>
+          <div class="note-card">
+            <NoteBlock
+              id={`home-${note.id}`}
+              pubDate={note.data.pubDate}
+              href={`/notes/${note.id}`}
+              compact
+              clampLines={4}
+            >
               <Content />
             </NoteBlock>
-          </a>
+          </div>
         ))}
       </div>
     </section>
@@ -134,15 +140,6 @@ const jsonLd = {
     flex: 0 0 clamp(220px, 46%, 300px);
     min-width: 0;
     scroll-snap-align: start;
-    color: inherit;
-  }
-
-  .note-card:hover {
-    text-decoration: none;
-  }
-
-  .note-card:hover :global(.note-screen) {
-    border-color: var(--accent-line);
   }
 
   /* Cards are a peek, so keep every one the same height regardless of length.

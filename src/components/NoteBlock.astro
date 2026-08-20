@@ -10,13 +10,19 @@ interface Props {
   /** Trim the body to this many lines. Used wherever a note is a preview
    * (sidebar rail, home strip) rather than the note itself. */
   clampLines?: number;
+  /** Makes the whole block a link to the note. Rendered as an overlay rather
+   * than a wrapper: note bodies contain auto-linked URLs, and an <a> may not
+   * nest inside another — the parser closes the outer one and clones it,
+   * which littered the home strip with empty phantom cards. */
+  href?: string;
   /** Repo-relative path to the note's source file. Supplying it renders a
    * delete control, which only reveals itself once an admin token is present
    * in localStorage (see the /notes script). */
   sourcePath?: string;
 }
 
-const { id, pubDate, compact = false, clamped = false, clampLines, sourcePath } = Astro.props;
+const { id, pubDate, compact = false, clamped = false, clampLines, href, sourcePath } =
+  Astro.props;
 
 // Notes are timestamped to the minute — the whole point is "when did I jot
 // this", which a date alone doesn't answer for several notes in one day.
@@ -50,11 +56,25 @@ const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
       )}
     </div>
   )}
+
+  {href && <a class="note-cover" href={href} aria-label={`메모 ${stamp}`}></a>}
 </article>
 
 <style>
   .note {
+    position: relative;
     margin: 0 0 20px;
+  }
+
+  .note-cover {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: 8px;
+  }
+
+  .note:has(.note-cover:hover) .note-screen {
+    border-color: var(--accent-line);
   }
 
   /* The terminal pane itself. Squared-off and flat on purpose — it should read
@@ -95,14 +115,17 @@ const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
    * note starting with a long URL rendered blank and stretched its card to
    * several hundred px. `lh` is the computed line box, so this tracks whatever
    * line-height the variant sets.
+   *
+   * A gradient mask would signal the cut more clearly, but it fades the last
+   * line of notes that don't reach the limit (nothing in CSS can tell whether
+   * the box actually overflowed) and Chrome drops the masked content entirely
+   * inside a horizontal scroller. A plain cut is the honest trade.
    */
   .note-content.is-clamped {
     /* em fallback first (line-height is 1.6–1.7 here); `lh` wins where known. */
     max-height: calc(var(--clamp-lines) * 1.7em);
     max-height: calc(var(--clamp-lines) * 1lh);
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent);
-    mask-image: linear-gradient(to bottom, #000 65%, transparent);
   }
 
   /* Markdown inside a note stays tight — a note is a couple of lines, so the
@@ -173,8 +196,6 @@ const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
     max-height: calc(8 * 1.7em);
     max-height: calc(8 * 1lh);
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent);
-    mask-image: linear-gradient(to bottom, #000 80%, transparent);
   }
 
   .note-more {
