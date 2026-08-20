@@ -1,0 +1,44 @@
+---
+import PostRow from './PostRow.astro';
+import ExternalRow from './ExternalRow.astro';
+import { firstImage } from '../lib/postThumbnail';
+import { SOURCE_LABELS, type FeedItem } from '../lib/feed';
+
+interface Props {
+  items: FeedItem[];
+  empty?: string;
+}
+
+const { items, empty = '아직 글이 없습니다.' } = Astro.props;
+---
+
+<section class="list">
+  {items.length === 0 && <p class="muted">{empty}</p>}
+  {items.map((item) =>
+    item.kind === 'post' ? (
+      <PostRow
+        slug={item.post.id}
+        title={item.post.data.title}
+        description={item.post.data.description}
+        pubDate={item.post.data.pubDate}
+        category={item.post.data.category}
+        tags={item.post.data.tags}
+        thumbnail={firstImage(item.post.body)}
+      />
+    ) : (
+      <ExternalRow
+        title={item.entry.title}
+        url={item.entry.url}
+        date={item.entry.date}
+        source={item.entry.source}
+        sourceLabel={SOURCE_LABELS[item.entry.source] ?? item.entry.source}
+      />
+    ),
+  )}
+</section>
+
+<style>
+  .list > :global(.row:first-child) {
+    padding-top: 0;
+  }
+</style>

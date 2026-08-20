@@ -1,0 +1,42 @@
+---
+import type { FeedPage } from '../lib/feed';
+
+interface Props {
+  page: FeedPage;
+}
+
+const { page } = Astro.props;
+---
+
+{page.last > 1 && (
+  <nav class="pager mono" aria-label="페이지 이동">
+    {page.prevUrl ? (
+      <a href={page.prevUrl} rel="prev">&larr; 이전</a>
+    ) : (
+      <span class="muted">&larr; 이전</span>
+    )}
+    <span class="pager-count muted">{page.current} / {page.last}</span>
+    {page.nextUrl ? (
+      <a href={page.nextUrl} rel="next">다음 &rarr;</a>
+    ) : (
+      <span class="muted">다음 &rarr;</span>
+    )}
+  </nav>
+)}
+
+<style>
+  .pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 0.82rem;
+  }
+
+  .pager-count {
+    font-size: 0.76rem;
+  }
+</style>

@@ -1,0 +1,158 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FeedList from '../components/FeedList.astro';
+import NoteBlock from '../components/NoteBlock.astro';
+import { SAME_AS, SITE } from '../lib/site';
+import { buildFeed } from '../lib/feed';
+
+/** Enough to show what the blog is about without turning the home page into the feed. */
+const RECENT_ITEMS = 6;
+const HOME_NOTES = 6;
+
+const feed = await buildFeed();
+const recent = feed.slice(0, RECENT_ITEMS);
+
+const allNotes = await getCollection('notes', ({ data }) => !data.draft);
+const notes = await Promise.all(
+  allNotes
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+    .slice(0, HOME_NOTES)
+    .map(async (note) => ({ note, Content: (await render(note)).Content })),
+);
+
+// The site root carries the Blog-level structured data. Reuses the feed rather
+// than re-querying: it's already sorted newest-first, just needs externals out.
+const recentPosts = feed
+  .filter((item): item is Extract<typeof item, { kind: 'post' }> => item.kind === 'post')
+  .slice(0, 10)
+  .map((item) => item.post);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  '@id': SITE.url,
+  name: SITE.name,
+  description: SITE.description,
+  url: SITE.url,
+  inLanguage: 'ko-KR',
+  author: {
+    '@type': 'Person',
+    name: SITE.author,
+    url: SITE.url,
+    jobTitle: 'Android Developer',
+    sameAs: SAME_AS,
+  },
+  blogPost: recentPosts.map((post) => ({
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.pubDate.toISOString(),
+    url: new URL(`/posts/${post.id}/`, SITE.url).href,
+  })),
+};
+---
+
+<BaseLayout
+  fullTitle={SITE.name}
+  title=""
+  statusLine="$ tail -f blog.md"
+  jsonLd={jsonLd}
+  withSidebar
+>
+  <h1 class="sr-only">{SITE.name}</h1>
+
+  <section class="home-section">
+    <div class="section-head">
+      <h2 class="section-title mono">Recent</h2>
+      <a class="section-more mono" href="/posts">전체 글 보기 →</a>
+    </div>
+    <FeedList items={recent} />
+  </section>
+
+  {notes.length > 0 && (
+    <section class="home-section">
+      <div class="section-head">
+        <h2 class="section-title mono">Notes</h2>
+        <a class="section-more mono" href="/notes">전체 메모 보기 →</a>
+      </div>
+      {/* Horizontal because a note is a glance — stacking them vertically would
+          make a handful of one-liners as tall as the post list above. */}
+      <div class="note-strip">
+        {notes.map(({ note, Content }) => (
+          <a class="note-card" href={`/notes/${note.id}`}>
+            <NoteBlock id={`home-${note.id}`} pubDate={note.data.pubDate} compact>
+              <Content />
+            </NoteBlock>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .home-section + .home-section {
+    margin-top: 48px;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-title {
+    margin: 0;
+    font-size: 0.76rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .section-more {
+    flex-shrink: 0;
+    font-size: 0.76rem;
+  }
+
+  /* Scrolls sideways with the cards snapping, so a partly visible card at the
+     edge signals there's more rather than looking clipped. */
+  .note-strip {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding-bottom: 6px;
+  }
+
+  .note-card {
+    flex: 0 0 clamp(220px, 46%, 300px);
+    scroll-snap-align: start;
+    color: inherit;
+  }
+
+  .note-card:hover {
+    text-decoration: none;
+  }
+
+  .note-card:hover :global(.note-screen) {
+    border-color: var(--accent-line);
+  }
+
+  /* Cards are a peek, so keep every one the same height regardless of length. */
+  .note-card :global(.note-screen) {
+    height: 100%;
+  }
+
+  .note-card :global(.note-content) {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

@@ -93,12 +93,15 @@ export default defineConfig({
         const path = new URL(page).pathname;
         // /search is an empty shell (results render client-side) — nothing to index.
         if (path.startsWith('/search')) return false;
+        // /write is the token-gated admin tool and renders `noindex`; listing a
+        // noindex URL here is what trips Search Console.
+        if (path.startsWith('/write')) return false;
         // Redirect stubs shouldn't compete with their destinations.
         if (path.startsWith('/tistory')) return false;
         if (path === '/posts/post-1787111131692/') return false;
         // Feed pages 2+ render `noindex` (link lists, no original content);
         // listing a noindex URL here trips Search Console.
-        if (/^\/\d+\/?$/.test(path)) return false;
+        if (/^\/posts\/page\/\d+\/?$/.test(path)) return false;
         const category = path.match(/^\/category\/([^/]+)\/?$/)?.[1];
         if (category) return activeCategories.has(category);
         return true;

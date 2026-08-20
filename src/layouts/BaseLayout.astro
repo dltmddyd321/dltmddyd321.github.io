@@ -98,7 +98,11 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
           <span class="mono">~/</span>LeeSeungYong<span class="mono">.log</span>
         </a>
         <nav>
-          <a href="/" class:list={{ current: isCurrent('/') }} aria-current={path === '/' ? 'page' : undefined}>
+          <a
+            href="/posts"
+            class:list={{ current: isCurrent('/posts') }}
+            aria-current={isCurrent('/posts') ? 'page' : undefined}
+          >
             Posts
           </a>
           {CATEGORY_KEYS.map((key) => (

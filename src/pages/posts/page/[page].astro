@@ -1,0 +1,60 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import FeedList from '../../../components/FeedList.astro';
+import Pager from '../../../components/Pager.astro';
+import { buildFeed, feedPage, PAGE_SIZE } from '../../../lib/feed';
+
+/** Page 1 lives at /posts, so this route only covers 2 and up. */
+export const getStaticPaths = (async () => {
+  const feed = await buildFeed();
+  const last = Math.max(1, Math.ceil(feed.length / PAGE_SIZE));
+  return Array.from({ length: Math.max(0, last - 1) }, (_, i) => ({
+    params: { page: String(i + 2) },
+  }));
+}) satisfies GetStaticPaths;
+
+// These pages are link lists with no original content, hence `noindex` below.
+const current = Number(Astro.params.page);
+const page = feedPage(await buildFeed(), current);
+---
+
+<BaseLayout
+  title={`Posts — ${page.current}페이지`}
+  description={`전체 글 목록 ${page.current}페이지 (${page.total}편 중 ${page.start}번째부터).`}
+  statusLine={`$ ls ./posts ./archives | wc -l  →  ${page.total}  [${page.current}/${page.last}]`}
+  noindex
+  withSidebar
+>
+  <section class="hero">
+    <p class="kicker mono">&gt; posts</p>
+    <h1>전체 글 <span class="muted">— {page.current}페이지</span></h1>
+  </section>
+
+  <FeedList items={page.items} />
+  <Pager page={page} />
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 8px 0 28px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+
+  .kicker {
+    color: var(--accent);
+    font-size: 0.8rem;
+    margin: 0 0 12px;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    margin: 0;
+  }
+
+  h1 .muted {
+    font-weight: 400;
+    font-size: 0.7em;
+  }
+</style>

@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FeedList from '../../components/FeedList.astro';
+import Pager from '../../components/Pager.astro';
+import { SITE } from '../../lib/site';
+import { buildFeed, feedPage } from '../../lib/feed';
+
+const page = feedPage(await buildFeed(), 1);
+const hasOwnPosts = page.items.some((item) => item.kind === 'post');
+---
+
+<BaseLayout
+  title="Posts"
+  description={`이 블로그와 다른 플랫폼에 쓴 글 전체 ${page.total}편.`}
+  statusLine={`$ ls ./posts ./archives | wc -l  →  ${page.total}  [${page.current}/${page.last}]`}
+  withSidebar
+>
+  <section class="hero">
+    <p class="kicker mono">&gt; posts</p>
+    <h1>전체 글</h1>
+  </section>
+
+  <FeedList items={page.items} />
+  <Pager page={page} />
+
+  {!hasOwnPosts && (
+    <p class="hint muted">
+      이 페이지에는 다른 플랫폼에 쓴 글이 함께 표시됩니다. 이 블로그에 쓴 글만 보려면 상단
+      카테고리를 눌러보세요.
+    </p>
+  )}
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 8px 0 28px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+
+  .kicker {
+    color: var(--accent);
+    font-size: 0.8rem;
+    margin: 0 0 12px;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    margin: 0;
+  }
+
+  .hint {
+    margin-top: 24px;
+    font-size: 0.85rem;
+  }
+</style>
