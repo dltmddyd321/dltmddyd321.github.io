@@ -18,6 +18,7 @@ const hasOwnPosts = page.items.some((item) => item.kind === 'post');
   <section class="hero">
     <p class="kicker mono">&gt; posts</p>
     <h1>전체 글</h1>
+    <p class="muted mono count-line">총 {page.total}개의 글 (레거시 글 포함)</p>
   </section>
 
   <FeedList items={page.items} />
@@ -46,7 +47,12 @@ const hasOwnPosts = page.items.some((item) => item.kind === 'post');
 
   h1 {
     font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    margin: 0 0 10px;
+  }
+
+  .count-line {
     margin: 0;
+    font-size: 0.8rem;
   }
 
   .hint {
