@@ -30,3 +30,5 @@ CLI 셸(~/.zshrc 또는 ~/.bashrc)에서 UTF-8 로케일이 비어있거나 불�
 `# ~/.zshrc 에 추가
 export LANG=ko_KR.UTF-8
 export LC_ALL=ko_KR.UTF-8`
+
++ 사실은 영어로 대화하는 것이 토큰 소모량도 조금이라도 더 아끼고 한글보다 언어 오류의 확률이 낮긴합니다..
