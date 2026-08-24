@@ -1,15 +1,15 @@
 ---
-title: iOS엔 없는 인앱 업데이트, App Store Lookup으로 흉내내기
-description: Android Play Core의 In-App Update를 iOS에 그대로 옮길 수 없어서, iTunes Lookup API로 버전을 비교해 App Store로 안내하는 방식으로 대체한 과정을 정리합니다.
+title: "iOS 인앱 업데이트 안내, App Store Lookup으로 모방하기"
+description: "Android Play Core의 In-App Update를 iOS에 그대로 옮길 수 없어서, iTunes Lookup API로 버전을 비교해 App Store로 안내하는 방식으로 대체한 과정을 정리합니다."
 pubDate: 2026-08-23T12:01:49Z
 category: dev-log
-tags: [android, ios, swift, kotlin]
+tags: ["ios", "swift"]
 aiPreview: Android는 Play Core의 In-App Update API로 앱 안에서 업데이트를 다운로드까지 시키지만, App Store는 그런 API 자체를 열어주지 않습니다. 대신 iTunes Lookup API로 스토어 최신 버전을 직접 조회해 비교하고, 다이얼로그로 App Store 딥링크를 안내하는 방식으로 우회했습니다.
 ---
 
-영수증·보증기간 관리 앱을 만들면서 안드로이드 쪽에 업데이트 안내 기능을 먼저 붙였습니다. Play Core의 In-App Update API를 쓰면 스토어에 새 버전이 올라왔을 때 앱을 켜는 시점에 자동으로 감지합니다. 사용자가 앱을 계속 쓰는 동안 백그라운드로 새 버전을 받아두고 다운로드가 끝나면 재시작을 유도할 수 있습니다.
+안드로이드에서는 신규 버전이 마켓에 업로드되면 사용자에게 업데이트 안내를 하는 기능을 제공합니다. Play Core의 In-App Update API를 쓰면 스토어에 새 버전이 올라왔을 때 앱을 켜는 시점에 자동으로 감지합니다. 사용자가 앱을 계속 쓰는 동안 백그라운드로 새 버전을 받아두고 다운로드가 끝나면 재시작을 유도할 수 있습니다.
 
-이걸 iOS에도 똑같이 넣으려고 찾아보다가, 애초에 대응되는 API가 없다는 걸 알게 됐습니다.
+이걸 iOS에도 똑같이 넣으려고 찾아보다가, 애초에 대응되는 API가 없다는 걸 알게 됐습니다.. Android와 iOS를 공부할수록 보이는 차이점들이 흥미롭네요.
 
 ## Android: Play Core가 다운로드까지 맡아준다
 
@@ -46,19 +46,21 @@ appUpdateManager.registerListener(listener)
 
 ## iOS: 애초에 이런 API가 없다
 
-같은 걸 iOS에서 찾다가 알게 된 사실인데, Apple은 이 종류의 API를 아예 제공하지 않습니다. 이유를 짐작해보면, App Store는 앱 배포와 설치 권한을 자기 자신만 갖고 있는 구조라서 서드파티 앱이 다른 앱(자기 자신 포함)의 설치·업데이트를 트리거하는 경로 자체를 열어주지 않는 것 같습니다. Android가 Play Store 바깥에서도 APK 설치를 허용하는 것과는 플랫폼 철학이 다른 셈입니다.
+Apple은 이 종류의 API를 아예 제공하지 않습니다. 이유를 짐작해보면, App Store는 앱 배포와 설치 권한을 자기 자신만 갖고 있는 구조라서 서드파티 앱이 다른 앱(자기 자신 포함)의 설치·업데이트를 트리거하는 경로 자체를 열어주지 않는 것 같습니다. Android가 Play Store 바깥에서도 APK 설치를 허용하는 것과는 플랫폼 접근 개념이 많이 다른 영향이겠네요.
 
 그렇다고 손 놓고 있을 일은 아니고 "업데이트가 나왔다는 걸 앱이 스스로 알아채서 사용자에게 안내하는 것"까지는 충분히 만들 수 있습니다. 다운로드·설치는 어차피 사용자가 App Store에서 직접 눌러야 하지만 그 앞 단계인 "지금 업데이트가 있는지 확인하고 알려주는" 부분은 iTunes Lookup API로 해결됩니다.
 
 ```
 GET https://itunes.apple.com/lookup?bundleId=com.windrr.boat
 ```
+https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/LookupExamples.html
 
 인증도 필요 없는 공개 API고 응답에 `version`, `trackViewUrl` 같은 필드가 들어 있습니다. 현재 앱의 `CFBundleShortVersionString`과 비교해서 스토어 버전이 더 높으면 다이얼로그를 띄우고 확인을 누르면 `trackViewUrl`을 열어 App Store 상세 페이지로 보냅니다.
 
 ## 버전 비교는 숫자로 해야 한다
 
 버전 문자열 두 개를 비교할 때 흔히 하는 실수가 그냥 문자열로 비교하는 겁니다. `"2.0.10"`과 `"2.0.9"`를 사전순으로 비교하면 `"10"`이 `"9"`보다 작다고 나옵니다. 첫 글자만 보고 비교하니 `1 < 9`가 되어버리는 겁니다. 그래서 점 단위로 쪼갠 다음 각 자리를 정수로 바꿔서 비교해야 합니다.
+대학교때 뭔가 이런 문제를 풀었었던 기억이 나는군요. ㅎㅎ
 
 ```swift
 static func isNewerVersion(_ remote: String, than local: String) -> Bool {
@@ -132,3 +134,4 @@ private func check() async {
 - 대신 iTunes Lookup API로 스토어 버전을 직접 조회해서 비교하고 확인을 누르면 App Store 상세 페이지로 보내는 방식으로 안내까지는 만들 수 있습니다.
 - 버전 문자열은 반드시 점 단위로 쪼개 숫자로 비교해야 합니다. 사전순 비교로는 두 자릿수 버전에서 틀린 결과가 나옵니다.
 - 오래된 공개 API를 쓸 때는 응답 스펙이 바뀔 가능성을 기본값으로 깔고 실패하는 모든 경로가 크래시가 아니라 "기능이 조용히 꺼지는" 쪽으로 수렴하도록 짜야 합니다.
+- 강제 업데이트를 위해서는 백엔드 검증을 통한 철저한 관리가 필요해보입니다. 그럼에도 불구하고 사용자가 업데이트를 회피할 수 있는 가능성이 있기 때문에 꼼꼼한 파악이 필요해보입니다.
