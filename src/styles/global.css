@@ -16,6 +16,9 @@
   --accent: #e0a458;
   --accent-soft: rgba(224, 164, 88, 0.14);
   --accent-line: rgba(224, 164, 88, 0.4);
+  /* Sits between --border and --text-muted: a scrollbar has to be findable
+     without competing with the content it sits beside. */
+  --scroll-thumb: #3d4036;
 
   --font-sans: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
@@ -41,6 +44,49 @@
  */
 [hidden] {
   display: none !important;
+}
+
+/*
+ * Scrollbars. The browser default is a pale slab that reads as a rendering
+ * fault on a dark page — most visibly under the home page's note strip. Themed
+ * once here so every scroll container matches: the note strip, code blocks,
+ * tables, and the post page's table-of-contents rail.
+ *
+ * Two mechanisms are needed. `scrollbar-color`/`scrollbar-width` are the
+ * standard properties (Firefox, Chrome 121+) and inherit, so declaring them on
+ * :root covers every descendant. WebKit ignores those and needs its own
+ * pseudo-elements, which don't inherit — hence the universal selector.
+ */
+:root {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border-radius: 999px;
+  /* Inset via a transparent border so the thumb reads as a slim rail rather
+     than filling the gutter edge to edge. */
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-line);
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 /* Fluid root size: every rem/ch value scales with it, so line length in

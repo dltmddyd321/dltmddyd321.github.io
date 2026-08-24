@@ -61,9 +61,10 @@ const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
 </article>
 
 <style>
+  /* No outer margin: every context that stacks notes sets its own gap, and a
+     margin here compounded with it (the home strip read as 32px, not 12px). */
   .note {
     position: relative;
-    margin: 0 0 20px;
   }
 
   .note-cover {
