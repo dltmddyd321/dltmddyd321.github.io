@@ -320,12 +320,20 @@ blockquote::after {
   border-width: 0 1px 1px 0;
 }
 
+/*
+ * Both prose contexts set their own paragraph rhythm (`.content p` in
+ * PostLayout, `.note-content p` in NoteBlock), and those selectors carry a
+ * scoped attribute — enough specificity to beat this reset. Without the
+ * override the trailing margin stacks on the padding below, so a one-line
+ * quote rendered in a box nearly twice as tall as it needed. Forced here
+ * rather than repeated inside each prose context.
+ */
 blockquote > :first-child {
-  margin-top: 0;
+  margin-top: 0 !important;
 }
 
 blockquote > :last-child {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 
 hr {
