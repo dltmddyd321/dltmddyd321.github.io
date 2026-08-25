@@ -4,6 +4,7 @@ description: "Claude Code를 사용할 때, 간혹 한글이 깨지는 현상에
 pubDate: 2026-08-24T08:21:02Z
 category: ai-lab
 tags: ["LLM", "AI", "Claude"]
+aiPreview: "CLI 출력 스트리밍에서 UTF-8 한글 3바이트 토큰의 디코딩이 어긋나 글자가 깨집니다. CLAUDE.md에 온전한 UTF-8로 응답하라는 규칙을 명시하니 눈에 띄게 줄었고, 셸의 LANG·LC_ALL 로케일이 비어 있거나 어긋난 경우도 같은 증상을 냅니다."
 ---
 
 ![dddd.png](/uploads/1787559419290-dddd.png)
