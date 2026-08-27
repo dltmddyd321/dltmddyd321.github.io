@@ -11,7 +11,7 @@ export const TOKEN_KEY = 'gh_pat';
 export const API_ROOT = 'https://api.github.com';
 
 /** GitHub accounts allowed to publish — the repo owner plus any invited collaborator. */
-export const ALLOWED_USERS = ['dltmddyd321', 'LeeSeungYongg'];
+export const ALLOWED_USERS = ['dltmddyd321', 'LeeSeungYong'];
 
 export function ghHeaders(token: string): HeadersInit {
   return {
