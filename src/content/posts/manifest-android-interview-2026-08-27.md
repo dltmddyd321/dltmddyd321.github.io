@@ -2,7 +2,7 @@
 title: "안드로이드 개발자라면, 안드로이드 기술 지식은 마스터해야지 (Manifest-Android-Interview) [2026-08-27]"
 description: "엄재웅님의 안드로이드 기술 면접 대비용 안드로이드 기술 지식이 담긴 서적을 읽으면서 배운 점과 중요한 부분들을 정리하는 첫 번째 게시글입니다."
 pubDate: 2026-08-27T13:35:21Z
-category: insight
+category: read
 tags: ["android", "cs", "kotiln"]
 ---
 
