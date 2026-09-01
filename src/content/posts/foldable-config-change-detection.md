@@ -33,7 +33,7 @@ override fun onConfigurationChanged(newConfig: Configuration) {
 
 여기서 한 가지 더 걸리는 부분이 있었습니다. 매니페스트에 선언한 `configChanges`가 `orientation|screenSize` 두 개뿐이었습니다.
 
-안드로이드는 `configChanges`에 선언 안 한 카테고리의 변화가 생기면 액티비티를 통째로 죽였다 다시 만듭니다. 문제는 폴더블의 접힘/펼침이 `orientation`, `screenSize` 말고도 `smallestScreenSize`, `screenLayout` 카테고리까지 같이 건드린다는 점입니다. 공식 문서도 폴더블을 다루려면 이 네 가지를 전부 선언하라고 안내합니다.
+안드로이드는 `configChanges`에 선언 안 한 카테고리의 변화가 생기면 액티비티를 통째로 죽였다 다시 만듭니다. 문제는 폴더블의 접힘/펼침이 `orientation`, `screenSize` 말고도 `smallestScreenSize`, `screenLayout` 카테고리까지 같이 건드린다는 점입니다. [공식 문서](https://developer.android.com/guide/topics/large-screens/configuration-and-continuity)도 폴더블을 다루려면 이 네 가지를 전부 선언하라고 안내합니다.
 
 ```xml
 <activity
@@ -47,11 +47,13 @@ override fun onConfigurationChanged(newConfig: Configuration) {
 
 `configChanges`를 다 선언하고 나면 이제 "접혔는지 펼쳤는지"를 우리 코드가 직접 판단해야 합니다. 그런데 1번에서 봤듯이 이걸 `Configuration.orientation` 비교로 유추하는 건 애초에 신뢰할 수 없는 신호였습니다. 방향은 그대로인데 크기만 바뀌는 게 폴더블의 기본 동작이니까요.
 
-안드로이드가 이 문제 때문에 따로 내놓은 게 Jetpack의 WindowManager 라이브러리입니다. `WindowInfoTracker`를 구독하면 `FoldingFeature`라는 형태로 접힘/펼침 상태(`FLAT`, `HALF_OPENED`)를 직접 받을 수 있습니다. 방향이나 크기로 추론하는 게 아니라, "지금 힌지가 접혀 있다/펼쳐져 있다"는 사실 자체를 이벤트로 주는 셈입니다.
+안드로이드가 이 문제 때문에 따로 내놓은 게 [Jetpack의 WindowManager 라이브러리](https://developer.android.com/develop/adaptive-apps/guides/foldables/make-your-app-fold-aware)입니다. `WindowInfoTracker`를 구독하면 `FoldingFeature`라는 형태로 접힘/펼침 상태(`FLAT`, `HALF_OPENED`)를 직접 받을 수 있습니다. 방향이나 크기로 추론하는 게 아니라, "지금 힌지가 접혀 있다/펼쳐져 있다"는 사실 자체를 이벤트로 주는 셈입니다.
 
 ```gradle
 implementation 'androidx.window:window:1.5.1'
 ```
+
+([현재 안정 버전 확인은 여기서](https://developer.android.com/jetpack/androidx/releases/window))
 
 ```kotlin
 lifecycleScope.launch {
