@@ -1,5 +1,5 @@
 ---
-title: "갤럭시 폴드를 펼치면 배경 이미지가 눌리는 이유"
+title: "갤럭시 폴드를 펼쳐도 구현한 구성 변경에 따른 UI 갱신이 발생하지 않던 문제"
 description: "폴더블 기기에서 화면 구성이 바뀌었는데도 회전 감지 로직이 반응하지 않아 생긴 버그를, configChanges 보강과 WindowInfoTracker 도입으로 잡은 과정을 정리합니다."
 pubDate: 2026-09-01T07:50:20Z
 category: dev-log
