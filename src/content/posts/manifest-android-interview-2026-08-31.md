@@ -4,6 +4,7 @@ description: "안드로이드 기술 면접 대비 읽으면서 개인적으로 
 pubDate: 2026-08-31T13:30:28Z
 category: read
 tags: ["android"]
+aiPreview: "액티비티와 프래그먼트의 생명주기를 나란히 놓고, 프래그먼트에서 뷰 수명이 인스턴스 수명보다 짧다는 점을 짚습니다. onDestroyView에서 뷰 참조를 놓아주지 않으면 누수로 이어지고, 그래서 관찰에는 viewLifecycleOwner를 써야 합니다. FragmentManager와 ChildFragmentManager의 구분, 서비스의 종류, 구성 변경 처리 방법까지 이어집니다."
 ---
 
 ### Activity의 LifeCycle이란?

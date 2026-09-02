@@ -3,7 +3,8 @@ title: "안드로이드 개발자라면, 안드로이드 기술 지식은 마스
 description: "엄재웅님의 안드로이드 기술 면접 대비용 안드로이드 기술 지식이 담긴 서적을 읽으면서 배운 점과 중요한 부분들을 정리하는 첫 번째 게시글입니다."
 pubDate: 2026-08-27T13:35:21Z
 category: read
-tags: ["android", "cs", "kotiln"]
+tags: ["android", "cs", "kotlin"]
+aiPreview: "안드로이드 OS 구조부터 Intent, Context, Application 클래스, 액티비티 생명주기까지 면접에서 자주 다뤄지는 기본기를 훑습니다. 명시적·암시적 Intent와 PendingIntent의 쓰임을 나누고, Serializable이 리플렉션 때문에 느린 반면 Parcelable은 직렬화 코드를 직접 작성해 빠르다는 차이를 짚습니다. 화면을 오갈 때 두 액티비티의 콜백이 어떤 순서로 교차하는지도 정리했습니다."
 ---
 
 ![스크린샷 2026-08-27 오후 9.05.04.png](/uploads/1787833078834------------2026-08-27------9.05.04.png)
