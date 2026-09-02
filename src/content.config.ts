@@ -10,7 +10,12 @@ const posts = defineCollection({
     pubDate: z.coerce.date(),
     // Derived from CATEGORIES so adding one there is the only edit needed.
     category: z.enum(CATEGORY_KEYS as [CategoryKey, ...CategoryKey[]]),
-    tags: z.array(z.string()).default([]),
+    // Tags are identifiers, so their case must not create separate groups:
+    // `iOS` and `ios` both become the canonical `ios` tag.
+    tags: z
+      .array(z.string().trim().toLowerCase())
+      .default([])
+      .transform((tags) => [...new Set(tags)]),
     draft: z.boolean().default(false),
     /**
      * Short teaser Claude writes, rendered as a distinct "AI Preview" banner

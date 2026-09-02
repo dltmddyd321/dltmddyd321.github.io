@@ -712,8 +712,9 @@ const REPO = 'dltmddyd321.github.io';
 
     const tags = tagsInput.value
       .split(',')
-      .map((t) => t.trim())
-      .filter(Boolean);
+      .map((t) => t.trim().toLowerCase())
+      .filter(Boolean)
+      .filter((tag, index, all) => all.indexOf(tag) === index);
 
     // Keep the loaded post's exact pubDate when its date wasn't touched, so
     // editing doesn't silently move the post to the top of the feed.
