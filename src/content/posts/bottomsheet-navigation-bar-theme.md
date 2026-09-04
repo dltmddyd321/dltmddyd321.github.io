@@ -120,6 +120,398 @@ fun onAttributeCacheLoaded(attr: Attr?) {
 앱이 그 영역을 직접 칠하는지와 무관하게 얹히기 때문에, 스트립 뷰가 정확한 위치와 크기와 색으로 멀쩡히 있어도 그 위를 덮고 있었던 거죠.
 앞서 무시되는 색 대입이 통한 것도, 그 setter가 내부적으로 앱이 이 영역을 직접 관리한다는 상태를 함께 세우면서 스크림을 비활성화했기 때문이었습니다.
 
+<figure class="nbs-embed">
+  <div class="nbs-board">
+    <section class="nbs-panel" aria-labelledby="nbs-stack-title">
+      <div class="nbs-panel-head">
+        <h4 class="nbs-panel-title" id="nbs-stack-title">창의 레이어 구조</h4>
+        <span class="nbs-panel-sub">bottom → top</span>
+      </div>
+      <div class="nbs-stack" id="nbsStack">
+        <div class="nbs-connector" aria-hidden="true"></div>
+        <div class="nbs-row">
+          <div class="nbs-plate nbs-plate-window" data-tag="L0"></div>
+          <div class="nbs-info">
+            <p class="nbs-name">다이얼로그 decorView</p>
+            <p class="nbs-meta">콘텐츠는 투명 — 뒤의 딤(dim)이 비쳐 보이는 자리</p>
+          </div>
+        </div>
+        <div class="nbs-row">
+          <div class="nbs-plate nbs-plate-strip" data-tag="L1"></div>
+          <div class="nbs-info">
+            <p class="nbs-name">우리가 붙인 스트립 뷰</p>
+            <p class="nbs-meta"><span class="nbs-dot"></span>fill: <code>#1B1B19</code> · 위치·크기 정상 확인됨</p>
+          </div>
+        </div>
+        <div class="nbs-row nbs-row-scrim">
+          <div class="nbs-plate nbs-plate-scrim" data-tag="L2"></div>
+          <div class="nbs-info">
+            <p class="nbs-name">시스템 대비 스크림</p>
+            <p class="nbs-meta">앱이 그 영역을 칠하는지와 무관하게 항상 얹힘</p>
+          </div>
+        </div>
+      </div>
+      <div class="nbs-toggle-row">
+        <span class="nbs-toggle-label"><span class="nbs-prop">isNavigationBarContrastEnforced</span> = <span id="nbsPropVal">true</span></span>
+        <input type="checkbox" class="nbs-switch" id="nbsToggle" checked role="switch" aria-checked="true" aria-label="isNavigationBarContrastEnforced 값 전환">
+      </div>
+    </section>
+    <section class="nbs-panel" aria-labelledby="nbs-result-title">
+      <div class="nbs-panel-head">
+        <h4 class="nbs-panel-title" id="nbs-result-title">합성 결과</h4>
+        <span class="nbs-panel-sub">실측값</span>
+      </div>
+      <div class="nbs-result">
+        <div class="nbs-device" aria-hidden="true">
+          <div class="nbs-device-screen"></div>
+          <div class="nbs-device-sheet"></div>
+          <div class="nbs-device-navbar" id="nbsNavbar"><span></span><span></span><span></span></div>
+        </div>
+        <div class="nbs-readout">
+          <div class="nbs-cell" id="nbsCellColor">
+            <span class="nbs-k">화면에 보이는 색</span>
+            <span class="nbs-v" id="nbsColorVal">#D1D1D1</span>
+          </div>
+          <div class="nbs-cell">
+            <span class="nbs-k">우리가 칠한 색</span>
+            <span class="nbs-v">#1B1B19</span>
+          </div>
+        </div>
+        <p class="nbs-verdict" id="nbsVerdict">스크림이 화면 픽셀을 <b>#D1D1D1</b>로 덮고 있다 — 우리 색과 무관</p>
+      </div>
+    </section>
+  </div>
+  <figcaption class="nbs-caption">스위치를 눌러 <code>isNavigationBarContrastEnforced</code>를 켜고 꺼보세요 · 다이어그램: Claude</figcaption>
+</figure>
+<style>
+  .nbs-embed {
+    --nbs-bg: var(--surface, #131410);
+    --nbs-surface-2: var(--surface-2, #1a1c16);
+    --nbs-border: var(--border, #2a2c24);
+    --nbs-text: var(--text, #ece9df);
+    --nbs-text-muted: var(--text-muted, #8f9285);
+    --nbs-accent: var(--accent, #e0a458);
+    --nbs-app-swatch: #1b1b19;
+    --nbs-scrim-fill: rgba(255,255,255,0.6);
+    --nbs-scrim-line: rgba(255,255,255,0.82);
+    --nbs-good: #7fd6a3;
+    --nbs-bad: #ef8b74;
+    --nbs-font-sans: var(--font-sans, -apple-system, sans-serif);
+    --nbs-font-mono: var(--font-mono, ui-monospace, monospace);
+    margin: 2em 0;
+    font-family: var(--nbs-font-sans);
+    color: var(--nbs-text);
+  }
+  .nbs-board {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 14px;
+  }
+  @media (max-width: 640px) {
+    .nbs-board { grid-template-columns: 1fr; }
+  }
+  .nbs-panel {
+    background: var(--nbs-bg);
+    border: 1px solid var(--nbs-border);
+    border-radius: 12px;
+    padding: 18px 18px 16px;
+  }
+  .nbs-panel-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .nbs-panel-title {
+    font-family: var(--nbs-font-sans);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--nbs-text);
+    margin: 0;
+  }
+  .nbs-panel-sub {
+    font-family: var(--nbs-font-mono);
+    font-size: 11px;
+    color: var(--nbs-text-muted);
+  }
+  .nbs-stack {
+    position: relative;
+    padding: 4px 4px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .nbs-row {
+    display: grid;
+    grid-template-columns: 104px 1fr;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+  }
+  .nbs-plate {
+    height: 50px;
+    border-radius: 9px;
+    border: 1px solid var(--nbs-border);
+    position: relative;
+    transition: transform 420ms cubic-bezier(.2,.7,.3,1), opacity 420ms ease, box-shadow 420ms ease;
+    box-shadow: 0 6px 14px -8px rgba(0,0,0,0.55);
+  }
+  .nbs-plate::after {
+    content: attr(data-tag);
+    position: absolute;
+    top: 5px;
+    left: 8px;
+    font-family: var(--nbs-font-mono);
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5);
+  }
+  .nbs-plate-window {
+    background: repeating-linear-gradient(135deg, var(--nbs-surface-2) 0 8px, var(--nbs-border) 8px 16px);
+  }
+  .nbs-plate-strip {
+    background: var(--nbs-app-swatch);
+    border-color: #35352f;
+  }
+  .nbs-plate-scrim {
+    background: var(--nbs-scrim-fill);
+    border: 1px dashed var(--nbs-scrim-line);
+  }
+  .nbs-info { min-width: 0; }
+  .nbs-name {
+    font-family: var(--nbs-font-sans);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--nbs-text);
+    margin: 0 0 4px;
+  }
+  .nbs-meta {
+    font-family: var(--nbs-font-mono);
+    font-size: 11px;
+    color: var(--nbs-text-muted);
+    line-height: 1.55;
+  }
+  .nbs-meta code {
+    font-family: inherit;
+    background: none;
+    padding: 0;
+    color: var(--nbs-text);
+  }
+  .nbs-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    margin-right: 5px;
+    vertical-align: -1px;
+    background: var(--nbs-app-swatch);
+    border: 1px solid var(--nbs-border);
+  }
+  .nbs-stack.nbs-scrim-off .nbs-plate-scrim {
+    transform: translate(26px, -30px) scale(0.92);
+    opacity: 0;
+    box-shadow: none;
+  }
+  .nbs-stack.nbs-scrim-off .nbs-row-scrim .nbs-info {
+    opacity: 0.45;
+  }
+  .nbs-connector {
+    position: absolute;
+    left: 104px;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--nbs-border) 0 6px, transparent 6px 10px);
+    background-size: 10px 1px;
+    z-index: -1;
+  }
+  .nbs-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 4px;
+    padding: 10px 12px;
+    background: var(--nbs-surface-2);
+    border: 1px solid var(--nbs-border);
+    border-radius: 10px;
+  }
+  .nbs-toggle-label {
+    font-family: var(--nbs-font-mono);
+    font-size: 11px;
+    color: var(--nbs-text);
+  }
+  .nbs-prop { color: var(--nbs-accent); }
+  .nbs-switch {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 42px;
+    height: 24px;
+    border-radius: 999px;
+    background: var(--nbs-border);
+    border: 1px solid var(--nbs-border);
+    position: relative;
+    cursor: pointer;
+    flex: none;
+    transition: background 200ms ease;
+  }
+  .nbs-switch::before {
+    content: "";
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--nbs-text);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    transition: transform 220ms cubic-bezier(.2,.7,.3,1);
+  }
+  .nbs-switch:checked {
+    background: var(--nbs-accent);
+    border-color: var(--nbs-accent);
+  }
+  .nbs-switch:checked::before {
+    transform: translateX(18px);
+    background: #241705;
+  }
+  .nbs-switch:focus-visible {
+    outline: 2px solid var(--nbs-accent);
+    outline-offset: 2px;
+  }
+  .nbs-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .nbs-device {
+    width: 144px;
+    height: 272px;
+    border-radius: 26px;
+    border: 3px solid var(--nbs-border);
+    background: var(--nbs-surface-2);
+    position: relative;
+    overflow: hidden;
+  }
+  .nbs-device-screen {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--nbs-surface-2) 0%, var(--nbs-app-swatch) 62%);
+  }
+  .nbs-device-sheet {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    top: 42%;
+    background: var(--nbs-app-swatch);
+    border-radius: 14px 14px 0 0;
+    box-shadow: 0 -10px 26px -14px rgba(0,0,0,0.7);
+  }
+  .nbs-device-sheet::before {
+    content: "";
+    position: absolute;
+    top: 9px; left: 50%;
+    width: 30px; height: 4px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.16);
+    transform: translateX(-50%);
+  }
+  .nbs-device-navbar {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 26px;
+    background: var(--nbs-result-color, var(--nbs-app-swatch));
+    transition: background 420ms ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+  }
+  .nbs-device-navbar span {
+    width: 7px; height: 7px;
+    border-radius: 2px;
+    background: rgba(0,0,0,0.35);
+  }
+  .nbs-readout {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .nbs-cell {
+    border: 1px solid var(--nbs-border);
+    background: var(--nbs-surface-2);
+    border-radius: 9px;
+    padding: 9px 10px;
+    text-align: center;
+  }
+  .nbs-k {
+    font-family: var(--nbs-font-mono);
+    font-size: 9.5px;
+    color: var(--nbs-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 5px;
+  }
+  .nbs-v {
+    font-family: var(--nbs-font-mono);
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+    color: var(--nbs-text);
+  }
+  .nbs-cell.nbs-bad .nbs-v { color: var(--nbs-bad); }
+  .nbs-cell.nbs-good .nbs-v { color: var(--nbs-good); }
+  .nbs-verdict {
+    font-family: var(--nbs-font-mono);
+    font-size: 11.5px;
+    color: var(--nbs-text-muted);
+    text-align: center;
+    min-height: 1.6em;
+    margin: 0;
+  }
+  .nbs-verdict b { color: var(--nbs-text); font-weight: 600; }
+  .nbs-caption {
+    margin-top: 10px;
+    font-family: var(--nbs-font-mono);
+    font-size: 11px;
+    color: var(--nbs-text-muted);
+    text-align: center;
+  }
+  .nbs-caption code {
+    font-family: inherit;
+    color: var(--nbs-text);
+  }
+</style>
+<script>
+(function () {
+  var toggle = document.getElementById('nbsToggle');
+  var stack = document.getElementById('nbsStack');
+  var propVal = document.getElementById('nbsPropVal');
+  var navbar = document.getElementById('nbsNavbar');
+  var colorVal = document.getElementById('nbsColorVal');
+  var cellColor = document.getElementById('nbsCellColor');
+  var verdict = document.getElementById('nbsVerdict');
+  if (!toggle) return;
+  var COVERED = '#D1D1D1';
+  var CLEAR = '#1B1B19';
+  function render() {
+    var enforced = toggle.checked;
+    propVal.textContent = enforced ? 'true' : 'false';
+    stack.classList.toggle('nbs-scrim-off', !enforced);
+    toggle.setAttribute('aria-checked', String(enforced));
+    var shown = enforced ? COVERED : CLEAR;
+    navbar.style.setProperty('--nbs-result-color', shown);
+    colorVal.textContent = shown;
+    cellColor.classList.toggle('nbs-bad', enforced);
+    cellColor.classList.toggle('nbs-good', !enforced);
+    verdict.innerHTML = enforced
+      ? '스크림이 화면 픽셀을 <b>#D1D1D1</b>로 덮고 있다 — 우리 색과 무관'
+      : '스크림을 끄니 화면 픽셀이 <b>#1B1B19</b> — 우리가 칠한 색과 일치';
+  }
+  toggle.addEventListener('change', render);
+  render();
+})();
+</script>
+
 ```
 fun applyDialogSystemBarTheme(window: Window) {
     insetsController(window).isAppearanceLightNavigationBars = !isDarkTheme
