@@ -49,6 +49,14 @@ const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
   {!compact && (
     <div class="note-meta mono">
       <a class="stamp" href={`/notes/${id}`}>{stamp}</a>
+      <button
+        type="button"
+        class="note-share"
+        data-share-title={`메모 · ${stamp}`}
+        data-share-path={`/notes/${id}`}
+      >
+        공유 ↗
+      </button>
       {sourcePath && (
         <button type="button" class="note-delete" data-path={sourcePath} hidden>
           🗑 삭제
@@ -223,6 +231,20 @@ const stamp = pubDate.toISOString().slice(0, 16).replace('T', ' ');
   .stamp:hover {
     color: var(--accent);
     text-decoration: none;
+  }
+
+  .note-share {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    cursor: pointer;
+  }
+
+  .note-share:hover {
+    color: var(--accent);
   }
 
   /* Pushed to the trailing edge so it never sits between the timestamp and

@@ -54,10 +54,12 @@ const rendered = await Promise.all(
 
 <script>
   import { initNoteDelete } from '../../lib/noteDelete';
+  import { initNoteShare } from '../../lib/noteShare';
 
   // Drop the note from the page immediately — the rebuild takes a minute, and
   // leaving it on screen reads as the delete having failed.
   initNoteDelete((button) => button.closest('.note')?.remove());
+  initNoteShare();
 </script>
 
 <style>

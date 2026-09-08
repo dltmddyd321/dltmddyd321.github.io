@@ -43,11 +43,13 @@ const searchTitle = `메모 · ${stamp}`;
 
 <script>
   import { initNoteDelete } from '../../lib/noteDelete';
+  import { initNoteShare } from '../../lib/noteShare';
 
   // The note being deleted is the whole page — send the reader back to the list.
   initNoteDelete(() => {
     location.href = '/notes';
   });
+  initNoteShare();
 </script>
 
 <style>
