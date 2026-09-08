@@ -1,5 +1,5 @@
 ---
-title: "에이전트가 소프트웨어가 될 때 — Agentic Software 논문"
+title: "에이전트가 소프트웨어가 될 때 — Agentic Software"
 description: "AI 에이전트가 소프트웨어의 정의 자체를 바꾼다는 주장과, 그 주장을 스스로 깎아내리는 벤치마크 숫자를 함께 담은 논문을 읽고 정리합니다."
 pubDate: 2026-09-08T04:00:00Z
 category: read
