@@ -1,5 +1,5 @@
 ---
-title: "AI를 잘 쓰고 있다는 착각, 그리고 Slop 피하기 — GDG Korea Android"
+title: "AI를 잘 쓰고 있다는 착각 — GDG Korea Android 퇴근 후 Meet Up"
 description: "GDG Korea Android에서 있었던 두 발표를 정리합니다. Daniele Bonaldo는 AI 코딩이 Slop이 되지 않게 만드는 구조를, 하동현님은 AI를 잘 쓰고 있다는 착각을 어떻게 검증하는지를 다룹니다."
 pubDate: 2026-09-10T05:00:00Z
 category: insight
