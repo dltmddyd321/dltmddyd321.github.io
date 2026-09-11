@@ -1,5 +1,5 @@
 ---
-title: "EditText 선택 영역 색을 View와 Compose 양쪽에 입히기"
+title: "EditText 선택 영역 색상 변경 처리"
 description: "텍스트 드래그 시 보이는 배경·핸들 색을 앱 테마 컬러로 바꾸는 작업을 View 시스템과 Compose 양쪽에서 진행하며 겪은 API 차이와 커버리지 문제를 기록합니다."
 pubDate: 2026-09-11T13:00:00Z
 category: dev-log
