@@ -7,7 +7,7 @@ tags: ["career", "engineering-culture", "leadership"]
 aiPreview: Addy Osmani가 구글에서 14년간 일하며 얻은 교훈 21가지를 정리한 글입니다. 유저 문제에 대한 집착, 완벽보다 출시, 코드보다 사람의 가시성, 추상화가 미루는 복잡성, 지표가 목표가 되는 순간의 함정, 시간과 복리 같은 주제를 다룹니다.
 ---
 
-Addy Osmani(전 구글 크롬 엔지니어링 리더)의 [21 Lessons from 14 Years at Google](https://addyo.substack.com/p/21-lessons-from-14-years-at-google)을 우리말로 정리해둡니다. 원문은 짧은 문장 하나에 설명 한두 줄을 붙인 구성인데, 그 형식 그대로 옮겼습니다.
+Addy Osmani(전 구글 크롬 엔지니어링 리더)의 [21 Lessons from 14 Years at Google](https://addyo.substack.com/p/21-lessons-from-14-years-at-google).
 
 1. **최고의 엔지니어는 유저 문제에 집착한다.** 기술을 억지로 문제에 끼워 맞추는 게 아니라 유저가 겪는 어려움을 깊이 이해하는 데서 해법이 자연스럽게 나온다.
 
@@ -50,4 +50,3 @@ Addy Osmani(전 구글 크롬 엔지니어링 리더)의 [21 Lessons from 14 Yea
 20. **결국 시간이 돈보다 가치 있어지는 시점이 온다 — 그에 맞게 행동하라.** 커리어가 길어질수록 시간을 돈과 맞바꾸던 계산법이 시간 자체를 대체할 수 없는 것으로 보는 쪽으로 바뀐다.
 
 21. **지름길은 없지만, 복리는 있다.** 전문성은 수년간 의도적으로 훈련해야 쌓인다. 글쓰기와 재사용 가능한 도구, 기록해둔 경험으로 복리처럼 배우는 쪽이 한 방의 대박을 노리는 것보다 커리어 성과가 훨씬 크다.
-
