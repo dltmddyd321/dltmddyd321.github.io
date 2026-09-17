@@ -22,17 +22,17 @@ Claude Code는 저장소 루트의 CLAUDE.md를 읽고 Codex는 같은 역할을
 ```mermaid
 gitGraph
     commit id: "공통 조상"
-    branch 브랜치-B
+    branch branch-b
     checkout main
     commit id: "이후 작업 계속"
-    branch 브랜치-A
-    checkout 브랜치-A
+    branch branch-a
+    checkout branch-a
     commit id: "AGENTS.md 동기화 관례 추가"
-    checkout 브랜치-B
+    checkout branch-b
     commit id: "이번 작업"
 ```
 
-브랜치-B는 그 관례가 생기기 전에 이미 갈라져 나간 상태였습니다. main에서 나중에 파생된 브랜치-A에만 그 커밋이 남았고, 브랜치-B는 main과도, 브랜치-A와도 합쳐진 적이 없어 그 존재 자체를 알 방법이 없었습니다.
+branch-b는 그 관례가 생기기 전에 이미 갈라져 나간 상태였습니다. main에서 나중에 파생된 branch-a에만 그 커밋이 남았고, branch-b는 main과도, branch-a와도 합쳐진 적이 없어 그 존재 자체를 알 방법이 없었습니다.
 
 같은 문제가 재사용 워크플로 정의(반복 작업을 고정된 절차로 적어둔 스킬 파일들)에서도 나타났습니다. 프로젝트 로컬 디렉토리에 커밋해둔 워크플로 몇 개가 다른 브랜치를 체크아웃하면 그냥 사라졌습니다. 브랜치를 옮길 때마다 있는지 없는지부터 확인하고 없으면 다시 만드는 일을 반복했습니다.
 
