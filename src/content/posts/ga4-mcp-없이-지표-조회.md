@@ -1,5 +1,5 @@
 ---
-title: "GA4를 MCP로 못 붙여서, 대신 스크립트로 만든 이야기"
+title: "Firebase Analytics 지표를 Claude와 함께 빠른 스크립트 구성 처리"
 description: "사이드 프로젝트 앱의 Firebase Analytics(GA4) 지표를 Claude에게 바로 물어보고 싶어서 MCP 연결을 시도했다가, 대신 Google Analytics Data API 스크립트를 직접 만들게 된 과정을 정리했습니다."
 pubDate: 2026-09-17T12:10:00Z
 category: ai-lab
