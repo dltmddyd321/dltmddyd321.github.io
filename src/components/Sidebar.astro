@@ -43,7 +43,6 @@ const recentNotes = await Promise.all(
     <p class="bio muted">
       경험하고, 만들고, 생각한 것을 공유합니다.
     </p>
-    <a class="profile-link mono" href="/about">Detail →</a>
   </section>
 
   {recentNotes.length > 0 && (
@@ -142,8 +141,7 @@ const recentNotes = await Promise.all(
     grid-template-columns: 64px 1fr;
     grid-template-areas:
       'avatar who'
-      'bio bio'
-      'link link';
+      'bio bio';
     gap: 12px;
     align-items: center;
   }
@@ -178,11 +176,6 @@ const recentNotes = await Promise.all(
     margin: 0;
     font-size: 0.82rem;
     line-height: 1.6;
-  }
-
-  .profile-link {
-    grid-area: link;
-    font-size: 0.78rem;
   }
 
   .block-title {
