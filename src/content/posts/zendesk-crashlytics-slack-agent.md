@@ -7,8 +7,6 @@ tags: ["claude-code", "slack", "zendesk", "firebase", "automation"]
 aiPreview: "고객 지원 티켓 링크가 올라올 때마다 사용자 ID를 복사해 크래시 리포팅 콘솔에서 검색하는 반복 업무를, Slack Link Unfurl 기능으로 자동화했습니다. 여기까지는 정규식과 REST API 호출뿐인 순수 자동화였는데, 한 단계 더 나아가 실제 크래시 데이터를 BigQuery로 읽고 티켓 문의 내용과 대조해 진단 문장을 만드는 에이전트로 확장했습니다. 그 과정에서 필요한 GCP/Slack 권한 조건들과, 판단이 필요한 지점과 필요 없는 지점을 어떻게 나눴는지를 정리했습니다."
 ---
 
-티켓 링크 하나로 크래시 원인까지 — 사내 Slack 에이전트 만들기
-
 사내에는 "이슈문의" 계열 채널이 몇 개 있다. 고객 지원 티켓 시스템(Zendesk)에서 티켓이 생기면, 담당자가 그 링크를 채널에 공유하면서 도움을 요청한다. 그런데 링크만 봐서는 뭐가 문제인지 알 수가 없다. 실제 원인을 보려면 그 사용자의 크래시 로그를 봐야 하는데, 절차가 매번 똑같다. 티켓을 열어서 사용자 식별자(User ID)를 확인하고 크래시 리포팅 콘솔(Firebase Crashlytics)로 가서 그 값을 검색한다. 별로 어려운 일은 아닌데, 하루에도 몇 번씩 반복하다 보면 그 자체가 업무 시간을 갉아먹는다.
 
 이 반복을 없애기로 했다. 처음엔 그냥 링크에 검색 결과를 붙여주는 봇으로 시작했고 나중엔 실제 크래시 데이터를 읽고 진단까지 써주는 에이전트로 넘어갔다. 그 과정을 정리한다.
@@ -49,37 +47,74 @@ aiPreview: "고객 지원 티켓 링크가 올라올 때마다 사용자 ID를 �
 
 ## 실제로 이렇게 뜬다
 
-채널에 티켓 링크를 붙이면 이런 식으로 흘러간다.
+채널에 티켓 링크를 붙이면 이런 식으로 흘러간다. (실제 화면이 아니라 가상 데이터로 만든 예시다.)
 
-```
-#이슈문의-android
-
-김민수  오후 2:14
-이거 고객 문의 좀 봐주세요
-https://support.example.com/agent/tickets/102384
-
-┌───────────────────────────────────────────┐
-│ Crashlytics 검색 · user id 88214             │
-│ 로그인 후 홈 화면 진입 시 앱이 자꾸 꺼져요        │
-│ console.firebase.google.com                 │
-└───────────────────────────────────────────┘
-
-  ↳ 1개의 답글  마지막 답장 1분 전
-
-크래시 분석봇  APP  오후 2:14
-이 user id의 최근 7일 크래시 3건을 확인했습니다.
-
-• NullPointerException — HomeActivity.onResume (2건, 6.3.15)
-• OutOfMemoryError — CalendarView.render (1건, 6.3.14)
-
-티켓 문의("홈 화면 진입 시 꺼짐")와 가장 관련 있어 보이는 건
-HomeActivity.onResume의 NPE입니다. 6.3.15 업데이트 이후 발생.
-
-⚠️ AI 추정입니다 — 정확한 원인은 Crashlytics 원본에서 직접 확인하세요.
-→ Firebase Console에서 보기
-```
-
-<!-- 스크린샷 위치 제안: 위 텍스트 목업 대신, 실제 Slack 채널에서 이 카드+답글이 뜬 화면을 캡처해서 넣으면 훨씬 생생하다. 회사 워크스페이스/채널명/실제 도메인이 찍히지 않게 크롭하거나 모자이크할 것. -->
+<figure style="margin: 32px 0;">
+<div style="max-width: 620px; margin: 0 auto; background: #FFFFFF; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 10px 24px rgba(0,0,0,0.12); overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1D1C1D;">
+  <div style="height: 44px; display: flex; align-items: center; gap: 8px; padding: 0 18px; border-bottom: 1px solid #E8E8E8;">
+    <span style="font-size: 16px; font-weight: 700; color: #616061;">#</span>
+    <span style="font-size: 14px; font-weight: 700; color: #1D1C1D;">이슈문의-android</span>
+  </div>
+  <div style="padding: 18px; display: flex; flex-direction: column; gap: 18px;">
+    <div style="display: flex; gap: 10px; align-items: flex-start;">
+      <div style="width: 32px; height: 32px; border-radius: 7px; background: #2EB67D; color: #FFFFFF; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;">민</div>
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
+        <div style="display: flex; align-items: baseline; gap: 8px;">
+          <span style="font-size: 14px; font-weight: 900;">김민수</span>
+          <span style="font-size: 11px; color: #616061;">오후 2:14</span>
+        </div>
+        <div style="font-size: 14px; line-height: 1.5;">이거 고객 문의 좀 봐주세요</div>
+        <a href="#" style="font-size: 14px; color: #1264A3; text-decoration: none; word-break: break-all;">https://support.example.com/agent/tickets/102384</a>
+        <div style="margin-top: 6px; max-width: 360px; border: 1px solid #E8E8E8; border-left: 4px solid #F5A623; border-radius: 4px; padding: 9px 11px; display: flex; flex-direction: column; gap: 4px;">
+          <span style="font-size: 14px; font-weight: 700; color: #1264A3;">Crashlytics 검색 · user id 88214</span>
+          <span style="font-size: 12px; color: #616061; line-height: 1.4;">로그인 후 홈 화면 진입 시 앱이 자꾸 꺼져요</span>
+          <div style="margin-top: 3px; display: flex; align-items: center; gap: 6px;">
+            <div style="width: 12px; height: 12px; border-radius: 3px; background: #FFA000; flex-shrink: 0;"></div>
+            <span style="font-size: 10px; letter-spacing: 0.3px; color: #868686;">CONSOLE.FIREBASE.GOOGLE.COM</span>
+          </div>
+        </div>
+        <div style="margin-top: 4px; display: flex; align-items: center; gap: 6px;">
+          <div style="width: 18px; height: 18px; border-radius: 5px; background: #4A154B; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+            <svg viewBox="0 0 24 24" width="10" height="10"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z" fill="#FFFFFF"/></svg>
+          </div>
+          <span style="font-size: 12px; font-weight: 700; color: #1264A3;">1개의 답글</span>
+          <span style="font-size: 11px; color: #616061;">마지막 답장 1분 전</span>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; gap: 10px; align-items: flex-start;">
+      <div style="width: 32px; height: 32px; border-radius: 7px; background: #4A154B; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z" fill="#FFFFFF"/></svg>
+      </div>
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 7px;">
+        <div style="display: flex; align-items: baseline; gap: 8px;">
+          <span style="font-size: 14px; font-weight: 900;">크래시 분석봇</span>
+          <span style="font-size: 9px; font-weight: 700; color: #616061; background: #F2F2F2; border-radius: 3px; padding: 1px 5px;">APP</span>
+          <span style="font-size: 11px; color: #616061;">오후 2:14</span>
+        </div>
+        <div style="font-size: 14px; line-height: 1.5;">이 user id의 최근 7일 크래시 3건을 확인했습니다.</div>
+        <ul style="margin: 0; padding-left: 16px; font-size: 13px; line-height: 1.6;">
+          <li>NullPointerException — HomeActivity.onResume (2건, 6.3.15)</li>
+          <li>OutOfMemoryError — CalendarView.render (1건, 6.3.14)</li>
+        </ul>
+        <div style="font-size: 14px; line-height: 1.5;">티켓 문의(&ldquo;홈 화면 진입 시 꺼짐&rdquo;)와 가장 관련 있어 보이는 건 HomeActivity.onResume의 NPE입니다. 6.3.15 업데이트 이후 발생.</div>
+        <div style="display: flex; gap: 7px; align-items: flex-start; background: #FFF8E6; border: 1px solid #F5D48A; border-radius: 6px; padding: 9px 11px;">
+          <svg viewBox="0 0 24 24" width="14" height="14" style="flex-shrink: 0; margin-top: 2px;">
+            <path d="M12 3 L22 20 L2 20 Z" fill="none" stroke="#B7791F" stroke-width="2" stroke-linejoin="round"/>
+            <line x1="12" y1="9" x2="12" y2="14" stroke="#B7791F" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="17" r="1" fill="#B7791F"/>
+          </svg>
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 12px; color: #7A5B12; line-height: 1.5;">AI 추정입니다 — 정확한 원인은 Crashlytics 원본에서 직접 확인하세요.</span>
+            <a href="#" style="font-size: 12px; font-weight: 700; color: #1264A3; text-decoration: underline;">Firebase Console에서 보기 →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<figcaption style="text-align: center; font-size: 13px; color: #888; margin-top: 10px;">실제 화면이 아닌 가상 데이터로 구성한 예시입니다.</figcaption>
+</figure>
 
 첫 카드는 1단계(unfurl)가 만들고, 그 아래 봇 답글은 2단계(에이전트)가 만든다. 같은 파이프라인 안에 결정론적인 부분과 AI가 판단하는 부분이 섞여 있는 셈이다.
 
