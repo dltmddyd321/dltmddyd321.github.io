@@ -1,5 +1,5 @@
 ---
-title: "AI가 쓴 한글, 검사기에 넣어봤다"
+title: "AI가 쓴 한글, 조금 더 사람처럼"
 description: "AI가 쓴 한글의 번역투와 기계적인 문체를 잡아내는 humanize-korean 스킬을 설치하고, 이 블로그의 지난 글을 그 검사기에 그대로 넣어본 기록입니다."
 pubDate: 2026-08-18T12:53:46Z
 category: ai-lab
