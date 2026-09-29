@@ -146,4 +146,3 @@ showOverlayIfNeeded()
 - 화면이 비어 보인다고 뷰가 없는 건 아닙니다. `dumpsys window windows`로 창이 몇 개인지 먼저 확인하면 방향이 빨리 잡힙니다.
 - `uiautomator dump`는 맨 위 창만 보여주고 `dumpsys activity top`은 액티비티의 뷰 계층을 보여줍니다. 두 결과가 어긋나면 그 자체가 단서입니다.
 - `recreate()`는 표시 중이던 DialogFragment도 함께 복원합니다. 재생성을 트리거하는 코드와 다이얼로그를 띄우는 코드가 서로 모르는 사이라면 충돌 지점이 생깁니다.
-- 재현이 안 되는 제보는 계정별 서버 설정 차이를 의심해볼 만합니다.
