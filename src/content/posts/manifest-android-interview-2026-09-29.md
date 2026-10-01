@@ -4,6 +4,7 @@ description: "기술 지식 - Compose에 관련된 기본 기술 지식에 대�
 pubDate: 2026-09-29T13:22:00Z
 category: read
 tags: []
+aiPreview: "Compose가 Compiler, Runtime, UI 세 계층으로 나뉘고, 화면을 그릴 때 Composition, Layout, Drawing 순서를 거친다는 기본 구조를 정리했습니다. Composition 단계에서 Slot Table에 컴포저블 관계를 기록하는 방식, 매개변수나 관찰 중인 상태가 바뀔 때 recomposition이 일어나는 조건, 중앙 상태 관리자인 Composer의 역할, 컴파일러가 컴포저블을 Restartable과 Skippable 등으로 분류하는 이유까지 읽은 내용을 담았습니다."
 ---
 
 ## Compose Fundamentals
