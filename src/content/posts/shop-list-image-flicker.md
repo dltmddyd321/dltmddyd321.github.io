@@ -257,12 +257,47 @@ override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 움직이는 이미지는 받는 것과 푸는 것을 한 번에 IO 스레드에서 끝냅니다.
 메인 스레드로 돌아왔을 때는 그리기만 하면 됩니다.
 
+그러면 IO 블록이 돌려주는 결과가 세 갈래로 나뉩니다.
+움직이는 이미지면 디코딩된 Drawable을, 일반 이미지면 캐시 키에 쓸 원본 파일을 돌려줘야 하고 실패면 돌려줄 게 없습니다.
+갈래마다 들고 있는 값의 타입이 다릅니다.
+
+두 값을 `Pair`로 묶어 돌려주는 방법도 있습니다.
+
 ```kotlin
-val image = withContext(Dispatchers.IO) {
-    val file = download(url)
-    if (file.isAnimated()) decodeAnimated(file) else file
+val (file, drawable) = withContext(Dispatchers.IO) {
+    val file = downloadOrNull(url)
+    val drawable = if (file?.isAnimated() == true) decodeAnimated(file) else null
+    Pair(file, drawable)
 }
 ```
+
+동작은 하지만 "파일은 없는데 Drawable은 있다" 같은 실제로는 일어날 수 없는 조합도 타입상으로는 만들 수 있습니다.
+받는 쪽은 매번 두 값을 보고 지금이 어떤 경우인지 해석해야 합니다.
+
+결과의 종류가 정해져 있으니 sealed interface로 묶었습니다.
+
+```kotlin
+sealed interface LoadedImage {
+    class Animated(val drawable: Drawable) : LoadedImage
+    class Static(val file: File) : LoadedImage
+}
+
+val image: LoadedImage? = withContext(Dispatchers.IO) {
+    val file = downloadOrNull(url) ?: return@withContext null
+    if (file.isAnimated()) LoadedImage.Animated(decodeAnimated(file))
+    else LoadedImage.Static(file)
+}
+
+when (image) {
+    is LoadedImage.Animated -> view.playAnimated(image.drawable)
+    is LoadedImage.Static -> view.loadConverted(url, image.file.lastModified())
+    null -> view.showFallback()
+}
+```
+
+각 갈래는 자기에게 필요한 값만 들고 있습니다.
+`when`에 `else`를 두지 않아도 컴파일러가 모든 경우를 다뤘는지 확인해 주고 나중에 다른 형식이 생겨 갈래가 늘면 처리하지 않은 곳에서 컴파일 오류가 납니다.
+무거운 일은 IO에서 끝내고 메인 스레드는 붙이기만 한다는 구분도 코드 모양에 그대로 드러납니다.
 
 변환 이미지 요청에서는 디스크 캐시를 끄던 옵션을 뺐습니다.
 대신 원본 파일의 수정 시각을 캐시 키에 같이 넣었습니다.
