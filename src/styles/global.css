@@ -342,10 +342,31 @@ hr {
   margin: 32px 0;
 }
 
-img {
+img,
+video {
   max-width: 100%;
   height: auto;
   border-radius: 8px;
+}
+
+/* Phone screen recordings are tall; at full column width they push the text
+   several screens away, so cap them near a real phone width and center. */
+.phone-capture {
+  max-width: 300px;
+  margin: 24px auto;
+  text-align: center;
+}
+
+.phone-capture video {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--border);
+}
+
+.phone-capture figcaption {
+  margin-top: 8px;
+  font-size: 0.85em;
+  color: var(--text-muted);
 }
 
 /* Wide content can't be reflowed, so let it scroll inside its own box rather

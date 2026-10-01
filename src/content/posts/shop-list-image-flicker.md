@@ -41,6 +41,11 @@ Layout Inspector 이야기도 같은 맥락으로 들렸습니다.
 - 빠르게 내리다 보면 어떤 썸네일은 물음표 이미지로 뜬다
 - 구매 버튼 안의 코인 아이콘이 가끔 안 보인다
 
+<figure class="phone-capture">
+  <video src="/uploads/1790819366091-shop-list-before.mp4" autoplay muted loop playsinline></video>
+  <figcaption>고치기 전, 아이템 순위 목록을 끝까지 내려본 화면</figcaption>
+</figure>
+
 물음표가 뜬 아이템은 스크롤을 살짝 올렸다 내리면 그제야 제대로 나왔습니다.
 코인 아이콘도 항상 안 보이는 건 아니었고 볼 때마다 빠진 아이템이 달랐습니다.
 
@@ -271,6 +276,11 @@ imageLoader.load(convertedUrl(url))
 
 디스크 캐시를 끈 이유가 원본이 바뀌었을 때 옛 이미지가 남는 걸 막으려던 거라면, 수정 시각을 키에 넣는 것으로 같은 목적을 지킬 수 있습니다.
 
+<figure class="phone-capture">
+  <video src="/uploads/1790819366092-shop-list-after.mp4" autoplay muted loop playsinline></video>
+  <figcaption>고친 뒤, 같은 화면을 다시 내려본 화면</figcaption>
+</figure>
+
 고친 곳을 증상별로 묶으면 이렇습니다.
 
 - 물음표: 취소는 다시 던지고, 결과를 붙이기 전에 뷰가 아직 같은 URL을 보여주는지 확인
@@ -289,4 +299,4 @@ imageLoader.load(convertedUrl(url))
 
 웨비나에서 "빠르고 버벅이지 않는 스크롤"이라는 말은 당연하게 들렸습니다.
 막상 우리 화면을 끝까지 내려보니 그 당연한 게 여러 군데서 조금씩 새고 있었습니다.
-고친 버전으로 같은 화면을 실기기에서 다시 내려보는 중이고, 달라진 점은 확인되는 대로 덧붙이겠습니다.
+고친 버전으로 같은 화면을 실기기에서 다시 내려본 영상은 위에 고치기 전 영상과 함께 붙여 두었습니다.
