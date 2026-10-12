@@ -9,6 +9,10 @@ aiPreview: 논문은 에이전트가 소프트웨어를 만드는 도구가 아�
 
 Zhenfeng Cao의 [Agentic Software: How AI Agents Are Restructuring the Software Paradigm](https://arxiv.org/abs/2606.05608)을 읽었습니다. 제목만 보면 흔한 낙관론 같은데 후반부가 오히려 냉정해서 기록해둡니다. 개인적으로 에이전트 시대 속에서 개발자들이 꼭 한번 읽어볼 만하다고 생각합니다.
 
+논문 전체를 섹션별로 옮겨 정리한 한글 요약본도 올려둡니다. 원문이 길어서 먼저 훑어보고 싶을 때 쓰시면 됩니다.
+
+<a href="/downloads/agentic-software-summary-ko.md" download="agentic_software_summary_ko.md">📄 Agentic Software 한글 요약본 다운로드 (.md)</a>
+
 **AI 에이전트는 소프트웨어를 만드는 새 도구가 아니라, 소프트웨어의 정의를 바꾸는 개념이다.**
 
 ## 정적인 D, 실행 시점의 D
