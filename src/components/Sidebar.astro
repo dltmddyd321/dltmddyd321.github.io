@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import NoteBlock from './NoteBlock.astro';
+import { GOATCOUNTER_CODE } from '../lib/site';
 import tistory from '../data/tistory-archive.json';
 import keyflow from '../data/keyflow-archive.json';
 
@@ -98,6 +99,22 @@ const recentNotes = await Promise.all(
   </section>
 
 
+  {GOATCOUNTER_CODE !== 'CHANGE_ME' && (
+    <section class="block" id="visitors" data-code={GOATCOUNTER_CODE} hidden>
+      <h2 class="block-title mono">Visitors</h2>
+      <dl class="visitor-stats">
+        <div>
+          <dt class="muted">Today</dt>
+          <dd class="mono count-big" data-visitor="today">-</dd>
+        </div>
+        <div>
+          <dt class="muted">Total</dt>
+          <dd class="mono count-big" data-visitor="total">-</dd>
+        </div>
+      </dl>
+    </section>
+  )}
+
   <section class="block">
     <h2 class="block-title mono">Archive</h2>
     <a class="archive-link" href="/archives">
@@ -108,6 +125,29 @@ const recentNotes = await Promise.all(
 </aside>
 
 <script>
+  const visitors = document.getElementById('visitors');
+  const code = visitors?.dataset.code;
+
+  async function fetchCount(query: string): Promise<string> {
+    const response = await fetch(`https://${code}.goatcounter.com/counter/TOTAL.json${query}`);
+    if (!response.ok) throw new Error(`GoatCounter ${response.status}`);
+    const body: { count: string } = await response.json();
+    return body.count;
+  }
+
+  if (visitors && code) {
+    const today = new Date().toLocaleDateString('sv-SE');
+    Promise.all([fetchCount(`?start=${today}`), fetchCount('')])
+      .then(([todayCount, totalCount]) => {
+        visitors.querySelector('[data-visitor="today"]')!.textContent = todayCount;
+        visitors.querySelector('[data-visitor="total"]')!.textContent = totalCount;
+        visitors.hidden = false;
+      })
+      .catch(() => {
+        visitors.hidden = true;
+      });
+  }
+
   const button = document.getElementById('tag-more');
   const extras = Array.from(document.querySelectorAll<HTMLLIElement>('.sidebar .extra'));
 
@@ -253,6 +293,21 @@ const recentNotes = await Promise.all(
   .archive-link:hover {
     text-decoration: none;
     color: var(--accent);
+  }
+
+  .visitor-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 0;
+  }
+
+  .visitor-stats dt {
+    font-size: 0.72rem;
+  }
+
+  .visitor-stats dd {
+    margin: 2px 0 0;
   }
 
   .count-big {
