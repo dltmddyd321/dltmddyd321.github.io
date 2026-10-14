@@ -1,5 +1,5 @@
 ---
-title: "Composio로 메일·Jira·드라이브를 엮어 본 하루 — 아침 요약과 번역 시트 정리"
+title: "Composio — AI 에이전트가 Gmail·Jira·드라이브를 쓰게 해 주는 연결 레이어"
 description: "AI 에이전트에게 외부 앱 권한을 대신 쥐여 주는 Composio가 무엇인지 정리하고, 이걸로 실제로 만든 두 가지 자동화(아침 메일·Jira 요약, 번역 시트 → strings.xml 정리)의 구조와 시행착오를 적었습니다."
 pubDate: 2026-10-14T05:40:00Z
 category: ai-lab
@@ -62,6 +62,91 @@ composio execute GMAIL_FETCH_EMAILS -d '{ max_results: 5 }'
 - **결과가 크면 파일로 떨어집니다.** 메일 5통만 가져와도 19만 바이트가 넘었는데, 이때는 결과 대신 `storedInFile: true`와 파일 경로가 옵니다. 스크립트에서는 두 경우를 모두 처리해야 합니다.
 - **toolkit은 생각보다 잘게 나뉩니다.** Google Drive는 연결돼 있었지만 Google Sheets는 별도 toolkit이라 시트를 바로 읽을 수 없었습니다. 그래서 Drive의 "파일 내보내기" 도구로 시트를 xlsx로 받아서 직접 읽었습니다.
 - **권한 범위를 확인해야 합니다.** 로그인 직후 GitHub에서 "서드파티 앱에 repo, workflow 권한이 승인됐다"는 보안 알림이 왔습니다. Composio에 GitHub 계정으로 로그인하면서 붙은 권한인데, 메일 요약에는 필요 없는 범위입니다. 연결할 때마다 어떤 권한이 붙는지 한 번씩 봐 두는 게 좋습니다.
+
+## 전체 구조
+
+본론에 들어가기 전에 전체 그림부터 보겠습니다. 스크립트는 두 개이고, 둘 다 외부 앱에 직접 접근하지 않습니다. Gmail, Jira, Google Drive 세 서비스와의 연결은 모두 Composio 하나를 거칩니다. 요약을 쓰는 Claude는 Composio와 아예 연결되지 않습니다.
+
+<figure style="margin: 32px 0; overflow-x: auto;">
+<svg viewBox="0 0 720 470" role="img" aria-labelledby="composio-arch-title composio-arch-desc" style="display: block; width: 100%; min-width: 560px; height: auto; font-family: var(--font-sans);">
+  <title id="composio-arch-title">Composio를 중심으로 한 자동화 구조</title>
+  <desc id="composio-arch-desc">아침 요약 스크립트와 번역 시트 스크립트가 Composio를 통해 Gmail, Jira, Google Drive를 호출한다. 요약용 Claude는 도구 없이 아침 요약 스크립트와만 연결된다.</desc>
+  <defs>
+    <marker id="ca-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" style="fill: var(--text-muted);"/>
+    </marker>
+    <marker id="ca-arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" style="fill: var(--accent);"/>
+    </marker>
+  </defs>
+  <!-- column labels -->
+  <text x="120" y="22" text-anchor="middle" style="fill: var(--text-muted); font-size: 12px; letter-spacing: 0.08em;">내 맥 (스크립트)</text>
+  <text x="360" y="22" text-anchor="middle" style="fill: var(--text-muted); font-size: 12px; letter-spacing: 0.08em;">연결 레이어</text>
+  <text x="600" y="22" text-anchor="middle" style="fill: var(--text-muted); font-size: 12px; letter-spacing: 0.08em;">외부 서비스</text>
+  <!-- script A: morning digest -->
+  <text x="30" y="52" style="fill: var(--text-muted); font-size: 11px;">launchd · 매일 08:30</text>
+  <rect x="20" y="60" width="200" height="84" rx="10" style="fill: var(--surface-2); stroke: var(--border); stroke-width: 1.5;"/>
+  <text x="120" y="92" text-anchor="middle" style="fill: var(--text); font-size: 15px; font-weight: 700;">아침 메일·Jira 요약</text>
+  <text x="120" y="114" text-anchor="middle" style="fill: var(--text-muted); font-size: 12px;">메일 가져오기 → 이슈 조회</text>
+  <text x="120" y="131" text-anchor="middle" style="fill: var(--text-muted); font-size: 12px;">→ 요약 → 나에게 발송</text>
+  <!-- Claude (no tools) -->
+  <rect x="40" y="182" width="160" height="58" rx="10" style="fill: none; stroke: var(--text-muted); stroke-width: 1.2; stroke-dasharray: 5 4;"/>
+  <text x="120" y="206" text-anchor="middle" style="fill: var(--text); font-size: 14px; font-weight: 700;">Claude (claude -p)</text>
+  <text x="120" y="226" text-anchor="middle" style="fill: var(--text-muted); font-size: 12px;">도구 없음 · 글만 씀</text>
+  <line x1="120" y1="146" x2="120" y2="178" style="stroke: var(--text-muted); stroke-width: 1.2; stroke-dasharray: 5 4;" marker-end="url(#ca-arrow)" marker-start="url(#ca-arrow)"/>
+  <text x="128" y="166" style="fill: var(--text-muted); font-size: 11px;">메일 목록 ↔ 요약문</text>
+  <!-- script B: translation sheet -->
+  <text x="30" y="290" style="fill: var(--text-muted); font-size: 11px;">요청할 때 실행</text>
+  <rect x="20" y="298" width="200" height="84" rx="10" style="fill: var(--surface-2); stroke: var(--border); stroke-width: 1.5;"/>
+  <text x="120" y="330" text-anchor="middle" style="fill: var(--text); font-size: 15px; font-weight: 700;">번역 시트 정리</text>
+  <text x="120" y="352" text-anchor="middle" style="fill: var(--text-muted); font-size: 12px;">시트 내려받기 → 변경 행 비교</text>
+  <text x="120" y="369" text-anchor="middle" style="fill: var(--text-muted); font-size: 12px;">→ strings.xml 스니펫 발송</text>
+  <!-- Composio hub -->
+  <rect x="270" y="90" width="180" height="260" rx="14" style="fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2;"/>
+  <text x="360" y="130" text-anchor="middle" style="fill: var(--accent); font-size: 20px; font-weight: 800;">Composio</text>
+  <line x1="292" y1="146" x2="428" y2="146" style="stroke: var(--accent-line); stroke-width: 1;"/>
+  <text x="360" y="174" text-anchor="middle" style="fill: var(--text); font-size: 13px;">계정 토큰 보관·갱신</text>
+  <text x="360" y="198" text-anchor="middle" style="fill: var(--text); font-size: 13px;">앱 API를 도구(slug)로 통일</text>
+  <text x="360" y="222" text-anchor="middle" style="fill: var(--text); font-size: 13px;">입력값 스키마 검증</text>
+  <rect x="292" y="250" width="136" height="70" rx="8" style="fill: var(--surface); stroke: var(--accent-line); stroke-width: 1;"/>
+  <text x="360" y="272" text-anchor="middle" style="fill: var(--text-muted); font-family: var(--font-mono); font-size: 11px;">composio link</text>
+  <text x="360" y="290" text-anchor="middle" style="fill: var(--text-muted); font-family: var(--font-mono); font-size: 11px;">composio search</text>
+  <text x="360" y="308" text-anchor="middle" style="fill: var(--text-muted); font-family: var(--font-mono); font-size: 11px;">composio execute</text>
+  <!-- scripts -> Composio -->
+  <path d="M222,102 C246,102 246,150 266,150" style="fill: none; stroke: var(--accent); stroke-width: 1.8;" marker-end="url(#ca-arrow-accent)"/>
+  <path d="M222,340 C246,340 246,290 266,290" style="fill: none; stroke: var(--accent); stroke-width: 1.8;" marker-end="url(#ca-arrow-accent)"/>
+  <!-- apps -->
+  <rect x="500" y="50" width="200" height="86" rx="10" style="fill: var(--surface-2); stroke: var(--border); stroke-width: 1.5;"/>
+  <text x="600" y="80" text-anchor="middle" style="fill: var(--text); font-size: 15px; font-weight: 700;">Gmail</text>
+  <text x="600" y="102" text-anchor="middle" style="fill: var(--text-muted); font-family: var(--font-mono); font-size: 10.5px;">GMAIL_FETCH_EMAILS</text>
+  <text x="600" y="119" text-anchor="middle" style="fill: var(--text-muted); font-family: var(--font-mono); font-size: 10.5px;">GMAIL_SEND_EMAIL</text>
+  <rect x="500" y="177" width="200" height="86" rx="10" style="fill: var(--surface-2); stroke: var(--border); stroke-width: 1.5;"/>
+  <text x="600" y="207" text-anchor="middle" style="fill: var(--text); font-size: 15px; font-weight: 700;">Jira</text>
+  <text x="600" y="229" text-anchor="middle" style="fill: var(--text-muted); font-family: var(--font-mono); font-size: 10.5px;">JIRA_SEARCH_..._JQL_GET</text>
+  <text x="600" y="246" text-anchor="middle" style="fill: var(--text-muted); font-family: var(--font-mono); font-size: 10.5px;">JIRA_SEARCH_APPROXIMATE_COUNT</text>
+  <rect x="500" y="304" width="200" height="86" rx="10" style="fill: var(--surface-2); stroke: var(--border); stroke-width: 1.5;"/>
+  <text x="600" y="334" text-anchor="middle" style="fill: var(--text); font-size: 15px; font-weight: 700;">Google Drive</text>
+  <text x="600" y="356" text-anchor="middle" style="fill: var(--text-muted); font-family: var(--font-mono); font-size: 10px;">GOOGLEDRIVE_GET_FILE_METADATA</text>
+  <text x="600" y="373" text-anchor="middle" style="fill: var(--text-muted); font-family: var(--font-mono); font-size: 10.5px;">GOOGLEDRIVE_EXPORT_…_FILE</text>
+  <!-- Composio -> apps -->
+  <line x1="452" y1="140" x2="496" y2="93" style="stroke: var(--text-muted); stroke-width: 1.5;" marker-end="url(#ca-arrow)"/>
+  <line x1="452" y1="220" x2="496" y2="220" style="stroke: var(--text-muted); stroke-width: 1.5;" marker-end="url(#ca-arrow)"/>
+  <line x1="452" y1="300" x2="496" y2="347" style="stroke: var(--text-muted); stroke-width: 1.5;" marker-end="url(#ca-arrow)"/>
+  <!-- who uses what -->
+  <text x="474" y="156" text-anchor="middle" style="fill: var(--text-muted); font-size: 10px;">A·B</text>
+  <text x="474" y="212" text-anchor="middle" style="fill: var(--text-muted); font-size: 10px;">A</text>
+  <text x="474" y="316" text-anchor="middle" style="fill: var(--text-muted); font-size: 10px;">B</text>
+  <!-- legend -->
+  <line x1="20" y1="428" x2="52" y2="428" style="stroke: var(--accent); stroke-width: 1.8;"/>
+  <text x="60" y="432" style="fill: var(--text-muted); font-size: 12px;">스크립트 → Composio 명령 호출</text>
+  <line x1="250" y1="428" x2="282" y2="428" style="stroke: var(--text-muted); stroke-width: 1.5;"/>
+  <text x="290" y="432" style="fill: var(--text-muted); font-size: 12px;">Composio → 앱 API (내 계정 토큰으로)</text>
+  <line x1="520" y1="428" x2="552" y2="428" style="stroke: var(--text-muted); stroke-width: 1.2; stroke-dasharray: 5 4;"/>
+  <text x="560" y="432" style="fill: var(--text-muted); font-size: 12px;">Composio를 거치지 않음</text>
+  <text x="20" y="456" style="fill: var(--text-muted); font-size: 11px;">A = 아침 요약, B = 번역 시트 정리 · 결과 메일은 둘 다 Gmail 발송 도구로 나에게 보냄</text>
+</svg>
+<figcaption style="margin-top: 10px; font-size: 13px; color: var(--text-muted); text-align: center;">두 스크립트는 앱 API를 직접 부르지 않고 Composio 명령만 호출합니다. 앱별 로그인과 토큰은 Composio가 맡습니다.</figcaption>
+</figure>
 
 ## 만든 것 1: 아침 메일·Jira 요약
 
