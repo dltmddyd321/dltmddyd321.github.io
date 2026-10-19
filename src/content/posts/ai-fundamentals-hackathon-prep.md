@@ -1,5 +1,5 @@
 ---
-title: "AI로 무언가를 한다면 유익한 개념들 (feat. AI 활용 기술 면접..?)"
+title: "AI로 작업한다면 한번 쯤 알고가면 좋은 개념들"
 description: "SK하이닉스 AI 해커톤 1차 예선을 준비하며 정리한 LLM·프롬프트·RAG·Agent·평가 지표·보안·비용의 핵심 개념과, 상황별로 먼저 확인할 것들을 옮겼습니다."
 pubDate: 2026-10-18T08:54:04Z
 category: ai-lab
