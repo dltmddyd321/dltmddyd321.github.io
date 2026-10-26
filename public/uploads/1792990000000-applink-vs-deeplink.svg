@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" width="760" height="430" font-family="Pretendard, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#667085"/>
+    </marker>
+  </defs>
+  <rect width="760" height="430" rx="16" fill="#FFFFFF"/>
+
+  <text x="190" y="40" text-anchor="middle" font-size="17" font-weight="700" fill="#B54708">딥 링크 (커스텀 스킴)</text>
+  <text x="570" y="40" text-anchor="middle" font-size="17" font-weight="700" fill="#175CD3">앱 링크 (https + 도메인 검증)</text>
+  <line x1="380" y1="24" x2="380" y2="410" stroke="#EAECF0" stroke-width="2"/>
+
+  <rect x="60" y="62" width="260" height="44" rx="10" fill="#FEF6EE" stroke="#F9DBAF"/>
+  <text x="190" y="89" text-anchor="middle" font-size="14" fill="#1D2939" font-family="Menlo, monospace">myapp://invite/abc</text>
+  <line x1="190" y1="106" x2="190" y2="134" stroke="#667085" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="138" width="300" height="56" rx="10" fill="#F9FAFB" stroke="#D0D5DD"/>
+  <text x="190" y="162" text-anchor="middle" font-size="14" fill="#1D2939">OS: "myapp" 스킴을 등록한 앱은?</text>
+  <text x="190" y="182" text-anchor="middle" font-size="12" fill="#667085">누가 등록했는지 확인하지 않음</text>
+
+  <line x1="130" y1="194" x2="105" y2="232" stroke="#667085" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="250" y1="194" x2="275" y2="232" stroke="#667085" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <rect x="30" y="236" width="150" height="56" rx="10" fill="#F9FAFB" stroke="#D0D5DD"/>
+  <text x="105" y="260" text-anchor="middle" font-size="13" fill="#1D2939">우리 앱</text>
+  <text x="105" y="279" text-anchor="middle" font-size="13" fill="#1D2939">+ 같은 스킴의 다른 앱</text>
+  <rect x="200" y="236" width="150" height="56" rx="10" fill="#F9FAFB" stroke="#D0D5DD"/>
+  <text x="275" y="260" text-anchor="middle" font-size="13" fill="#1D2939">앱이 설치되지</text>
+  <text x="275" y="279" text-anchor="middle" font-size="13" fill="#1D2939">않은 경우</text>
+
+  <line x1="105" y1="292" x2="105" y2="322" stroke="#667085" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="275" y1="292" x2="275" y2="322" stroke="#667085" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <rect x="30" y="326" width="150" height="56" rx="10" fill="#FEF3F2" stroke="#FECDCA"/>
+  <text x="105" y="350" text-anchor="middle" font-size="13" fill="#B42318">앱 선택 창이 뜨거나</text>
+  <text x="105" y="369" text-anchor="middle" font-size="13" fill="#B42318">엉뚱한 앱이 열림</text>
+  <rect x="200" y="326" width="150" height="56" rx="10" fill="#FEF3F2" stroke="#FECDCA"/>
+  <text x="275" y="350" text-anchor="middle" font-size="13" fill="#B42318">아무 일도 없거나</text>
+  <text x="275" y="369" text-anchor="middle" font-size="13" fill="#B42318">오류 페이지</text>
+
+  <rect x="420" y="62" width="300" height="44" rx="10" fill="#EFF8FF" stroke="#B2DDFF"/>
+  <text x="570" y="89" text-anchor="middle" font-size="13" fill="#1D2939" font-family="Menlo, monospace">https://links.example.com/invite/abc</text>
+  <line x1="570" y1="106" x2="570" y2="134" stroke="#667085" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <rect x="420" y="138" width="300" height="56" rx="10" fill="#F9FAFB" stroke="#D0D5DD"/>
+  <text x="570" y="162" text-anchor="middle" font-size="14" fill="#1D2939">OS: 이 도메인 검증을 통과한 앱은?</text>
+  <text x="570" y="182" text-anchor="middle" font-size="12" fill="#667085">설치할 때 서버 파일로 미리 확인해 둠</text>
+
+  <line x1="510" y1="194" x2="485" y2="232" stroke="#667085" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="630" y1="194" x2="655" y2="232" stroke="#667085" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <rect x="410" y="236" width="150" height="56" rx="10" fill="#F9FAFB" stroke="#D0D5DD"/>
+  <text x="485" y="260" text-anchor="middle" font-size="13" fill="#1D2939">검증된 앱이</text>
+  <text x="485" y="279" text-anchor="middle" font-size="13" fill="#1D2939">설치돼 있음</text>
+  <rect x="580" y="236" width="150" height="56" rx="10" fill="#F9FAFB" stroke="#D0D5DD"/>
+  <text x="655" y="260" text-anchor="middle" font-size="13" fill="#1D2939">앱이 없거나</text>
+  <text x="655" y="279" text-anchor="middle" font-size="13" fill="#1D2939">검증 실패</text>
+
+  <line x1="485" y1="292" x2="485" y2="322" stroke="#667085" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="655" y1="292" x2="655" y2="322" stroke="#667085" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <rect x="410" y="326" width="150" height="56" rx="10" fill="#ECFDF3" stroke="#ABEFC6"/>
+  <text x="485" y="350" text-anchor="middle" font-size="13" fill="#067647">선택 창 없이</text>
+  <text x="485" y="369" text-anchor="middle" font-size="13" fill="#067647">바로 앱 실행</text>
+  <rect x="580" y="326" width="150" height="56" rx="10" fill="#ECFDF3" stroke="#ABEFC6"/>
+  <text x="655" y="350" text-anchor="middle" font-size="13" fill="#067647">같은 주소의</text>
+  <text x="655" y="369" text-anchor="middle" font-size="13" fill="#067647">웹 페이지가 열림</text>
+</svg>
