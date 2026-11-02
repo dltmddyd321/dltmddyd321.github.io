@@ -1,5 +1,5 @@
 ---
-title: "색 하나 읽다가 멈춘 위젯 — ANR 덤프 읽는 법과 중복 onUpdate"
+title: "DB 조회에서 멈춘 위젯 — ANR 덤프 읽는 법과 중복 onUpdate"
 description: "홈 화면 위젯 갱신 중 메인 스레드가 리소스 조회에서 찍힌 ANR을 추적해, 브로드캐스트 한 번에 달력을 세 번 그리던 중복 onUpdate와 반복 getIdentifier 호출을 정리한 기록입니다."
 pubDate: 2026-11-02T08:00:00Z
 category: dev-log
@@ -7,7 +7,7 @@ tags: ["android", "anr", "appwidget", "broadcastreceiver", "resources"]
 aiPreview: "위젯 갱신 중 발생한 ANR 덤프의 맨 윗줄은 색 리소스 조회였지만, 실제 원인은 AppWidgetProvider를 상속하면서 super.onReceive()와 직접 onUpdate()를 함께 불러 시스템 갱신 한 번에 달력을 최대 세 번 그리던 구조와, 42칸마다 getIdentifier()로 색 이름을 다시 찾던 반복 조회였습니다. ACTION_APPWIDGET_UPDATE는 부모로 넘기지 않게 하고 리소스 ID만 캐싱해 그리기를 한 번으로 줄였습니다. 콜드 스타트 초기화 부담은 남아 있어 배포 후 ANR 추이를 다시 볼 예정입니다."
 ---
 
-ANR 스레드 덤프를 하나 받았는데 스택이 이상했습니다. 메인 스레드 맨 위가 `AssetManager2::FindEntryInternal`, 그 아래로 `Resources.getColor()`가 이어지고, 더 내려가면 홈 화면 위젯의 `onReceive()`가 있었습니다. 색 하나 읽다가 앱이 멈췄다는 얘기처럼 보입니다.
+ANR 스레드 덤프를 하나 받았는데 스택이 이상했습니다. 메인 스레드 맨 위가 `AssetManager2::FindEntryInternal`, 그 아래로 `Resources.getColor()`가 이어지고, 더 내려가면 홈 화면 위젯의 `onReceive()`가 있었습니다. 색 하나 읽다가 앱이 멈췄다는 얘기처럼 보입니다. 근데 이 에러 코드.. 예전부터 계속 본 적이 있어서 제대로 한 번 손을 봤습니다.
 
 ```
 main (native)
@@ -27,7 +27,7 @@ main (native)
 
 ## ANR 덤프의 맨 윗줄은 범인이 아닙니다
 
-먼저 짚고 갈 점이 있습니다. 이건 크래시 스택이 아니라 ANR이 났을 때 시스템이 찍은 스레드 덤프입니다. 메인 스레드가 오래 응답하지 않으면 시스템이 그 순간 모든 스레드의 스택을 한 번 찍어 둡니다. 맨 윗줄은 "찍힌 순간 하던 일"일 뿐이고 그 한 줄이 느렸다는 뜻은 아닙니다.
+이건 크래시 스택이 아니라 ANR이 났을 때 시스템이 찍은 스레드 덤프입니다. 메인 스레드가 오래 응답하지 않으면 시스템이 그 순간 모든 스레드의 스택을 한 번 찍어 둡니다. 맨 윗줄은 "찍힌 순간 하던 일"일 뿐이고 그 한 줄이 느렸다는 뜻은 아닙니다.
 
 그래서 봐야 할 것은 맨 위가 아니라 흐름 전체입니다. 이 덤프에서 읽히는 건 세 가지였습니다.
 
@@ -56,7 +56,7 @@ override fun onReceive(context: Context?, intent: Intent?) {
 
 ## 원인 2: 셀마다 색을 문자열 이름으로 다시 찾았습니다
 
-달력은 6주 × 7일, 42칸입니다. 칸마다 날짜 색을 정하면서 테마 색을 읽는데, 기본 테마의 색 값은 hex가 아니라 `color_palette_blue_500` 같은 리소스 이름이었습니다. 읽을 때마다 이렇게 풀었습니다.
+문제의 위젯은 달력 위젯이었고, 달력은 6주 × 7일, 42칸입니다. 칸마다 날짜 색을 정하면서 테마 색을 읽는데, 기본 테마의 색 값은 hex가 아니라 `color_palette_blue_500` 같은 리소스 이름이었습니다. 읽을 때마다 이렇게 풀었습니다.
 
 ```kotlin
 fun resolveColorValue(value: String): Int {
