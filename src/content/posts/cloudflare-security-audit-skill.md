@@ -56,21 +56,38 @@ npx skills add https://github.com/cloudflare/security-audit-skill \
 
 ```mermaid
 flowchart TD
-    P[부모 에이전트<br/>단계 진행과 파일 관리] --> R[1. 정찰 · 4개 병렬<br/>구조·신뢰 경계·입력 지점 파악]
-    R --> L[(coverage-ledger<br/>점검 단위 22개)]
+    P["🧭 부모 에이전트<br/>단계 진행과 파일 관리"] --> R["🔭 1. 정찰 · 4개 병렬<br/>구조·신뢰 경계·입력 지점 파악"]
+    R --> L[("📒 coverage-ledger<br/>점검 단위 22개")]
     L --> H
-    subgraph H[2. 1차 탐색 · hunter 8개 병렬]
+    subgraph H["🎯 2. 1차 탐색 · hunter 8개 병렬"]
         H1[단위 묶음 A] --- H2[단위 묶음 B] --- H3[...] --- H8[단위 묶음 H]
     end
-    H --> C[critic 1개<br/>빠진 단위 찾기]
-    C --> H2W[2차 탐색 · hunter 2개]
+    H --> C["🧐 critic 1개<br/>빠진 단위 찾기"]
+    C --> H2W["🎯 2차 탐색 · hunter 2개"]
     H2W --> V
-    subgraph V[3. 후보 검증 · verifier 18개]
+    subgraph V["🛡️ 3. 후보 검증 · verifier 18개"]
         V1[후보마다 새 에이전트가<br/>반박을 시도]
     end
-    V --> F[(4. findings.json<br/>스키마 검사)]
-    F --> RV[5. 기록 재검증 · 3개]
-    RV --> REP[6. 보고서]
+    V --> F[("🗂️ 4. findings.json<br/>스키마 검사")]
+    F --> RV["🔁 5. 기록 재검증 · 3개"]
+    RV --> REP["📄 6. 보고서"]
+
+    classDef parent fill:#3a2a12,stroke:#e0a458,stroke-width:2px,color:#ffe2b8
+    classDef recon fill:#123236,stroke:#4fd1c5,stroke-width:2px,color:#d4fbf7
+    classDef hunter fill:#14243f,stroke:#63a4ff,stroke-width:2px,color:#d8e8ff
+    classDef critic fill:#2c1c3d,stroke:#b58cff,stroke-width:2px,color:#eadcff
+    classDef verify fill:#16331f,stroke:#5fd38d,stroke-width:2px,color:#dcf9e6
+    classDef data fill:#26271f,stroke:#a8ab9c,stroke-width:1.5px,color:#ece9df
+    classDef report fill:#3d1f24,stroke:#ff8a8a,stroke-width:2px,color:#ffe0e0
+    class P parent
+    class R recon
+    class H1,H2,H3,H8,H2W hunter
+    class C critic
+    class V1,RV verify
+    class L,F data
+    class REP report
+    style H fill:#0f1a2c,stroke:#63a4ff,stroke-dasharray:4 3,color:#d8e8ff
+    style V fill:#0f2216,stroke:#5fd38d,stroke-dasharray:4 3,color:#dcf9e6
 ```
 
 정찰 에이전트 4개가 앱 구조와 신뢰 경계, 입력 지점을 파악하고 그 결과로 점검 단위 22개짜리 장부(ledger)를 만듭니다. hunter 8개가 이 장부를 나눠 맡아 동시에 탐색하고 critic이 장부에서 아무도 깊게 보지 않은 곳을 찾아 2차 hunter에게 넘깁니다. 이번 실행에는 모두 36개 에이전트가 들어갔습니다.
@@ -79,11 +96,24 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    H[hunter<br/>후보를 찾음] -->|후보와 근거만 전달| V[verifier<br/>처음 보는 에이전트]
-    V -->|코드를 다시 읽고 반박| D{반박에 성공?}
-    D -->|예| X[rejected]
-    D -->|아니오, 실행 증거 있음| OK[confirmed]
-    D -->|아니오, 실행 증거 없음| NV[needs_validation]
+    H["🎯 hunter<br/>후보를 찾음"] -->|후보와 근거만 전달| V["🛡️ verifier<br/>처음 보는 에이전트"]
+    V -->|코드를 다시 읽고 반박| D{"반박에 성공?"}
+    D -->|예| X["❌ rejected"]
+    D -->|아니오, 실행 증거 있음| OK["✅ confirmed"]
+    D -->|아니오, 실행 증거 없음| NV["⚠️ needs_validation"]
+
+    classDef hunter fill:#14243f,stroke:#63a4ff,stroke-width:2px,color:#d8e8ff
+    classDef verify fill:#16331f,stroke:#5fd38d,stroke-width:2px,color:#dcf9e6
+    classDef decide fill:#2c1c3d,stroke:#b58cff,stroke-width:2px,color:#eadcff
+    classDef bad fill:#2a2a2a,stroke:#8f9285,stroke-width:2px,color:#d0d0c8
+    classDef good fill:#3d1f24,stroke:#ff6b6b,stroke-width:2px,color:#ffe0e0
+    classDef warn fill:#3a2a12,stroke:#e0a458,stroke-width:2px,color:#ffe2b8
+    class H hunter
+    class V verify
+    class D decide
+    class X bad
+    class OK good
+    class NV warn
 ```
 
 hunter는 자기가 찾은 걸 취약점이라고 믿고 싶어합니다. 그래서 검증은 그 대화를 전혀 모르는 새 에이전트가 맡고 이 에이전트의 일은 후보를 무너뜨리는 것입니다. 무너뜨리지 못해도 실제로 실행해서 재현한 증거가 없으면 confirmed로 올라가지 않습니다.
@@ -92,11 +122,22 @@ hunter는 자기가 찾은 걸 취약점이라고 믿고 싶어합니다. 그래
 
 ```mermaid
 flowchart LR
-    A[점검 단위 22개] --> B[후보 16건]
-    B --> C[기록 16건]
-    C --> D1[confirmed 0]
-    C --> D2[needs_validation 15]
-    C --> D3[rejected 1]
+    A["📒 점검 단위<br/>22개"] --> B["🎯 후보<br/>16건"]
+    B --> C["🗂️ 기록<br/>16건"]
+    C --> D1["✅ confirmed<br/>0"]
+    C ==> D2["⚠️ needs_validation<br/>15"]
+    C --> D3["❌ rejected<br/>1"]
+
+    classDef data fill:#26271f,stroke:#a8ab9c,stroke-width:1.5px,color:#ece9df
+    classDef hunter fill:#14243f,stroke:#63a4ff,stroke-width:2px,color:#d8e8ff
+    classDef good fill:#3d1f24,stroke:#ff6b6b,stroke-width:2px,color:#ffe0e0
+    classDef warn fill:#3a2a12,stroke:#e0a458,stroke-width:3px,color:#ffe2b8
+    classDef bad fill:#2a2a2a,stroke:#8f9285,stroke-width:2px,color:#d0d0c8
+    class A,C data
+    class B hunter
+    class D1 good
+    class D2 warn
+    class D3 bad
 ```
 
 confirmed가 0건인 건 취약점이 없다는 뜻이 아닙니다. 빌드나 에뮬레이터를 네트워크가 막힌 샌드박스에서 돌릴 수 없는 환경이라 대상 코드를 하나도 실행하지 않았고 규칙상 실행 증거가 없으면 확정하지 않습니다. 대신 needs_validation 기록마다 "확정을 막는 사실"과 "소유자가 확인할 것"이 붙어 나옵니다. 사람이 무엇을 확인하면 되는지까지 정리해 주는 셈입니다.
