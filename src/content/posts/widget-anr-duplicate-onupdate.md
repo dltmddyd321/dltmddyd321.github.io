@@ -110,45 +110,6 @@ val resId = colorResIdCache.getOrPut(value) {
 - `AppWidgetProvider`를 상속하면서 `super.onReceive()`와 직접 `onUpdate()`를 같이 부르면, 시스템 갱신 때 두 번 그리게 됩니다.
 - `getIdentifier()`를 반복 경로에서 쓰고 있다면 ID를 캐싱하되, 색이나 drawable 같은 설정 의존 값까지 캐싱하지는 않아야 합니다.
 
-<!-- HUMANIZE-SUMMARY v1.6.1
-run_id: 2026-11-02-001
-mode: monolith (route_hint light, 강도 보수)
-metrics:
-  char_in: 4539
-  char_out: 4533
-  change_rate: 약 0.2% (쉼표 6개 삭제, 자가 산출 참고값)
-  self_check: 6/6
-  grade: B
-categories:  # before → after
-  C-11 연결어미(-고/-지만) 뒤 쉼표: 7 → 1 (가독성 위해 1건 의도적 보존)
-  C-10 콜론 부제 헤딩: 2 → 2 (헤딩 구조 유지 지시로 보존)
-  D-1 결산 lexicon: 1 → 1 (임계 미만)
-  A·D·G·H·I 기타 S1/S2: 0 → 0
-self_check:
-  - 고유명사·수치·인용·코드 블록·백틱·인용(>) 100% 보존: ✅
-  - 변경률 30% 이하: ✅
-  - 장르 이탈 없음(기술 블로그): ✅
-  - register 보존(-습니다체, '~한 겁니다' 구어 종결 유지): ✅
-  - S1 잔존 0건(C-11 6회 미만으로 하향): ✅
-  - 인공 표현 추가 없음(삭제만 수행): ✅
-highlights:
-  - id: C-11
-    before: "\"찍힌 순간 하던 일\"일 뿐이고, 그 한 줄이 느렸다는 뜻은 아닙니다."
-    after: "\"찍힌 순간 하던 일\"일 뿐이고 그 한 줄이 느렸다는 뜻은 아닙니다."
-  - id: C-11
-    before: "`onReceive()`를 끝내야 하고, 넘기면 ANR입니다."
-    after: "`onReceive()`를 끝내야 하고 넘기면 ANR입니다."
-  - id: C-11
-    before: "`super.onReceive()`를 두 번 부르고, 마지막에 `onUpdate()`를 또 직접 부릅니다."
-    after: "`super.onReceive()`를 두 번 부르고 마지막에 `onUpdate()`를 또 직접 부릅니다."
-  - id: C-11
-    before: "바뀌지 않지만, 같은 ID가 가리키는 색은"
-    after: "바뀌지 않지만 같은 ID가 가리키는 색은"
-  - id: C-11
-    before: "IO 스레드에서 하고 있었지만, RemoteViews를 채우는 일은"
-    after: "IO 스레드에서 하고 있었지만 RemoteViews를 채우는 일은"
-residual_findings:
-  - C-11 (S2 수준): "줄어드는지 보고, 남아 있으면" 쉼표 1건 보존 — 긴 문장의 절 경계 가독성용
-  - C-10 (S2): "원인 1: ~", "원인 2: ~" 헤딩 — 헤딩 구조 유지 지시로 미수정
-grade_reason: "B — S1 0건, 자체검증 6/6 통과. 원문이 이미 low risk라 변경률이 A 기준 하한(10%)에 못 미쳐 B. 보수 강도상 의도된 결과."
--->
+일단 확인한 건 여기까지입니다. 원인으로 보이는 두 가지를 걷어냈지만, 콜드 스타트와 겹치는 경우까지 다 막았다고 보기는 어렵습니다. 이후에 같은 스택이 다시 올라오는지는 계속 지켜볼 생각입니다.
+
+위젯 갱신에서 ANR을 줄여 본 경험이 있으시다면 조언을 부탁드립니다. 특히 위젯 브로드캐스트로 프로세스가 새로 뜰 때 초기화를 어디까지 미뤄도 괜찮았는지, `goAsync()`로 옮겼을 때 주의할 점이 있었는지 궁금합니다.
