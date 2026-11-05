@@ -64,6 +64,8 @@ adb shell dumpsys activity top
 이 뷰는 `window.navigationBarColor`로 칠해지는데, Android 14 이하에서는 여기에 테마의 단색을 넣고 있었습니다.
 다크 테마라 그 색이 검정으로 보였습니다.
 
+![수정 전 하단 영역. 빨간 점선이 제스처 바 영역으로, 하단 탭과 달리 검은 단색입니다](/uploads/1793846400000-gesture-bar-before.png)
+
 ## Android 14 이하에서도 Navigation Bar 뒤로 그리기
 
 Android 15와 같은 구조를 낮은 버전에서도 만들었습니다.
@@ -88,6 +90,8 @@ ViewCompat.setOnApplyWindowInsetsListener(contentRoot) { view, insets ->
 
 설치해 보니 이번에는 검정이 아니라 흰 띠가 나왔습니다.
 여전히 맨 아래만 따로 놀았습니다.
+
+![Android 14 이하 대응 후 하단 영역. 이번에는 제스처 바 영역이 흰 띠로 남았습니다](/uploads/1793846400000-gesture-bar-white-strip.png)
 
 ## 다 맞는데 왜 흰 띠일까
 
@@ -155,6 +159,8 @@ ViewCompat.setOnApplyWindowInsetsListener(screenRoot) { _, insets ->
 2356~2390px도 `#090815`로 바뀌어 테마 배경이 제스처 바 영역까지 이어졌습니다.
 `DrawerLayout`은 2400px까지 그려지고 측면 메뉴는 2355px에서 끝났습니다.
 제스처 핸들 자체는 시스템이 그리는 거라 남아 있고 색만 테마 밝기에 맞춰 바뀝니다.
+
+![DrawerLayout을 늘린 뒤 하단 영역. 제스처 바 영역까지 테마 배경이 이어집니다](/uploads/1793846400000-gesture-bar-fixed.png)
 
 ## 정리
 
