@@ -7,7 +7,7 @@ tags: ["android", "edge-to-edge", "window-insets", "drawerlayout", "navigation-b
 aiPreview: "테마 이미지를 바꿀 수 있는 앱에서 시스템 제스처 바 영역만 단색으로 남는 문제가 한 번 고친 뒤에도 계속 보고됐습니다. Android 15 이상에서만 배경 이미지를 Navigation Bar 뒤로 늘리도록 막아 둔 탓에 Android 14 이하 기기에서는 처리 자체가 돌지 않았고, SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION과 투명 navigationBarColor로 레이아웃을 펼친 뒤에도 흰 띠가 남았습니다. dumpsys와 스크린샷 픽셀 색을 맞춰 보니 DrawerLayout.drawChild()가 콘텐츠를 자기 높이로 clipRect해서 늘린 이미지가 그려지지 않고 있었습니다. DrawerLayout 자체를 제스처 바 높이만큼 늘리고 안쪽 UI는 패딩과 마진으로 제자리에 두어 해결했습니다."
 ---
 
-테마 이미지를 바꿀 수 있는 앱에서 "아무리 고쳐도 맨 아래 영역만 검은색"이라는 이야기가 계속 나왔습니다.
+테마 이미지를 바꿀 수 있는 앱에서 "아무리 고쳐도 맨 아래 시스템 제스처 영역만 검은색"이라는 이야기가 계속 나왔습니다.
 화면 맨 아래, 시스템 제스처 바(가로 핸들이 있는 얇은 띠) 영역만 테마 이미지가 아니라 단색으로 따로 노는 문제입니다.
 한 번 고쳐서 배포했는데도 그대로였고 이번에 실제 기기를 붙여서 끝까지 따라가 봤습니다.
 처음 대응부터 중간에 왜 해결이 안 됐는지까지 기록해봅니다.
@@ -16,8 +16,7 @@ aiPreview: "테마 이미지를 바꿀 수 있는 앱에서 시스템 제스처 
 
 Android 15(API 35)부터는 앱이 edge-to-edge로 강제됩니다.
 앱 창이 Navigation Bar 뒤까지 펼쳐지고 그 영역을 어떻게 채울지는 앱 몫이 됩니다.
-
-그래서 처음에는 이렇게 처리했습니다.
+기본적인 대응 방법은 다음가 같았스빈다.
 
 - 콘텐츠 루트에 Navigation Bar 높이만큼 하단 패딩을 줘서 버튼이나 탭이 바 밑으로 들어가지 않게 합니다.
 - 루트의 `clipToPadding`, `clipChildren`을 꺼서 자식이 패딩 영역까지 그릴 수 있게 합니다.
@@ -168,4 +167,3 @@ ViewCompat.setOnApplyWindowInsetsListener(screenRoot) { _, insets ->
 - 레이아웃을 펼친 뒤에도 `DrawerLayout.drawChild()`가 콘텐츠를 자기 높이로 잘라 늘린 이미지가 그려지지 않았습니다.
 - 레이아웃 범위가 맞는데 화면이 다르면, 스크린샷 픽셀 색과 `dumpsys` 수치를 같이 보면 어디서 잘리는지 바로 드러납니다.
 - 남은 확인: 3버튼 내비게이션, 측면 메뉴를 연 상태, Android 15 이상 제스처 내비게이션 기기.
-
