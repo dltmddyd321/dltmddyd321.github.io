@@ -172,6 +172,23 @@ const jsonLd = {
     deleteBtn?.removeAttribute('hidden');
   }
 
+  // "q" jumps into the editor for this post. Matched on e.code so it works on
+  // a Korean keyboard layout too (where e.key is "ㅂ"), and skipped while
+  // typing anywhere or holding a modifier so browser shortcuts stay intact.
+  function isTypingTarget(target: EventTarget | null): boolean {
+    if (!(target instanceof HTMLElement)) return false;
+    return target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.code !== 'KeyQ' || e.repeat || e.isComposing) return;
+    if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
+    if (isTypingTarget(e.target)) return;
+    if (!editLink || editLink.hidden) return;
+    e.preventDefault();
+    location.href = editLink.href;
+  });
+
   deleteBtn?.addEventListener('click', async () => {
     const path = deleteBtn.dataset.path;
     const title = deleteBtn.dataset.title ?? '이 글';
