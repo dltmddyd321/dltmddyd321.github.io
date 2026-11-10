@@ -1,5 +1,5 @@
 ---
-title: "Compose 카드에서 mp4를 무음 반복 재생하기 — TextureView로 둥근 모서리 살리기"
+title: "Compose에서 mp4를 무음 반복 재생하기"
 description: "이미지만 받던 Compose 카드에 mp4 재생을 붙이면서 영상 판별, TextureView 선택, 비율 맞추기, 플레이어 수명 관리를 정리한 기록입니다."
 pubDate: 2026-11-10T03:00:00Z
 category: dev-log
@@ -8,7 +8,7 @@ aiPreview: "Coil로 이미지만 그리던 Compose 안내 카드에 mp4를 무�
 ---
 
 홈 화면 상단에는 서버에서 내려주는 짧은 안내 카드가 있습니다.
-지금까지는 이미지(정적 이미지, GIF, 애니메이션 WebP)만 받을 수 있었는데, 이번에 mp4도 재생되게 해 달라는 요청이 들어왔습니다.
+지금까지는 이미지(정적 이미지, GIF, 애니메이션 WebP)만 받을 수 있는 Image Composable이 있었는데, 이번에 mp4도 재생되게 해 달라는 요청이 들어왔습니다.
 카드는 Compose로 그리고 있었고 이미지 로딩은 Coil이 맡고 있었습니다.
 Compose 안에서 짧은 영상을 무음 반복 재생으로 붙이면서 고민했던 부분을 기록해봅니다.
 
