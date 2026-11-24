@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { CATEGORIES, CATEGORY_KEYS } from '../lib/categories';
+import { SERIES, SERIES_KEYS } from '../lib/series';
 
 const OWNER = 'dltmddyd321';
 const REPO = 'dltmddyd321.github.io';
@@ -93,6 +94,19 @@ const REPO = 'dltmddyd321.github.io';
         URL 슬러그 <span class="hint-inline">비워두면 제목에서 자동 생성 (한글 제목은 자동 생성이 안 되니 직접 입력)</span>
         <input type="text" id="f-slug" placeholder="ai-rewrite-prompt" spellcheck="false" />
       </label>
+      <div class="fields-row">
+        <label>
+          시리즈 <span class="hint-inline">새 시리즈는 src/lib/series.ts에 추가</span>
+          <select id="f-series">
+            <option value="">— 없음 —</option>
+            {SERIES_KEYS.map((key) => <option value={key}>{SERIES[key].title}</option>)}
+          </select>
+        </label>
+        <label>
+          몇 편
+          <input type="number" id="f-series-order" min="1" step="1" placeholder="1" />
+        </label>
+      </div>
       <label>
         태그 (쉼표로 구분)
         <input type="text" id="f-tags" placeholder="kotlin, coroutine" />
@@ -177,6 +191,8 @@ const REPO = 'dltmddyd321.github.io';
   const categorySelect = document.getElementById('f-category') as HTMLSelectElement;
   const slugInput = document.getElementById('f-slug') as HTMLInputElement;
   const tagsInput = document.getElementById('f-tags') as HTMLInputElement;
+  const seriesSelect = document.getElementById('f-series') as HTMLSelectElement;
+  const seriesOrderInput = document.getElementById('f-series-order') as HTMLInputElement;
   const draftCheckbox = document.getElementById('f-draft') as HTMLInputElement;
   const bodyTextarea = document.getElementById('f-body') as HTMLTextAreaElement;
 
@@ -235,6 +251,8 @@ const REPO = 'dltmddyd321.github.io';
     pubDate: string;
     category: string;
     tags: string[];
+    series: string;
+    seriesOrder: string;
     draft: boolean;
     body: string;
     /** Frontmatter keys the form doesn't manage (aiPreview today), kept
@@ -262,7 +280,7 @@ const REPO = 'dltmddyd321.github.io';
       .map((t) => unquote(t))
       .filter(Boolean);
 
-    const MANAGED = new Set(['title', 'description', 'pubDate', 'category', 'tags', 'draft']);
+    const MANAGED = new Set(['title', 'description', 'pubDate', 'category', 'tags', 'series', 'seriesOrder', 'draft']);
     const extra = frontmatter
       .split('\n')
       .filter((line) => {
@@ -277,6 +295,8 @@ const REPO = 'dltmddyd321.github.io';
       pubDate: (data.pubDate ?? '').trim(),
       category: (data.category ?? '').trim(),
       tags,
+      series: unquote(data.series ?? ''),
+      seriesOrder: (data.seriesOrder ?? '').trim(),
       draft: (data.draft ?? '').trim() === 'true',
       body: body.replace(/^\n+/, '').replace(/\s+$/, '\n'),
     };
@@ -369,6 +389,8 @@ const REPO = 'dltmddyd321.github.io';
     slugInput.value = '';
     slugInput.readOnly = false;
     tagsInput.value = '';
+    seriesSelect.value = '';
+    seriesOrderInput.value = '';
     draftCheckbox.checked = false;
     bodyTextarea.value = '';
     updateBodyCount();
@@ -433,6 +455,8 @@ const REPO = 'dltmddyd321.github.io';
       dateInput.value = parsed.pubDate.slice(0, 10) || todayISO();
       categorySelect.value = parsed.category;
       tagsInput.value = parsed.tags.join(', ');
+      seriesSelect.value = parsed.series;
+      seriesOrderInput.value = parsed.seriesOrder;
       draftCheckbox.checked = parsed.draft;
       bodyTextarea.value = parsed.body;
       updateBodyCount();
@@ -734,6 +758,11 @@ const REPO = 'dltmddyd321.github.io';
             `category: ${categorySelect.value}`,
             `tags: [${tags.map(yamlString).join(', ')}]`,
           ];
+    if (kind === 'post' && seriesSelect.value) {
+      frontmatterLines.push(`series: ${seriesSelect.value}`);
+      const order = Number.parseInt(seriesOrderInput.value, 10);
+      if (Number.isInteger(order) && order > 0) frontmatterLines.push(`seriesOrder: ${order}`);
+    }
     if (draftCheckbox.checked) frontmatterLines.push('draft: true');
     // Carry through anything the form doesn't own — without this, editing a
     // post to fix a typo would silently strip its aiPreview.
@@ -970,6 +999,7 @@ const REPO = 'dltmddyd321.github.io';
   input[type='text'],
   input[type='password'],
   input[type='date'],
+  input[type='number'],
   select,
   textarea {
     background: var(--surface-2);

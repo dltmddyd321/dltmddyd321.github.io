@@ -1,6 +1,8 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { categoryLabel } from '../lib/categories';
+import { seriesTitle, type SeriesKey } from '../lib/series';
+import SeriesNav from '../components/SeriesNav.astro';
 import { SITE, GISCUS } from '../lib/site';
 
 const giscusEnabled = GISCUS.repoId !== 'CHANGE_ME' && GISCUS.categoryId !== 'CHANGE_ME';
@@ -18,11 +20,15 @@ interface Props {
    * controls, which only reveal themselves once a valid admin token is
    * present in localStorage (see the script below). */
   sourcePath: string;
+  /** Post id (URL slug), used to place this post within its series. */
+  slug: string;
+  /** Series this post belongs to, if any — adds the series outline and prev/next. */
+  series?: SeriesKey;
   /** Section headings from `render()`, used to build the table of contents. */
   headings?: { depth: number; slug: string; text: string }[];
 }
 
-const { title, description, pubDate, category, tags, aiPreview, sourcePath, headings = [] } =
+const { title, description, pubDate, category, tags, aiPreview, sourcePath, slug, series, headings = [] } =
   Astro.props;
 
 // h2/h3 only — h4 and deeper are detail within a section, and a one-entry
@@ -68,6 +74,8 @@ const jsonLd = {
           <p>{aiPreview}</p>
         </aside>
       )}
+
+      {series && <SeriesNav series={series} currentSlug={slug} variant="outline" />}
     </header>
 
     <div class="post-grid">
@@ -76,6 +84,12 @@ const jsonLd = {
           <span class="side-label">date</span>
           <span>{dateStr}</span>
         </div>
+        {series && (
+          <div class="side-block">
+            <span class="side-label">series</span>
+            <a class="series-link" href={`/series/${series}`}>{seriesTitle(series)}</a>
+          </div>
+        )}
         <div class="side-block">
           <span class="side-label">category</span>
           <a class="chip" href={`/category/${category}`}>{categoryLabel(category)}</a>
@@ -107,6 +121,8 @@ const jsonLd = {
         <slot />
       </div>
     </div>
+
+    {series && <SeriesNav series={series} currentSlug={slug} variant="pager" />}
 
     <footer class="post-footer">
       <a href="/">&larr; 목록으로</a>
@@ -464,6 +480,16 @@ const jsonLd = {
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-size: 0.68rem;
+  }
+
+  .series-link {
+    color: var(--text);
+    line-height: 1.45;
+  }
+
+  .series-link:hover {
+    color: var(--accent);
+    text-decoration: none;
   }
 
   .tag-list {

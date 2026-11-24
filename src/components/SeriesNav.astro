@@ -1,0 +1,226 @@
+---
+import { seriesOutline, type SeriesKey } from '../lib/series';
+
+interface Props {
+  series: SeriesKey;
+  /** The post being read — highlighted in the outline, the anchor for prev/next. */
+  currentSlug: string;
+  /**
+   * `outline`: the series' table of contents, collapsible, under the post title.
+   * `pager`: previous/next part links at the end of the post.
+   */
+  variant: 'outline' | 'pager';
+}
+
+const { series, currentSlug, variant } = Astro.props;
+const outline = await seriesOutline(series);
+const index = outline.published.findIndex((part) => part.slug === currentSlug);
+const current = outline.published[index];
+const prev = index > 0 ? outline.published[index - 1] : undefined;
+const next = index >= 0 ? outline.published[index + 1] : undefined;
+const total = outline.parts.length;
+---
+
+{variant === 'outline' && current && (
+  <details class="series-outline" open data-pagefind-ignore>
+    <summary>
+      <span class="series-label mono">series</span>
+      <span class="series-name">{outline.title}</span>
+      <span class="series-pos mono">{current.order} / {total}</span>
+    </summary>
+    <ol class="series-parts">
+      {outline.parts.map((part) => (
+        <li class:list={{ current: part.kind === 'post' && part.slug === currentSlug, planned: part.kind === 'planned' }}>
+          <span class="part-no mono">{String(part.order).padStart(2, '0')}</span>
+          {part.kind === 'post' ? (
+            <a href={`/posts/${part.slug}`} aria-current={part.slug === currentSlug ? 'page' : undefined}>
+              {part.title}
+            </a>
+          ) : (
+            <span class="part-title">
+              {part.title} <span class="soon mono">예정</span>
+            </span>
+          )}
+        </li>
+      ))}
+    </ol>
+    <a class="series-all mono" href={`/series/${series}`}>시리즈 전체 보기 →</a>
+  </details>
+)}
+
+{variant === 'pager' && current && (prev || next) && (
+  <nav class="series-pager" aria-label="시리즈 이전·다음 글" data-pagefind-ignore>
+    {prev ? (
+      <a class="pager-link prev" href={`/posts/${prev.slug}`}>
+        <span class="pager-dir mono">&larr; 이전 편 · {prev.order}편</span>
+        <span class="pager-title">{prev.title}</span>
+      </a>
+    ) : <span />}
+    {next ? (
+      <a class="pager-link next" href={`/posts/${next.slug}`}>
+        <span class="pager-dir mono">다음 편 · {next.order}편 &rarr;</span>
+        <span class="pager-title">{next.title}</span>
+      </a>
+    ) : <span />}
+  </nav>
+)}
+
+<style>
+  .series-outline {
+    margin-top: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  summary {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 14px 18px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::after {
+    content: '▾';
+    margin-left: auto;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  .series-outline:not([open]) summary::after {
+    content: '▸';
+  }
+
+  .series-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .series-name {
+    font-weight: 700;
+  }
+
+  .series-pos {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .series-parts {
+    list-style: none;
+    margin: 0;
+    padding: 4px 18px 8px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .series-parts li {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 7px 0;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .part-no {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .series-parts a {
+    color: var(--text);
+  }
+
+  .series-parts a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .series-parts li.current .part-no,
+  .series-parts li.current a {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .series-parts li.planned {
+    color: var(--text-muted);
+  }
+
+  .soon {
+    margin-left: 6px;
+    font-size: 0.68rem;
+    padding: 1px 6px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+
+  .series-all {
+    display: block;
+    padding: 10px 18px 14px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .series-all:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .series-pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 48px;
+  }
+
+  .pager-link {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+  }
+
+  .pager-link:hover {
+    border-color: var(--accent-line);
+    text-decoration: none;
+  }
+
+  .pager-link.next {
+    text-align: right;
+  }
+
+  .pager-dir {
+    font-size: 0.75rem;
+    color: var(--accent);
+  }
+
+  .pager-title {
+    font-weight: 700;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 560px) {
+    .series-pager {
+      grid-template-columns: 1fr;
+    }
+
+    .pager-link.next {
+      text-align: left;
+    }
+  }
+</style>

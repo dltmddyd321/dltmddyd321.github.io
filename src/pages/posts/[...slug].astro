@@ -21,6 +21,8 @@ const { Content, headings } = await render(post);
   category={post.data.category}
   tags={post.data.tags}
   aiPreview={post.data.aiPreview}
+  slug={post.id}
+  series={post.data.series}
   headings={headings}
   sourcePath={`src/content/posts/${post.id}.md`}
 >

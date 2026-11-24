@@ -114,10 +114,18 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
               {CATEGORIES[key].label}
             </a>
           ))}
-          {/* Not a category — a separate content type, so it sits after the
-              category group behind a divider rather than inside it. */}
+          {/* Not categories — a reading path across posts and a separate
+              content type, so they sit after the category group behind a
+              divider rather than inside it. */}
           <a
-            class:list={['nav-notes', { current: isCurrent('/notes') }]}
+            class:list={['nav-divider', { current: isCurrent('/series') }]}
+            href="/series"
+            aria-current={isCurrent('/series') ? 'page' : undefined}
+          >
+            Series
+          </a>
+          <a
+            class:list={{ current: isCurrent('/notes') }}
             href="/notes"
             aria-current={isCurrent('/notes') ? 'page' : undefined}
           >
@@ -344,7 +352,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     color: var(--text-muted);
   }
 
-  .nav-notes {
+  .nav-divider {
     padding-left: 18px;
     border-left: 1px solid var(--border);
   }

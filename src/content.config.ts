@@ -1,6 +1,7 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { CATEGORY_KEYS, type CategoryKey } from './lib/categories';
+import { SERIES_KEYS, type SeriesKey } from './lib/series';
 
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
@@ -17,6 +18,13 @@ const posts = defineCollection({
       .default([])
       .transform((tags) => [...new Set(tags)]),
     draft: z.boolean().default(false),
+    /**
+     * Optional series membership. Keys come from SERIES in lib/series.ts, so a
+     * typo fails the build instead of starting a one-post series.
+     * `seriesOrder` is the part number (1-based) shown as "n편".
+     */
+    series: z.enum(SERIES_KEYS as [SeriesKey, ...SeriesKey[]]).optional(),
+    seriesOrder: z.number().int().positive().optional(),
     /**
      * Short teaser Claude writes, rendered as a distinct "AI Preview" banner
      * separate from the human-written `description` lede.

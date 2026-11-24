@@ -23,6 +23,8 @@ const { items, empty = '아직 글이 없습니다.' } = Astro.props;
         pubDate={item.post.data.pubDate}
         category={item.post.data.category}
         tags={item.post.data.tags}
+        series={item.post.data.series}
+        seriesOrder={item.post.data.seriesOrder}
         thumbnail={firstImage(item.post.body)}
       />
     ) : (

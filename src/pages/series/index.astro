@@ -1,0 +1,126 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SERIES_KEYS, seriesOutline } from '../../lib/series';
+
+const outlines = await Promise.all(SERIES_KEYS.map((key) => seriesOutline(key)));
+---
+
+<BaseLayout
+  title="Series"
+  description="여러 편으로 이어지는 연재 글 모음. 이승용의 Android 개발 블로그."
+  statusLine={`$ ls ./series  →  ${outlines.length}`}
+  withSidebar
+>
+  <section class="hero">
+    <p class="kicker mono">&gt; series</p>
+    <h1>Series</h1>
+    <p class="lede muted">한 주제를 여러 편으로 이어 쓴 연재 글입니다.</p>
+  </section>
+
+  <section class="list">
+    {outlines.map((outline) => (
+      <article class="series-card">
+        <a class="title" href={`/series/${outline.key}`}>{outline.title}</a>
+        <p class="desc muted">{outline.description}</p>
+        <p class="count mono">{outline.published.length} / {outline.parts.length}편 공개</p>
+        <ol class="parts">
+          {outline.parts.map((part) => (
+            <li class:list={{ planned: part.kind === 'planned' }}>
+              <span class="part-no mono">{String(part.order).padStart(2, '0')}</span>
+              {part.kind === 'post' ? (
+                <a href={`/posts/${part.slug}`}>{part.title}</a>
+              ) : (
+                <span>{part.title}</span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </article>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 8px 0 28px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+
+  .kicker {
+    color: var(--accent);
+    font-size: 0.8rem;
+    margin: 0 0 12px;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    margin: 0 0 12px;
+  }
+
+  .lede {
+    margin: 0;
+  }
+
+  .series-card {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .title:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .desc {
+    margin: 8px 0 6px;
+    line-height: 1.6;
+  }
+
+  .count {
+    margin: 0 0 12px;
+    font-size: 0.78rem;
+    color: var(--accent);
+  }
+
+  .parts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.92rem;
+  }
+
+  .parts li {
+    display: flex;
+    gap: 12px;
+  }
+
+  .parts a {
+    color: var(--text);
+  }
+
+  .parts a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .parts li.planned {
+    color: var(--text-muted);
+  }
+
+  .part-no {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    padding-top: 2px;
+  }
+</style>

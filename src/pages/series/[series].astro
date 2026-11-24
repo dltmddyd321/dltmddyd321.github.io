@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostRow from '../../components/PostRow.astro';
+import { SERIES_KEYS, seriesOutline, type SeriesKey } from '../../lib/series';
+import { firstImage } from '../../lib/postThumbnail';
+
+export async function getStaticPaths() {
+  return SERIES_KEYS.map((series) => ({ params: { series } }));
+}
+
+const { series } = Astro.params;
+const outline = await seriesOutline(series as SeriesKey);
+const publishedCount = outline.published.length;
+const total = outline.parts.length;
+---
+
+<BaseLayout
+  title={outline.title}
+  description={`${outline.description} — ${total}편 중 ${publishedCount}편 공개. 이승용의 Android 개발 블로그.`}
+  statusLine={`$ ls ./series/${series}  →  ${publishedCount}/${total}`}
+  noindex={publishedCount === 0}
+  withSidebar
+>
+  <section class="hero">
+    <p class="kicker mono">&gt; series · {publishedCount} / {total}</p>
+    <h1>{outline.title}</h1>
+    <p class="lede muted">{outline.description}</p>
+  </section>
+
+  <ol class="parts">
+    {outline.parts.map((part) => (
+      <li class="part">
+        <span class="part-no mono">{String(part.order).padStart(2, '0')}</span>
+        <div class="part-body">
+          {part.kind === 'post' ? (
+            <PostRow
+              slug={part.slug}
+              title={part.title}
+              description={part.post.data.description}
+              pubDate={part.post.data.pubDate}
+              category={part.post.data.category}
+              tags={part.post.data.tags}
+              thumbnail={firstImage(part.post.body)}
+            />
+          ) : (
+            <div class="planned">
+              <span class="soon mono">예정</span>
+              <span class="planned-title">{part.title}</span>
+            </div>
+          )}
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <a class="back mono" href="/series">&larr; 전체 시리즈</a>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 8px 0 28px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4px;
+  }
+
+  .kicker {
+    color: var(--accent);
+    font-size: 0.8rem;
+    margin: 0 0 12px;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    margin: 0 0 12px;
+  }
+
+  .lede {
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .parts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .part {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .part-no {
+    flex-shrink: 0;
+    width: 2ch;
+    font-size: 0.85rem;
+    color: var(--accent);
+  }
+
+  .part-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .planned {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  .planned-title {
+    font-weight: 700;
+  }
+
+  .soon {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+
+  .back {
+    display: inline-block;
+    margin-top: 28px;
+    font-size: 0.85rem;
+  }
+</style>

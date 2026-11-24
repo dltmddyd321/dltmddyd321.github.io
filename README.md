@@ -22,6 +22,12 @@ tags: [kotlin, coroutine]
 ```
 
 - `draft: true`를 추가하면 배포에서 제외됩니다.
+- 연재 글은 `series`(시리즈 키)와 `seriesOrder`(몇 편)를 넣습니다. 글 위에 시리즈 목차, 글 끝에 이전·다음 편이 붙고 `/series`에 모입니다.
+  ```md
+  series: pleos-connect
+  seriesOrder: 1
+  ```
+  시리즈 추가·수정은 `src/lib/series.ts` 한 곳만 고칩니다. `planned`에 편별 제목을 적어 두면 아직 안 쓴 편이 "예정"으로 보입니다.
 - 카테고리 6종: `insight`(Insight), `dev-log`(Dev_Log), `algorithm`(Algorithm), `read`(Read), `archive`(Archive), `ai-lab`(AI_Lab).
   추가·수정은 `src/lib/categories.ts` 한 곳만 고치면 nav·스키마·카테고리 페이지가 따라옵니다.
 

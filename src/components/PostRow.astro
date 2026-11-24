@@ -1,5 +1,6 @@
 ---
 import { categoryLabel } from '../lib/categories';
+import { seriesTitle } from '../lib/series';
 
 interface Props {
   slug: string;
@@ -11,9 +12,13 @@ interface Props {
   /** First content image found in the post body, if any — shown as a
    * thumbnail at the row's trailing edge. */
   thumbnail?: string;
+  /** Series key and part number, shown as a small label next to the category. */
+  series?: string;
+  seriesOrder?: number;
 }
 
-const { slug, title, description, pubDate, category, tags = [], thumbnail } = Astro.props;
+const { slug, title, description, pubDate, category, tags = [], thumbnail, series, seriesOrder } =
+  Astro.props;
 
 const dateStr = pubDate.toISOString().slice(0, 10);
 ---
@@ -23,6 +28,11 @@ const dateStr = pubDate.toISOString().slice(0, 10);
     <div class="meta mono">
       <span class="date">{dateStr}</span>
       <a class="chip" href={`/category/${category}`}>{categoryLabel(category)}</a>
+      {series && (
+        <a class="series-mark" href={`/series/${series}`}>
+          {seriesTitle(series)}{seriesOrder ? ` · ${seriesOrder}편` : ''}
+        </a>
+      )}
     </div>
     <a class="title" href={`/posts/${slug}`}>{title}</a>
     <p class="desc muted">{description}</p>
@@ -49,6 +59,16 @@ const dateStr = pubDate.toISOString().slice(0, 10);
     padding: 22px 0;
     border-bottom: 1px solid var(--border);
     position: relative;
+  }
+
+  .series-mark {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+  }
+
+  .series-mark:hover {
+    color: var(--accent);
+    text-decoration: none;
   }
 
   .row-body {
