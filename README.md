@@ -27,7 +27,7 @@ tags: [kotlin, coroutine]
   series: pleos-connect
   seriesOrder: 1
   ```
-  시리즈 추가·수정은 `src/lib/series.ts` 한 곳만 고칩니다. `planned`에 편별 제목을 적어 두면 아직 안 쓴 편이 "예정"으로 보입니다.
+  시리즈 추가·수정은 `src/lib/series.ts` 한 곳만 고칩니다. 목차에는 발행한 글만 보입니다.
 - 카테고리 6종: `insight`(Insight), `dev-log`(Dev_Log), `algorithm`(Algorithm), `read`(Read), `archive`(Archive), `ai-lab`(AI_Lab).
   추가·수정은 `src/lib/categories.ts` 한 곳만 고치면 nav·스키마·카테고리 페이지가 따라옵니다.
 

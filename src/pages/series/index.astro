@@ -22,16 +22,12 @@ const outlines = await Promise.all(SERIES_KEYS.map((key) => seriesOutline(key)))
       <article class="series-card">
         <a class="title" href={`/series/${outline.key}`}>{outline.title}</a>
         <p class="desc muted">{outline.description}</p>
-        <p class="count mono">{outline.published.length} / {outline.parts.length}편 공개</p>
+        <p class="count mono">글 {outline.parts.length}편</p>
         <ol class="parts">
           {outline.parts.map((part) => (
-            <li class:list={{ planned: part.kind === 'planned' }}>
+            <li>
               <span class="part-no mono">{String(part.order).padStart(2, '0')}</span>
-              {part.kind === 'post' ? (
-                <a href={`/posts/${part.slug}`}>{part.title}</a>
-              ) : (
-                <span>{part.title}</span>
-              )}
+              <a href={`/posts/${part.slug}`}>{part.title}</a>
             </li>
           ))}
         </ol>
@@ -113,9 +109,6 @@ const outlines = await Promise.all(SERIES_KEYS.map((key) => seriesOutline(key)))
     text-decoration: none;
   }
 
-  .parts li.planned {
-    color: var(--text-muted);
-  }
 
   .part-no {
     flex-shrink: 0;

@@ -14,11 +14,10 @@ interface Props {
 
 const { series, currentSlug, variant } = Astro.props;
 const outline = await seriesOutline(series);
-const index = outline.published.findIndex((part) => part.slug === currentSlug);
-const current = outline.published[index];
-const prev = index > 0 ? outline.published[index - 1] : undefined;
-const next = index >= 0 ? outline.published[index + 1] : undefined;
-const total = outline.parts.length;
+const index = outline.parts.findIndex((part) => part.slug === currentSlug);
+const current = outline.parts[index];
+const prev = index > 0 ? outline.parts[index - 1] : undefined;
+const next = index >= 0 ? outline.parts[index + 1] : undefined;
 ---
 
 {variant === 'outline' && current && (
@@ -26,21 +25,15 @@ const total = outline.parts.length;
     <summary>
       <span class="series-label mono">series</span>
       <span class="series-name">{outline.title}</span>
-      <span class="series-pos mono">{current.order} / {total}</span>
+      <span class="series-pos mono">{current.order}편</span>
     </summary>
     <ol class="series-parts">
       {outline.parts.map((part) => (
-        <li class:list={{ current: part.kind === 'post' && part.slug === currentSlug, planned: part.kind === 'planned' }}>
+        <li class:list={{ current: part.slug === currentSlug }}>
           <span class="part-no mono">{String(part.order).padStart(2, '0')}</span>
-          {part.kind === 'post' ? (
-            <a href={`/posts/${part.slug}`} aria-current={part.slug === currentSlug ? 'page' : undefined}>
-              {part.title}
-            </a>
-          ) : (
-            <span class="part-title">
-              {part.title} <span class="soon mono">예정</span>
-            </span>
-          )}
+          <a href={`/posts/${part.slug}`} aria-current={part.slug === currentSlug ? 'page' : undefined}>
+            {part.title}
+          </a>
         </li>
       ))}
     </ol>
@@ -153,17 +146,6 @@ const total = outline.parts.length;
     font-weight: 700;
   }
 
-  .series-parts li.planned {
-    color: var(--text-muted);
-  }
-
-  .soon {
-    margin-left: 6px;
-    font-size: 0.68rem;
-    padding: 1px 6px;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-  }
 
   .series-all {
     display: block;

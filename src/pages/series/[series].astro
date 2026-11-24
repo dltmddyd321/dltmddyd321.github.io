@@ -10,19 +10,18 @@ export async function getStaticPaths() {
 
 const { series } = Astro.params;
 const outline = await seriesOutline(series as SeriesKey);
-const publishedCount = outline.published.length;
-const total = outline.parts.length;
+const count = outline.parts.length;
 ---
 
 <BaseLayout
   title={outline.title}
-  description={`${outline.description} — ${total}편 중 ${publishedCount}편 공개. 이승용의 Android 개발 블로그.`}
-  statusLine={`$ ls ./series/${series}  →  ${publishedCount}/${total}`}
-  noindex={publishedCount === 0}
+  description={`${outline.description} — 글 ${count}편. 이승용의 Android 개발 블로그.`}
+  statusLine={`$ ls ./series/${series}  →  ${count}`}
+  noindex={count === 0}
   withSidebar
 >
   <section class="hero">
-    <p class="kicker mono">&gt; series · {publishedCount} / {total}</p>
+    <p class="kicker mono">&gt; series · {count}편</p>
     <h1>{outline.title}</h1>
     <p class="lede muted">{outline.description}</p>
   </section>
@@ -32,22 +31,15 @@ const total = outline.parts.length;
       <li class="part">
         <span class="part-no mono">{String(part.order).padStart(2, '0')}</span>
         <div class="part-body">
-          {part.kind === 'post' ? (
-            <PostRow
-              slug={part.slug}
-              title={part.title}
-              description={part.post.data.description}
-              pubDate={part.post.data.pubDate}
-              category={part.post.data.category}
-              tags={part.post.data.tags}
-              thumbnail={firstImage(part.post.body)}
-            />
-          ) : (
-            <div class="planned">
-              <span class="soon mono">예정</span>
-              <span class="planned-title">{part.title}</span>
-            </div>
-          )}
+          <PostRow
+            slug={part.slug}
+            title={part.title}
+            description={part.post.data.description}
+            pubDate={part.post.data.pubDate}
+            category={part.post.data.category}
+            tags={part.post.data.tags}
+            thumbnail={firstImage(part.post.body)}
+          />
         </div>
       </li>
     ))}
@@ -103,26 +95,6 @@ const total = outline.parts.length;
     min-width: 0;
   }
 
-  .planned {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 22px 0;
-    border-bottom: 1px solid var(--border);
-    color: var(--text-muted);
-  }
-
-  .planned-title {
-    font-weight: 700;
-  }
-
-  .soon {
-    flex-shrink: 0;
-    font-size: 0.7rem;
-    padding: 2px 8px;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-  }
 
   .back {
     display: inline-block;
